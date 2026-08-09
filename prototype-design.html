@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prototype — Direction design portfolio</title>
+    <!-- PROTOTYPE JETABLE : compare 3 directions visuelles. Ne pas plier dans main.js/index.css tel quel. -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@500;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap");
+
+      /* ============ BASE COMMUNE (fondations partagées par les variantes) ============ */
+      :root {
+        --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        --hairline: rgba(255, 255, 255, 0.08);
+        --hairline-strong: rgba(255, 255, 255, 0.18);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Manrope", system-ui, sans-serif;
+        background: #060606;
+        color: #f3f1ed;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body.is-settling {
+        overflow: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 0;
+        cursor: pointer;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      .proto-strip {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.6rem 1.2rem;
+        background: rgba(6, 6, 6, 0.92);
+        border-bottom: 1px solid var(--hairline);
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #9a978f;
+        backdrop-filter: blur(8px);
+      }
+
+      .proto-strip strong {
+        color: #d8b06a;
+        font-weight: 700;
+      }
+
+      /* ============ VARIANTE A — "ÉDITORIAL / GRILLE" (direction actuelle affinée) ============ */
+      .variant-a__header {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        width: min(calc(100% - 3rem), 1320px);
+        margin: 6rem auto 0;
+      }
+
+      .variant-a__brand {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+
+      .variant-a__nav-tools {
+        display: flex;
+        gap: 1.1rem;
+        font-size: 0.86rem;
+        color: #96948b;
+      }
+
+      .variant-a__hero {
+        width: min(calc(100% - 3rem), 1320px);
+        margin: 5rem auto 3.5rem;
+        display: grid;
+        grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+        gap: 3rem;
+        align-items: end;
+      }
+
+      .variant-a__hero h1 {
+        margin: 0;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: clamp(2.9rem, 6vw, 5.6rem);
+        font-weight: 600;
+        line-height: 0.98;
+        letter-spacing: -0.04em;
+      }
+
+      .variant-a__hero h1 em {
+        font-style: normal;
+        color: #9a978f;
+      }
+
+      .variant-a__lede {
+        margin: 0 0 1rem;
+        max-width: 26rem;
+        color: #9a978f;
+        font-size: 1.02rem;
+        line-height: 1.7;
+      }
+
+      .variant-a__tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .variant-a__tag {
+        padding: 0.4rem 0.8rem;
+        border: 1px solid var(--hairline);
+        border-radius: 999px;
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #9a978f;
+      }
+
+      .variant-a__grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.8rem;
+        width: min(calc(100% - 3rem), 1320px);
+        margin: 0 auto;
+        padding-bottom: 6rem;
+      }
+
+      .variant-a__card {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        aspect-ratio: 1 / 1;
+        border: 1px solid var(--hairline);
+        background: #0b0b0b;
+      }
+
+      .variant-a__card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.9;
+        transition:
+          transform 0.5s var(--ease-expo),
+          opacity 0.5s var(--ease-expo);
+      }
+
+      .variant-a__card:hover img {
+        transform: scale(1.04);
+        opacity: 1;
+      }
+
+      .variant-a__card-info {
+        position: absolute;
+        inset: auto 0 0;
+        z-index: 1;
+        padding: 1rem;
+        background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.78));
+        opacity: 0;
+        transform: translateY(8px);
+        transition:
+          opacity 0.3s var(--ease-expo),
+          transform 0.3s var(--ease-expo);
+      }
+
+      .variant-a__card:hover .variant-a__card-info {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .variant-a__card-title {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+
+      .variant-a__card-meta {
+        margin-top: 0.15rem;
+        font-size: 0.75rem;
+        color: rgba(243, 241, 237, 0.72);
+      }
+
+      @media (max-width: 900px) {
+        .variant-a__hero {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          margin-top: 3.5rem;
+        }
+        .variant-a__grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .variant-a__card {
+          aspect-ratio: 4 / 5;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .variant-a__grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ============ VARIANTE B — "CINÉMA / SCÈNE" ============ */
+      .variant-b {
+        --accent: #ca8a04;
+        min-height: 100vh;
+        padding-top: 2rem;
+      }
+
+      .variant-b__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        width: min(calc(100% - 3rem), 1320px);
+        margin: 2.4rem auto 0;
+      }
+
+      .variant-b__index {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #8f8b82;
+      }
+
+      .variant-b__brand {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      .variant-b__hero {
+        width: min(calc(100% - 3rem), 1320px);
+        margin: 5rem auto 3.5rem;
+        display: grid;
+        gap: 2.2rem;
+      }
+
+      .variant-b__kicker {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+      }
+
+      .variant-b__kicker::before {
+        content: "";
+        display: block;
+        width: 2.6rem;
+        height: 1px;
+        background: var(--accent);
+      }
+
+      .variant-b__hero h1 {
+        margin: 0.4rem 0 0;
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.6rem, 6.5vw, 6rem);
+        font-weight: 700;
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+      }
+
+      .variant-b__hero h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      .variant-b__lede {
+        max-width: 30rem;
+        margin: 0;
+        font-size: 1.08rem;
+        line-height: 1.8;
+        color: #c6c3ba;
+      }
+
+      .variant-b__featured {
+        position: relative;
+        display: block;
+        width: min(calc(100% - 3rem), 1320px);
+        margin: 0 auto 4.5rem;
+        overflow: hidden;
+        border: 1px solid var(--hairline);
+      }
+
+      .variant-b__featured img {
+        width: 100%;
+        aspect-ratio: 21 / 9;
+        object-fit: cover;
+        filter: saturate(0.82) contrast(1.02);
+        transition: transform 0.8s var(--ease-expo);
+      }
+
+      .variant-b__featured:hover img {
+        transform: scale(1.02);
+      }
+
+      .variant-b__featured-cap {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        padding: 1.4rem;
+        background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.85));
+      }
+
+      .variant-b__featured-cap strong {
+        display: block;
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+        font-weight: 700;
+      }
+
+      .variant-b__featured-cap span {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .variant-b__list {
+        width: min(calc(100% - 3rem), 1320px);
+        margin: 0 auto 4.5rem;
+      }
+
+      .variant-b__row {
+        display: grid;
+        grid-template-columns: 5rem minmax(0, 1.4fr) minmax(0, 1fr) auto;
+        gap: 1.5rem;
+        align-items: center;
+        padding: 1.5rem 0.4rem;
+        border-top: 1px solid var(--hairline);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.76rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #8a877e;
+        transition: padding 0.4s var(--ease-expo);
+      }
+
+      .variant-b__list .variant-b__row:last-child {
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .variant-b__row:hover {
+        padding-left: 1.2rem;
+      }
+
+      .variant-b__row-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.2rem, 2.2vw, 1.9rem);
+        font-weight: 700;
+        text-transform: none;
+        letter-spacing: 0;
+        color: #f3f1ed;
+        transition: color 0.3s var(--ease-expo);
+      }
+
+      .variant-b__row:hover .variant-b__row-title {
+        color: var(--accent);
+      }
+
+      .variant-b__row-arrow {
+        color: var(--accent);
+        transform: translateX(0);
+        transition: transform 0.4s var(--ease-expo);
+      }
+
+      .variant-b__row:hover .variant-b__row-arrow {
+        transform: translateX(6px);
+      }
+
+      .variant-b__cta {
+        width: min(calc(100% - 3rem), 1320px);
+        margin: 0 auto 5rem;
+        padding: 3rem;
+        border: 1px solid var(--hairline);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .variant-b__cta p {
+        margin: 0;
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.4rem, 2.6vw, 2.1rem);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      .variant-b__cta button {
+        padding: 0.9rem 1.8rem;
+        border-radius: 999px;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-weight: 700;
+        transition: all 0.3s var(--ease-expo);
+      }
+
+      .variant-b__cta button:hover {
+        background: var(--accent);
+        color: #0a0a0a;
+      }
+
+      /* ============ VARIANTE C — "INDEX / STUDIO (type-first)" ============ */
+      .variant-c {
+        background: #0a0a0a;
+        padding-top: 2rem;
+      }
+
+      .variant-c__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        width: min(calc(100% - 3rem), 1320px);
+        margin: 0 auto;
+        padding: 0.8rem 0 1.8rem;
+      }
+
+      .variant-c__brand {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #f3f1ed;
+      }
+
+      .variant-c__nav {
+        display: flex;
+        gap: 1.4rem;
+        font-size: 0.86rem;
+        color: #7d7a72;
+      }
+
+      .variant-c__hero {
+        width: min(calc(100% - 3rem), 1320px);
+        margin: 0 auto;
+        padding: 1.5rem 0 3rem;
+      }
+
+      .variant-c__hero h1 {
+        margin: 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: clamp(3.4rem, 11vw, 9rem);
+        line-height: 0.88;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+      }
+
+      .variant-c__marquee {
+        overflow: hidden;
+        white-space: nowrap;
+        border-top: 1px solid var(--hairline);
+        border-bottom: 1px solid var(--hairline);
+        padding: 0.9rem 0;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #6d6a62;
+      }
+
+      .variant-c__marquee-inner {
+        display: inline-block;
+        padding-right: 2rem;
+        animation: marquee 26s linear infinite;
+      }
+
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      .variant-c__index {
+        width: min(calc(100% - 3rem), 1320px);
+        margin: 0 auto;
+        padding: 0 0 4rem;
+      }
+
+      .variant-c__item {
+        display: grid;
+        grid-template-columns: 4rem minmax(0, 1.3fr) minmax(0, 1fr) auto;
+        gap: 1.5rem;
+        align-items: center;
+        padding: 1.9rem 0.3rem;
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .variant-c__item:first-child {
+        border-top: 1px solid var(--hairline);
+      }
+
+      .variant-c__num {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.78rem;
+        color: #7f7c74;
+      }
+
+      .variant-c__title {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: clamp(1.9rem, 4.4vw, 3.9rem);
+        font-weight: 700;
+        line-height: 0.95;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        transition:
+          transform 0.5s var(--ease-expo),
+          color 0.3s var(--ease-expo);
+      }
+
+      .variant-c__meta {
+        font-size: 0.78rem;
+        color: #8b887f;
+      }
+
+      .variant-c__arrow {
+        color: #8b887f;
+        font-size: 1.2rem;
+        transition: all 0.4s var(--ease-expo);
+      }
+
+      .variant-c__item:hover .variant-c__title {
+        transform: translateX(0.6rem);
+        color: #fff;
+      }
+
+      .variant-c__item:hover .variant-c__arrow {
+        color: #fff;
+        transform: translate(3px, -3px);
+      }
+
+      .variant-c__preview {
+        position: fixed;
+        top: 24%;
+        right: 5%;
+        width: min(24vw, 340px);
+        aspect-ratio: 4 / 5;
+        pointer-events: none;
+        z-index: 5;
+        opacity: 0;
+        transform: scale(0.92) rotate(-2deg);
+        transition:
+          opacity 0.35s var(--ease-expo),
+          transform 0.35s var(--ease-expo);
+      }
+
+      .variant-c__preview.is-visible {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+
+      .variant-c__preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: 1px solid var(--hairline-strong);
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+      }
+
+      @media (max-width: 900px) {
+        .variant-c__item {
+          grid-template-columns: 3rem minmax(0, 1fr) auto;
+        }
+        .variant-c__meta {
+          display: none;
+        }
+        .variant-c__preview {
+          display: none;
+        }
+      }
+
+      /* ============ VARIANTE D — "COMBINÉE" : hero typo (C) discret + vidéo + grille (A) ============ */
+      .variant-d {
+        background: #060606;
+        --content-d: min(calc(100% - 3rem), 980px);
+      }
+
+      .variant-d__hero {
+        position: relative;
+        width: 100%;
+        padding: 1.25rem;
+        background: #060606;
+      }
+
+      .variant-d__header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.9rem 1.5rem;
+        background: transparent;
+      }
+
+      .variant-d__header-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        width: var(--content-d);
+        margin: 0 auto;
+      }
+
+      .variant-d__brand {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #f3f1ed;
+      }
+
+      .variant-d__nav {
+        display: flex;
+        gap: 1.4rem;
+        font-size: 0.86rem;
+        color: #b9b6ad;
+      }
+
+      .variant-d__media {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 1;
+        overflow: hidden;
+      }
+
+      .variant-d__media video,
+      .variant-d__media img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 50%;
+      }
+
+      .variant-d__media-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.5) 0%,
+          rgba(0, 0, 0, 0.18) 42%,
+          rgba(6, 6, 6, 0.95) 100%
+        );
+      }
+
+      .variant-d__title {
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        z-index: 2;
+        margin: 0;
+        width: var(--content-d);
+        transform: translateX(-50%);
+        padding: 1.6rem 0 1.2rem;
+        font-family: "Archivo", sans-serif;
+        font-weight: 700;
+        font-size: clamp(2rem, 4.2vw, 3.4rem);
+        line-height: 1;
+        letter-spacing: -0.03em;
+        text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+      }
+
+      .variant-d__title small {
+        display: block;
+        margin-top: 0.8rem;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 400;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #d4cfc0;
+      }
+
+      .variant-d__lede {
+        width: var(--content-d);
+        margin: 2rem auto 2.2rem;
+        padding-left: 0.6rem;
+      }
+
+      .variant-d__lede p {
+        margin: 0;
+        max-width: 30rem;
+        color: #a8a49b;
+        font-size: 1.02rem;
+        line-height: 1.7;
+      }
+
+      .variant-d__grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.5rem;
+        width: var(--content-d);
+        margin: 0 auto;
+        padding-bottom: 6rem;
+      }
+
+      .variant-d__card {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        aspect-ratio: 1 / 1;
+        border: 1px solid var(--hairline);
+        background: #0b0b0b;
+      }
+
+      .variant-d__card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.9;
+        transition:
+          transform 0.5s var(--ease-expo),
+          opacity 0.5s var(--ease-expo);
+      }
+
+      .variant-d__card:hover img {
+        transform: scale(1.04);
+        opacity: 1;
+      }
+
+      .variant-d__card-info {
+        position: absolute;
+        inset: auto 0 0;
+        z-index: 1;
+        padding: 0.65rem;
+        background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.82));
+        opacity: 0;
+        transform: translateY(8px);
+        transition:
+          opacity 0.3s var(--ease-expo),
+          transform 0.3s var(--ease-expo);
+      }
+
+      .variant-d__card:hover .variant-d__card-info {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .variant-d__card-title {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.98rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+
+      .variant-d__card-meta {
+        margin-top: 0.15rem;
+        font-size: 0.68rem;
+        color: rgba(243, 241, 237, 0.72);
+      }
+
+      @media (max-width: 900px) {
+        .variant-d__media {
+          aspect-ratio: 4 / 5;
+        }
+        .variant-d__grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .variant-d__card {
+          aspect-ratio: 4 / 5;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .variant-d__grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ============ BARRE DE COMMUTATION (second prototype — jamais en production) ============ */
+      .proto-switcher {
+        position: fixed;
+        bottom: 1.2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.4rem 0.6rem;
+        border-radius: 999px;
+        background: #151515;
+        border: 1px solid var(--hairline-strong);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #cfccc6;
+      }
+
+      .proto-switcher__arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        border: 1px solid var(--hairline);
+        transition: border-color 0.2s var(--ease-expo);
+      }
+
+      .proto-switcher__arrow:hover {
+        border-color: #fff;
+      }
+
+      .proto-switcher__label {
+        min-width: 12rem;
+        text-align: center;
+        font-weight: 600;
+        color: #cfcbc2;
+      }
+
+      /* ============ MOUVEMENT RÉDUIT ============ */
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+        .variant-c__marquee-inner {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="is-settling">
+    <div class="proto-strip">
+      <span><strong>PROTOTYPE</strong> — direction design : ne pas plier dans le site réel</span>
+      <span data-strip-nav>?variant=A — Éditorial</span>
+    </div>
+
+    <div class="variant-c__preview" data-c-preview hidden>
+      <img alt="" data-c-preview-img />
+    </div>
+
+    <div class="proto-switcher" aria-label="Alterner les variantes du prototype">
+      <button class="proto-switcher__arrow" data-switch="prev" type="button" aria-label="Variante précédente">&lang;</button>
+      <span class="proto-switcher__label" data-switch-label></span>
+      <button class="proto-switcher__arrow" data-switch="next" type="button" aria-label="Variante suivante">&rang;</button>
+    </div>
+
+    <script>
+      // ============================================================
+      // DONNÉES DE PROTOTYPE — sous-ensemble des vrais projets (jetable)
+      // ============================================================
+      const PROJECTS = [
+        {
+          title: "Stéphanie Boulay",
+          type: "Vidéoclip",
+          role: "Montage",
+          year: "2025",
+          client: "Stéphanie Boulay",
+          image: "./assets/media/projects/stephanie-boulay/card-main.png",
+        },
+        {
+          title: "Donner le goût",
+          type: "Série culinaire",
+          role: "Motion design",
+          year: "2025",
+          client: "Télé-Québec",
+          image: "./assets/media/projects/donner-le-gout/card-main.png",
+        },
+        {
+          title: "Elisapie",
+          type: "Vidéoclip",
+          role: "Montage · color · VFX",
+          year: "2024",
+          client: "Elisapie",
+          image: "./assets/media/projects/elisapie/card-main.png",
+        },
+        {
+          title: "La prison de l'Esprit-Saint",
+          type: "Série documentaire",
+          role: "Conception graphique",
+          year: "2024",
+          client: "Crave",
+          image: "./assets/media/projects/prison-esprit-saint/card-main.png",
+        },
+        {
+          title: "Beautés rebelles",
+          type: "Série documentaire",
+          role: "Design & motion",
+          year: "2024",
+          client: "TV5",
+          image: "./assets/media/projects/beautes-rebelles/card-main.png",
+        },
+        {
+          title: "Frank Bourassa",
+          type: "Série documentaire",
+          role: "Motion & VFX",
+          year: "2023",
+          client: "Crave / Casadel",
+          image: "./assets/media/projects/frank-bourassa/card-main.png",
+        },
+        {
+          title: "Zug Island",
+          type: "Court-métrage",
+          role: "Montage",
+          year: "2022",
+          client: "Les Films du 3 mars",
+          image: "./assets/media/projects/zug-island/card-main.png",
+        },
+        {
+          title: "Tout doux",
+          type: "Campagne",
+          role: "Motion design",
+          year: "2023",
+          client: "Claude Bégin",
+          image: "./assets/media/projects/tout-doux/card-main.png",
+        },
+      ];
+
+      // ============================================================
+      // RÉDACTIONS (variantes)
+      // ============================================================
+      function renderVariantA(container) {
+        container.className = "variant-a";
+
+        const header =
+          '<header class="variant-a__header">' +
+          '<div class="variant-a__brand">Jérémie Carvalho</div>' +
+          '<div class="variant-a__nav-tools"><span>Montage</span><span>Motion</span><span>Contact</span></div>' +
+          "</header>";
+
+        const hero =
+          '<section class="variant-a__hero">' +
+          "<h1>Monteur et motion designer <em>basé à Montréal</em></h1>" +
+          "<div>" +
+          '<p class="variant-a__lede">Je collabore à des documentaires, fictions, vidéoclips et projets culturels en mettant le récit, le rythme et la clarté au centre.</p>' +
+          '<div class="variant-a__tags">' +
+          '<span class="variant-a__tag">Documentaire</span>' +
+          '<span class="variant-a__tag">Fiction</span>' +
+          '<span class="variant-a__tag">Vidéoclip</span>' +
+          "</div>" +
+          "</div>" +
+          "</section>";
+
+        const cards = PROJECTS.map(function (project) {
+          return (
+            '<a class="variant-a__card" href="#">' +
+            '<img src="' +
+            project.image +
+            '" alt="" loading="lazy" />' +
+            '<div class="variant-a__card-info">' +
+            '<div class="variant-a__card-title">' +
+            project.title +
+            "</div>" +
+            '<div class="variant-a__card-meta">' +
+            project.type +
+            " · " +
+            project.role +
+            "</div>" +
+            "</div>" +
+            "</a>"
+          );
+        }).join("");
+
+        container.innerHTML = header + hero + '<div class="variant-a__grid">' + cards + "</div>";
+      }
+
+      function renderVariantB(container) {
+        container.innerHTML =
+          "<div class='variant-b'>" +
+          '<header class="variant-b__header">' +
+          '<div class="variant-b__index">N° 001 — Portfolio</div>' +
+          '<div class="variant-b__brand">Jérémie Carvalho</div>' +
+          "</header>" +
+          '<section class="variant-b__hero">' +
+          '<div class="variant-b__kicker">Documentaire · Fiction · Vidéoclip</div>' +
+          "<h1>Le monteur <em>qui fait sentir</em> le récit</h1>" +
+          '<p class="variant-b__lede">Je collabore à des documentaires, fictions, vidéoclips et projets culturels en plaçant le récit, le rythme et la clarté au centre.</p>' +
+          "</section>" +
+          '<a class="variant-b__featured" href="#">' +
+          '<img src="' +
+          PROJECTS[0].image +
+          '" alt="" />' +
+          '<div class="variant-b__featured-cap"><span>' +
+          PROJECTS[0].type +
+          "</span><strong>" +
+          PROJECTS[0].title +
+          "</strong></div>" +
+          "</a>" +
+          '<div class="variant-b__list">' +
+          PROJECTS.slice(1)
+            .map(function (project, index) {
+              var num = String(index + 2).padStart(2, "0");
+              return (
+                '<a class="variant-b__row" href="#">' +
+                "<span>" +
+                num +
+                "</span>" +
+                '<span class="variant-b__row-title">' +
+                project.title +
+                "</span>" +
+                '<span class="variant-b__row-client">' +
+                project.client +
+                "</span>" +
+                '<span class="variant-b__row-arrow">&rarr;</span>' +
+                "</a>"
+              );
+            })
+            .join("") +
+          "</div>" +
+          '<div class="variant-b__cta">' +
+          "<p>Un projet à raconter ?<br />Parlons-en.</p>" +
+          '<button type="button">me joindre &#8594;</button>' +
+          "</div>" +
+          "</div>";
+      }
+
+      function renderVariantC(container) {
+        var marqueeText =
+          "Documentaires — Fictions — Vidéoclips — Habillage — Récit — Rythme — Clarté — ";
+
+        container.innerHTML =
+          "<div class='variant-c'>" +
+          '<header class="variant-c__header">' +
+          '<div class="variant-c__brand">JC — Portfolio</div>' +
+          '<div class="variant-c__nav"><span>Montage</span><span>Motion</span><span>Contact</span></div>' +
+          "</header>" +
+          '<section class="variant-c__hero"><h1>Jérémie<br>Carvalho</h1></section>' +
+          '<div class="variant-c__marquee"><div class="variant-c__marquee-inner">' +
+          marqueeText +
+          marqueeText +
+          "</div></div>" +
+          '<div class="variant-c__index">' +
+          PROJECTS.map(function (project, index) {
+            var num = String(index + 1).padStart(2, "0");
+            return (
+              '<a class="variant-c__item" href="#" data-preview="' +
+              project.image +
+              '">' +
+              '<span class="variant-c__num">' +
+              num +
+              "</span>" +
+              '<span class="variant-c__title">' +
+              project.title +
+              "</span>" +
+              '<span class="variant-c__meta">' +
+              project.type +
+              " · " +
+              project.year +
+              "</span>" +
+              '<span class="variant-c__arrow">&#8599;</span>' +
+              "</a>"
+            );
+          }).join("") +
+          "</div>" +
+          "</div>";
+      }
+
+      function renderVariantD(container) {
+        container.innerHTML =
+          "<div class='variant-d'>" +
+          '<div class="variant-d__hero">' +
+          '<header class="variant-d__header">' +
+          '<div class="variant-d__header-inner">' +
+          '<div class="variant-d__brand">Jérémie Carvalho</div>' +
+          '<div class="variant-d__nav"><span>Montage</span><span>Motion</span><span>Contact</span></div>' +
+          "</div>" +
+          "</header>" +
+          '<div class="variant-d__media">' +
+          '<video autoplay muted loop playsinline preload="metadata"' +
+          'poster="./assets/media/projects/stephanie-boulay/card-main.png">'+
+          '<source src="./assets/media/hero/hero-video.mp4" type="video/mp4" />' +
+          "</video>" +
+          '<div class="variant-d__media-overlay"></div>' +
+          '<p class="variant-d__title">Jérémie Carvalho' +
+          "<small>Monteur &amp; motion designer — Montréal</small>" +
+          "</p>" +
+          "</div>" +
+          "</div>" +
+          '<div class="variant-d__lede">' +
+          "<p>Documentaires, fictions, vidéoclips et projets culturels — le récit, le rythme et la clarté au centre.</p>" +
+          "</div>" +
+          '<div class="variant-d__grid">' +
+          PROJECTS.map(function (project) {
+            return (
+              '<a class="variant-d__card" href="#">' +
+              '<img src="' +
+              project.image +
+              '" alt="" loading="lazy" />' +
+              '<div class="variant-d__card-info">' +
+              '<div class="variant-d__card-title">' +
+              project.title +
+              "</div>" +
+              '<div class="variant-d__card-meta">' +
+              project.type +
+              " · " +
+              project.role +
+              "</div>" +
+              "</div>" +
+              "</a>"
+            );
+          }).join("") +
+          "</div>" +
+          "</div>";
+      }
+
+      // ============================================================
+      // PRÉVISUALISATION VARIANTE C
+      // ============================================================
+      const cPreview = document.querySelector(".variant-c__preview");
+      const cPreviewImg = document.querySelector("[data-c-preview-img]");
+
+      function enableCPreview() {
+        cPreview.hidden = false;
+        document
+          .querySelectorAll(".variant-c__item")
+          .forEach(function (item) {
+            item.addEventListener("mouseenter", function () {
+              cPreviewImg.src = item.dataset.preview;
+              cPreview.classList.add("is-visible");
+            });
+            item.addEventListener("mouseleave", function () {
+              cPreview.classList.remove("is-visible");
+            });
+          });
+      }
+
+      function disableCPreview() {
+        cPreview.hidden = true;
+        cPreview.classList.remove("is-visible");
+        cPreviewImg.removeAttribute("src");
+      }
+
+      // ============================================================
+      // COMMUTATEUR
+      // ============================================================
+      const VARIANTS = ["A", "B", "C", "D"];
+      const VARIANT_NAMES = {
+        A: "Éditorial / grille",
+        B: "Cinéma / scène",
+        C: "Index / studio",
+        D: "Combinée — hero vidéo",
+      };
+
+      const switchLabel = document.querySelector("[data-switch-label]");
+      const switchNav = document.querySelector("[data-variant-nav]");
+      const canvas = document.createElement("div");
+      canvas.id = "variant-canvas";
+      document.body.insertBefore(canvas, document.querySelector(".proto-switcher"));
+
+      let currentVariant = new URLSearchParams(window.location.search).get("variant") || "A";
+      if (!VARIANTS.includes(currentVariant)) {
+        currentVariant = "A";
+      }
+
+      function renderVariant() {
+        disableCPreview();
+
+        if (currentVariant === "A") {
+          renderVariantA(canvas);
+        } else if (currentVariant === "B") {
+          renderVariantB(canvas);
+        } else if (currentVariant === "C") {
+          renderVariantC(canvas);
+          wireCPreview();
+        } else {
+          renderVariantD(canvas);
+        }
+
+        switchLabel.textContent = currentVariant + " — " + VARIANT_NAMES[currentVariant];
+        if (switchNav) {
+          switchNav.textContent =
+            "Clavier &larr; &rarr; | variante " + currentVariant;
+        }
+
+        const url = new URL(window.location.href);
+        url.searchParams.set("variant", currentVariant);
+        window.history.replaceState({}, "", url.toString());
+      }
+
+      document.querySelectorAll("[data-switch]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          const delta = button.dataset.switch === "next" ? 1 : -1;
+          const idx =
+            (VARIANTS.indexOf(currentVariant) + delta + VARIANTS.length) % VARIANTS.length;
+          currentVariant = VARIANTS[idx];
+          renderVariant();
+        });
+      });
+
+      document.addEventListener("keydown", function (event) {
+        const target = event.target;
+        if (target && (target.matches("input, textarea") || target.isContentEditable)) {
+          return;
+        }
+        if (event.key === "ArrowLeft") {
+          const idx =
+            (VARIANTS.indexOf(currentVariant) - 1 + VARIANTS.length) % VARIANTS.length;
+          currentVariant = VARIANTS[idx];
+          renderVariant();
+        } else if (event.key === "ArrowRight") {
+          const idx = (VARIANTS.indexOf(currentVariant) + 1) % VARIANTS.length;
+          currentVariant = VARIANTS[idx];
+          renderVariant();
+        }
+      });
+
+      renderVariant();
+
+      window.addEventListener("load", function () {
+        document.body.classList.remove("is-settling");
+      });
+    </script>
+  </body>
+</html>

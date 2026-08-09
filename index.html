@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>J&eacute;r&eacute;mie Carvalho</title>
+    <meta
+      name="description"
+      content="Prototype local du portfolio de J&eacute;r&eacute;mie Carvalho avec navigation &eacute;ditoriale, grilles de projets et panneau projet en surimpression."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="site-header__inner">
+          <button
+            class="menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="primary-nav"
+            aria-label="Ouvrir la navigation"
+          >
+            <span class="menu-toggle__line"></span>
+            <span class="menu-toggle__line"></span>
+            <span class="menu-toggle__line"></span>
+          </button>
+
+          <nav class="primary-nav" id="primary-nav" aria-label="Navigation principale">
+            <ul class="nav-list">
+              <li><button type="button" data-filter-link="projects">J&eacute;r&eacute;mie Carvalho</button></li>
+              <li><button type="button" data-filter-link="montage">Montage</button></li>
+              <li><button type="button" data-filter-link="motion">Motion design</button></li>
+              <li><button type="button" data-view-link="contact">Contact</button></li>
+          </ul>
+          </nav>
+
+          <div class="header-meta">
+            <div class="locale-switch">
+              <button type="button" class="locale-switch__button" data-locale-toggle>FR</button>
+            </div>
+
+            <ul class="social-links social-links--header" aria-label="Liens sociaux">
+              <li>
+                <a href="mailto:info@jeremiecarvalho.com" aria-label="Courriel" data-social-link="mail">
+                  <img class="social-links__icon" alt="" hidden />
+                  <span class="social-links__fallback">@</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/carvalho.jeremie/"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label="Instagram"
+                  data-social-link="instagram"
+                >
+                  <img class="social-links__icon" alt="" hidden />
+                  <span class="social-links__fallback">ig</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/j%C3%A9r%C3%A9mie-carvalho-469322177"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label="LinkedIn"
+                  data-social-link="linkedin"
+                >
+                  <img class="social-links__icon" alt="" hidden />
+                  <span class="social-links__fallback">in</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.facebook.com/carvalho.jeremie/"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label="Facebook"
+                  data-social-link="facebook"
+                >
+                  <img class="social-links__icon" alt="" hidden />
+                  <span class="social-links__fallback">fb</span>
+                </a>
+              </li>
+            </ul>
+
+            <a class="header-cv is-disabled" href="#" aria-disabled="true">CV</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="site-main">
+        <section class="view view--projects is-active" data-view="projects" aria-label="Projets">
+          <section class="hero">
+            <div class="hero__media" aria-hidden="true">
+              <div class="hero__video-placeholder">
+                <video class="hero__video" muted autoplay loop playsinline preload="metadata" hidden></video>
+                <img class="hero__poster" alt="" hidden />
+                <span>Vid&eacute;o hero &agrave; int&eacute;grer</span>
+              </div>
+              <div class="hero__overlay"></div>
+            </div>
+
+            <div class="hero__content">
+              <p class="hero__role">Monteur &amp; motion designer — Montr&eacute;al</p>
+            </div>
+          </section>
+
+          <p class="hero__lede">
+            Je collabore &agrave; des documentaires, fictions, vid&eacute;oclips et projets culturels en
+            mettant le r&eacute;cit, le rythme et la clart&eacute; au centre.
+          </p>
+
+          <section class="grid-section">
+            <div class="project-grid" data-grid="projects"></div>
+          </section>
+        </section>
+
+        <section class="view view--contact" data-view="contact" aria-label="Page contact">
+          <div class="contact-view">
+            <div class="contact-view__portrait" aria-hidden="true">
+              <div class="portrait-placeholder">
+                <img class="portrait-placeholder__image" alt="" hidden />
+                <span>Portrait &agrave; int&eacute;grer</span>
+              </div>
+            </div>
+
+            <div class="contact-view__content">
+              <div class="contact-view__about">
+                <p>Monteur et motion designer r&eacute;sidant &agrave; Montr&eacute;al.</p>
+                <p>
+                  Je collabore avec des r&eacute;alisateurs, artistes et &eacute;quipes de production sur des
+                  projets documentaires, de fiction, des s&eacute;ries t&eacute;l&eacute;, des vid&eacute;oclips et
+                  autres.
+                </p>
+                <p>Ouvert &agrave; des collaborations r&eacute;currentes ou contractuelles.</p>
+              </div>
+
+              <div class="contact-view__cta">
+                <p class="contact-view__copy">
+                  Pour discuter d&rsquo;un projet ou d&rsquo;une collaboration, vous pouvez me joindre par
+                  courriel.
+                </p>
+                <a class="contact-email" href="mailto:info@jeremiecarvalho.com">
+                  info@jeremiecarvalho.com
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="site-footer__stack">
+          <ul class="social-links social-links--footer" aria-label="Liens de bas de page">
+            <li>
+              <a href="mailto:info@jeremiecarvalho.com" aria-label="Courriel" data-social-link="mail">
+                <img class="social-links__icon" alt="" hidden />
+                <span class="social-links__fallback">@</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.instagram.com/carvalho.jeremie/"
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label="Instagram"
+                data-social-link="instagram"
+              >
+                <img class="social-links__icon" alt="" hidden />
+                <span class="social-links__fallback">ig</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/in/j%C3%A9r%C3%A9mie-carvalho-469322177"
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label="LinkedIn"
+                data-social-link="linkedin"
+              >
+                <img class="social-links__icon" alt="" hidden />
+                <span class="social-links__fallback">in</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.facebook.com/carvalho.jeremie/"
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label="Facebook"
+                data-social-link="facebook"
+              >
+                <img class="social-links__icon" alt="" hidden />
+                <span class="social-links__fallback">fb</span>
+              </a>
+            </li>
+          </ul>
+          <p class="site-footer__copyright">&copy; 2026 J&eacute;r&eacute;mie Carvalho. Tous droits r&eacute;serv&eacute;s.</p>
+        </div>
+      </footer>
+    </div>
+
+    <div class="project-overlay" hidden>
+      <div class="project-overlay__backdrop" data-overlay-close></div>
+      <div class="project-overlay__ghost" aria-hidden="true"></div>
+
+      <section class="project-panel" role="dialog" aria-modal="true" aria-label="Aper&ccedil;u du projet">
+        <div class="project-panel__topbar">
+          <button class="project-panel__close" type="button" data-overlay-close aria-label="Fermer le projet">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="project-panel__scroll">
+          <div class="project-panel__media">
+            <div class="project-panel__media-inner">
+              <iframe
+                class="project-panel__iframe"
+                title="Vid&eacute;o du projet"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen
+                hidden
+              ></iframe>
+              <video class="project-panel__video" muted autoplay loop playsinline preload="metadata" hidden></video>
+              <img class="project-panel__image" alt="" hidden />
+              <span>M&eacute;dia principal &agrave; int&eacute;grer</span>
+            </div>
+          </div>
+
+          <div class="project-panel__body">
+            <h2 class="project-panel__title"></h2>
+            <p class="project-panel__subtitle" data-project-subtitle></p>
+
+            <dl class="project-panel__meta">
+              <div>
+                <dt>Type</dt>
+                <dd data-project-type></dd>
+              </div>
+              <div>
+                <dt>R&ocirc;le</dt>
+                <dd data-project-role></dd>
+              </div>
+              <div>
+                <dt>Client</dt>
+                <dd data-project-client></dd>
+              </div>
+            </dl>
+
+            <div class="project-panel__text" data-project-text></div>
+
+            <div class="project-panel__credits">
+              <h3>Cr&eacute;dits</h3>
+              <dl class="project-panel__credits-list" data-project-credits></dl>
+            </div>
+
+            <div class="project-panel__gallery" aria-label="M&eacute;dias compl&eacute;mentaires" data-project-gallery></div>
+
+            <nav class="project-panel__navigation" aria-label="Navigation entre les projets">
+              <button type="button" data-project-nav="prev">Pr&eacute;c&eacute;dent</button>
+              <button type="button" data-project-nav="next">Suivant</button>
+            </nav>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <template id="project-card-template">
+      <article class="project-card-shell">
+        <button class="project-card" type="button" aria-haspopup="dialog">
+          <span class="project-card__surface project-card__surface--rest" aria-hidden="true">
+            <img class="project-card__image" alt="" hidden />
+            <span class="project-card__placeholder-label">Image principale</span>
+          </span>
+          <span class="project-card__info" aria-hidden="true">
+            <strong class="project-card__title"></strong>
+            <span class="project-card__meta">
+              <span class="project-card__type"></span>
+              <span class="project-card__role"></span>
+            </span>
+          </span>
+          <span class="sr-only project-card__sr-label"></span>
+        </button>
+      </article>
+    </template>
+
+    <script src="./main.js" defer></script>
+  </body>
+</html>
