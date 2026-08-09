@@ -392,13 +392,11 @@ const localeToggle = document.querySelector("[data-locale-toggle]");
 const menuToggle = document.querySelector(".menu-toggle");
 const primaryNav = document.querySelector(".primary-nav");
 const cardTemplate = document.getElementById("project-card-template");
-const socialLinkNodes = [...document.querySelectorAll("[data-social-link]")];
 const heroPlaceholder = document.querySelector(".hero__video-placeholder");
 const heroVideo = heroPlaceholder?.querySelector(".hero__video");
 const heroPoster = heroPlaceholder?.querySelector(".hero__poster");
 const heroPlaceholderLabel = heroPlaceholder?.querySelector("span");
 const heroRole = document.querySelector(".hero__role");
-const heroLede = document.querySelector(".hero__lede");
 const portraitPlaceholder = document.querySelector(".portrait-placeholder");
 const portraitImage = portraitPlaceholder?.querySelector(".portrait-placeholder__image");
 const portraitPlaceholderLabel = portraitPlaceholder?.querySelector("span");
@@ -438,7 +436,6 @@ let overlayTrigger = null;
 const projectMap = new Map(normalizedProjects.map((project) => [project.slug, project]));
 const imageExtensions = ["avif", "webp", "png", "jpg", "jpeg"];
 const videoExtensions = ["mp4", "webm"];
-const iconExtensions = ["svg", "png", "webp"];
 
 const siteAssets = {
   hero: {
@@ -446,11 +443,6 @@ const siteAssets = {
     image: buildAssetCandidates("./assets/media/hero/hero-poster", imageExtensions),
   },
   portrait: buildAssetCandidates("./assets/media/portrait/contact-portrait", imageExtensions),
-  socialIcons: {
-    mail: buildAssetCandidates("./assets/icons/social/mail", iconExtensions),
-    instagram: buildAssetCandidates("./assets/icons/social/instagram", iconExtensions),
-    linkedin: buildAssetCandidates("./assets/icons/social/linkedin", iconExtensions),
-  },
 };
 
 const state = {
@@ -474,8 +466,6 @@ const siteCopy = {
     },
     heroPlaceholder: "Vidéo hero à intégrer",
     heroRole: "Monteur & motion designer — Montréal",
-    heroLede:
-      "Je collabore à des documentaires, fictions, vidéoclips et projets culturels en mettant le récit, le rythme et la clarté au centre.",
     portraitPlaceholder: "Portrait à intégrer",
     contactAbout: [
       "Monteur et motion designer résidant à Montréal.",
@@ -517,8 +507,6 @@ const siteCopy = {
     },
     heroPlaceholder: "Hero video placeholder",
     heroRole: "Editor & motion designer — Montreal",
-    heroLede:
-      "I collaborate on documentaries, fiction, music videos, and cultural projects, with a strong focus on story, rhythm, and clarity.",
     portraitPlaceholder: "Portrait placeholder",
     contactAbout: [
       "Editor and motion designer based in Montreal.",
@@ -800,10 +788,6 @@ function applyLocale({ rerenderGrid = true, updateHistory = true } = {}) {
 
   if (heroRole) {
     heroRole.textContent = copy.heroRole;
-  }
-
-  if (heroLede) {
-    heroLede.textContent = copy.heroLede;
   }
 
   if (portraitPlaceholderLabel) {
@@ -1100,20 +1084,6 @@ function hydrateStaticAssets() {
   });
 
   loadImageAsset(portraitImage, siteAssets.portrait, { container: portraitPlaceholder });
-
-  socialLinkNodes.forEach((link) => {
-    const icon = link.querySelector(".social-links__icon");
-    const candidates = siteAssets.socialIcons[link.dataset.socialLink] ?? [];
-
-    loadImageAsset(icon, candidates, {
-      onSuccess: () => {
-        link.classList.add("has-icon");
-      },
-      onError: () => {
-        link.classList.remove("has-icon");
-      },
-    });
-  });
 }
 
 function getProjectsForView(view) {
