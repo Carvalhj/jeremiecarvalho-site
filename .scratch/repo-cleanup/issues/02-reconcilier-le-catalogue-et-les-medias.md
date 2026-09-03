@@ -4,9 +4,9 @@
 
 **Blocked by:** None — can start immediately
 
-**Status:** ready-for-agent
+**Status:** completed
 
-- [ ] Comparer les 21 projets declares avec les 21 dossiers medias existants.
-- [ ] Resoudre explicitement l'incoherence entre les noms `zouz` et `zooz`.
-- [ ] Preserver les projets, medias, filtres et comportements existants pendant la correction.
-- [ ] Verifier la syntaxe du script de production apres la correction.
+- [x] Comparer les 21 projets declares avec les 21 dossiers medias existants.
+- [x] Resoudre explicitement l'incoherence entre les noms `zouz` et `zooz`.
+- [x] Preserver les projets, medias, filtres et comportements existants pendant la correction.
+- [x] Verifier la syntaxe du script de production apres la correction.

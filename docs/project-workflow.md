@@ -4,7 +4,7 @@ Ce document resume la marche a suivre pour ajouter un nouveau projet au portfoli
 
 ## Etape 1: ajouter le contenu
 
-Ouvrir [main.js](c:/Users/carva/OneDrive/Documents/GitHub/Portfolio/main.js) et ajouter un nouvel objet dans le tableau `projects`.
+Ouvrir [`main.js`](../main.js) et ajouter un nouvel objet dans le tableau `projects`.
 
 Champs obligatoires:
 
@@ -63,15 +63,14 @@ Creer un dossier avec exactement le meme nom que le `slug`:
 assets/media/projects/mon-nouveau-projet/
 ```
 
-Tu peux ensuite y deposer:
+Tu peux ensuite y déposer:
 
 - `card-main.*`
-- `card-hover.*`
 - `cover-video.*` ou `cover-image.*`
 - `gallery-01.*`
 - `gallery-02.*`
 
-Les extensions reconnues sont documentees dans [assets/README.md](c:/Users/carva/OneDrive/Documents/GitHub/Portfolio/assets/README.md).
+Les noms et extensions reconnus sont documentés dans [`assets/README.md`](../assets/README.md). `card-hover` n'est pas pris en charge par le code actuel.
 
 ## Etape 4: verifier
 

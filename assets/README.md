@@ -1,48 +1,50 @@
 # Assets
 
-Le site est maintenant prepare pour charger automatiquement les medias suivants, sans modifier le code.
+Cette arborescence contient les médias locaux du site. Les noms et formats des médias chargés automatiquement ci-dessous correspondent à la logique de [`main.js`](../main.js); le CV est décrit séparément comme une intégration future.
 
 ## Arborescence
 
 ```text
 assets/
   docs/
-    jeremie-carvalho-cv.pdf
-  icons/
-    social/
-      mail.svg
-      instagram.svg
-      linkedin.svg
+    jeremie-carvalho-cv.pdf  (optionnel, intégration future)
   media/
     hero/
-      hero-video.mp4
-      hero-poster.jpg
+      hero-video.*
+      hero-poster.*
     portrait/
-      contact-portrait.jpg
+      contact-portrait.*
     projects/
       <slug>/
-        card-main.jpg
-        card-hover.png
-        cover-video.mp4
-        cover-image.jpg
-        gallery-01.jpg
-        gallery-02.jpg
+        card-main.*
+        cover-video.*
+        cover-image.*
+        gallery-01.*
+        gallery-02.*
 ```
 
 ## Raccourci
 
-- `hero-video.*` alimente la bande video en haut de la page d'accueil.
-- `hero-poster.*` sert d'image de secours si la video n'est pas encore presente.
-- `contact-portrait.*` remplace automatiquement le placeholder de la page Contact.
+- `hero-video.*` alimente la vidéo hero. Le code cherche les extensions vidéo reconnues.
+- `hero-poster.*` sert d'image de secours si la vidéo hero n'est pas présente.
+- `contact-portrait.*` remplace le placeholder de la page Contact.
 - `card-main.*` est l'image visible au repos dans la grille.
-- `card-hover.*` est l'image informative affichee au hover sur desktop et au tap sur mobile.
-- `cover-video.*` ou `cover-image.*` alimente le media principal du panneau projet.
-- `gallery-01.*` et `gallery-02.*` alimentent les medias complementaires du panneau projet.
+- `cover-video.*` ou `cover-image.*` alimente le média principal du panneau projet.
+- `gallery-01.*` et `gallery-02.*` alimentent les médias complémentaires du panneau projet.
+
+`card-hover` n'est pas découvert par le code actuel et ne doit pas être ajouté comme média pris en charge.
 
 ## Slugs de projets
 
+- `demoreel`
+- `langlois-dragonfly`
+- `onf-bww`
+- `onf-paradaiz`
+- `pc-cdn`
+- `onf-tgwcp`
 - `stephanie-boulay`
-- `demoreel-2023`
+- `donner-le-gout`
+- `onf-ledl`
 - `elisapie`
 - `frank-bourassa`
 - `beautes-rebelles`
@@ -51,25 +53,26 @@ assets/
 - `zug-island`
 - `evinces`
 - `tout-doux`
-- `donner-le-gout`
 - `ascension-pour-cafe-chaud`
+- `zouz`
 - `chroniques-vie-ordinaire`
 - `naomi-zero-stress`
 
 ## Formats recommandes
 
 - Images: `avif`, `webp`, `png`, `jpg`, `jpeg`
-- Videos: `mp4`, `webm`
-- Icones: `svg`, `png`, `webp`
+- Vidéos: `mp4`, `webm`
 
-Le code essaie plusieurs extensions pour chaque nom, puis garde le placeholder si aucun fichier n'est trouve.
+Le code essaie ces extensions pour chaque nom, puis garde le placeholder si aucun fichier n'est trouvé. Les icônes sociales visibles dans la page sont intégrées directement dans `index.html`; les fichiers SVG éventuels de `assets/icons/social/` ne sont pas chargés automatiquement.
+
+Le fichier `assets/docs/jeremie-carvalho-cv.pdf` est réservé à une intégration future. Le lien CV de la page est actuellement désactivé.
 
 ## Ajouter un nouveau projet
 
 Pour qu'un nouveau projet apparaisse dans le site, il faut faire 2 choses:
 
-1. Ajouter son contenu dans `main.js`
-2. Creer son dossier media dans `assets/media/projects/`
+1. Ajouter son contenu dans `main.js`.
+2. Créer son dossier média dans `assets/media/projects/`.
 
 ### 1. Ajouter l'objet projet dans `main.js`
 
@@ -121,23 +124,23 @@ Creer:
 assets/media/projects/mon-nouveau-projet/
 ```
 
-Puis y deposer les fichiers utiles:
+Puis y déposer les fichiers utiles:
 
 - `card-main.*`
-- `card-hover.*`
 - `cover-video.*` ou `cover-image.*`
 - `gallery-01.*`
 - `gallery-02.*`
 
 ### 4. Regles a garder
 
-- Le `slug` doit rester stable: il sert a l'URL et au nom du dossier media.
+- Le `slug` doit rester stable: il sert à l'identifiant du projet et au nom du dossier média.
 - Les couleurs `palette` servent seulement aux placeholders et aux fonds de secours.
-- Si un media manque, le site garde automatiquement son placeholder.
-- Si tu renommes un `slug`, pense a renommer aussi son dossier dans `assets/media/projects/`.
+- Si un média manque, le site garde automatiquement son placeholder.
+- Si tu renommes un `slug`, renomme aussi son dossier dans `assets/media/projects/`.
 
 ### 5. Ou regarder
 
-- Structure des medias: `assets/README.md`
+- Structure et contrat des médias: `assets/README.md`
 - Contenu des projets: `main.js`
-- Comportement de la grille et de l'overlay: `main.js`
+- Comportement de la grille et du panneau: `main.js`
+- Aperçu et procédure générale: `../README.md`

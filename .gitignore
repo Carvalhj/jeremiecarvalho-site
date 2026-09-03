@@ -1,0 +1,15 @@
+# Fichiers créés par le système d'exploitation
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Fichiers locaux des éditeurs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Fichiers temporaires
+*.tmp
+*.temp
+*.bak

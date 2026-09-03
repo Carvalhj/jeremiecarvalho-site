@@ -4,11 +4,11 @@
 
 **Blocked by:** 02 — Reconcilier le catalogue et les medias
 
-**Status:** ready-for-agent
+**Status:** completed
 
-- [ ] Mettre a jour la liste des projets pour correspondre au catalogue valide.
-- [ ] Remplacer les liens vers des chemins absolus par des liens relatifs au depot.
-- [ ] Documenter uniquement les noms et formats effectivement reconnus par le site.
-- [ ] Retirer `card-hover` des instructions ou le marquer clairement comme fonctionnalite future non disponible.
-- [ ] Clarifier les README secondaires afin d'eviter la duplication ou les instructions contradictoires.
-- [ ] Conserver les indications utiles pour le CV, le hero, le portrait et les medias optionnels.
+- [x] Mettre a jour la liste des projets pour correspondre au catalogue valide.
+- [x] Remplacer les liens vers des chemins absolus par des liens relatifs au depot.
+- [x] Documenter uniquement les noms et formats effectivement reconnus par le site.
+- [x] Retirer `card-hover` des instructions ou le marquer clairement comme fonctionnalite future non disponible.
+- [x] Clarifier les README secondaires afin d'eviter la duplication ou les instructions contradictoires.
+- [x] Conserver les indications utiles pour le CV, le hero, le portrait et les medias optionnels.

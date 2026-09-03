@@ -4,9 +4,9 @@
 
 **Blocked by:** None — can start immediately
 
-**Status:** ready-for-agent
+**Status:** completed
 
-- [ ] Ajouter une documentation d'accueil concise pour le but du portfolio, son architecture et son point d'entree.
-- [ ] Documenter l'aperçu local, la structure des medias, l'ajout d'un projet et le role du tracker scratch.
-- [ ] Ajouter des regles d'ignore minimales pour les fichiers OS, editeur et temporaires pertinents.
-- [ ] Ne pas introduire de framework, gestionnaire de paquets, build ou dependance.
+- [x] Ajouter une documentation d'accueil concise pour le but du portfolio, son architecture et son point d'entree.
+- [x] Documenter l'aperçu local, la structure des medias, l'ajout d'un projet et le role du tracker scratch.
+- [x] Ajouter des regles d'ignore minimales pour les fichiers OS, editeur et temporaires pertinents.
+- [x] Ne pas introduire de framework, gestionnaire de paquets, build ou dependance.

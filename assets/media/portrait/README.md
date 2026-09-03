@@ -1,3 +1,7 @@
-Deposer ici le portrait de la page Contact:
+# Portrait de la page Contact
 
-- `contact-portrait.jpg`
+Déposer ici, si disponible:
+
+- `contact-portrait.avif`, `.webp`, `.png`, `.jpg` ou `.jpeg`
+
+Un portrait absent laisse le placeholder prévu par la page. Voir le contrat complet dans [`assets/README.md`](../../README.md).

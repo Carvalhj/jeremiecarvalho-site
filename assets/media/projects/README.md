@@ -1,7 +1,5 @@
-Chaque sous-dossier correspond a un projet et charge automatiquement:
+Chaque sous-dossier doit porter exactement le `slug` du projet déclaré dans [`main.js`](../../../main.js).
 
-- `card-main.*`
-- `card-hover.*`
-- `cover-video.*` ou `cover-image.*`
-- `gallery-01.*`
-- `gallery-02.*`
+Le code découvre `card-main.*`, `cover-video.*`, `cover-image.*`, `gallery-01.*` et `gallery-02.*`. Les extensions reconnues et la liste des slugs sont maintenues dans [`assets/README.md`](../../README.md).
+
+Les médias `card-hover` ne sont pas pris en charge.
