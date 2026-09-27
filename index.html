@@ -106,6 +106,10 @@
               <div class="hero__overlay"></div>
             </div>
 
+            <div class="scroll-hint" aria-hidden="true">
+              <div class="scroll-hint__chevron"></div>
+            </div>
+
             <div class="hero__content">
               <p class="hero__role">Monteur &amp; motion designer — Montr&eacute;al</p>
             </div>
@@ -289,5 +293,27 @@
     </template>
 
     <script src="./main.js" defer></script>
+    <script>
+      (() => {
+        const hint = document.querySelector(".scroll-hint");
+        if (!hint) return;
+        let ticking = false;
+        setTimeout(() => hint.classList.add("is-visible"), 5000);
+        window.addEventListener("scroll", () => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              if (window.scrollY > 10) {
+                hint.classList.add("is-hidden");
+                hint.classList.remove("is-visible");
+              } else {
+                hint.classList.remove("is-hidden");
+              }
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
