@@ -216,7 +216,7 @@ const projects = [
     type: "Bande-annonce",
     role: "Montage",
     client: { label: "Production", value: "ONF" },
-    vimeo: "https://player.vimeo.com/video/1223395042?fl=tl&fe=ec&share=copy",
+    vimeo: "https://player.vimeo.com/video/1231003987",
     text: [
       "« Virginia Tangvald navigue sur les eaux troubles de son histoire familiale pour résoudre le mystère entourant la disparition de son frère et le naufrage de son père, le célèbre marin Peter Tangvald.» - site internet de l'ONF",
     ],
@@ -346,9 +346,9 @@ const projects = [
     title: "Hanging on a String",
     subtitle: "Vidéoclip, 2024",
     type: "Vidéoclip",
-    role: "Animation 2D",
+    role: "Animation",
     client: {},
-    vimeo: "https://player.vimeo.com/video/1082654066?h=87d6c26f18",
+    vimeo: "https://player.vimeo.com/video/1086047361",
     text: [
       "Premier single de l'album du même nom, « Hanging on a String » est un vidéoclip réalisé par Annick Jean.",
     ],
@@ -473,7 +473,7 @@ const projects = [
     type: "Vidéoclip",
     role: "Montage",
     client: { label: "Label", value: "Lazy At Work" },
-    vimeo: "https://player.vimeo.com/video/890120953?h=eab5981268",
+    vimeo: "https://player.vimeo.com/video/1230974666",
     text: [],
     credits: [
       { label: "Réalisation", value: "Philippe Léonard" },
