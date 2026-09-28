@@ -373,7 +373,6 @@ button {
 .hero__video-placeholder.is-filled,
 .portrait-placeholder.is-filled,
 .project-panel__media-inner.is-filled,
-.project-panel__gallery-item.is-filled,
 .project-card__surface.is-filled {
   background: #050505;
 }
@@ -381,7 +380,6 @@ button {
 .hero__video-placeholder span,
 .portrait-placeholder span,
 .project-panel__media-inner span,
-.project-panel__gallery-item span,
 .project-card__placeholder-label {
   padding: 0.55rem 0.8rem;
   color: rgba(255, 255, 255, 0.72);
@@ -395,7 +393,6 @@ button {
 .hero__video-placeholder.is-filled > span,
 .portrait-placeholder.is-filled > span,
 .project-panel__media-inner.is-filled > span,
-.project-panel__gallery-item.is-filled > span,
 .project-card__surface.is-filled .project-card__placeholder-label {
   opacity: 0;
   pointer-events: none;
@@ -843,7 +840,7 @@ button {
 
 .project-panel__meta {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
   gap: 1rem;
   margin: 1.4rem 0 0;
 }

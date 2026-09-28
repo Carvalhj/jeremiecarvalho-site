@@ -85,7 +85,7 @@ Chaque projet suit cette structure:
   subtitle: "Vidéoclip, 2026",
   type: "Vidéoclip",
   role: "Montage",
-  client: "Nom du client",
+  client: { label: "Client", value: "Nom du client" },
   text: [
     "Premier paragraphe court.",
     "Deuxième paragraphe court.",
@@ -135,7 +135,8 @@ Puis y déposer les fichiers utiles:
 
 - Le `slug` doit rester stable: il sert à l'identifiant du projet et au nom du dossier média.
 - Les couleurs `palette` servent seulement aux placeholders et aux fonds de secours.
-- Si un média manque, le site garde automatiquement son placeholder.
+- Si le média principal ou l'image de carte manque, le site garde automatiquement son placeholder.
+- Si un média complémentaire manque, la galerie n'affiche aucun emplacement pour celui-ci.
 - Si tu renommes un `slug`, renomme aussi son dossier dans `assets/media/projects/`.
 
 ### 5. Ou regarder

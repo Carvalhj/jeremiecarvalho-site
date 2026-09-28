@@ -13,11 +13,14 @@ Champs obligatoires:
 - `subtitle`
 - `type`
 - `role`
-- `client`
 - `text`
 - `credits`
 - `views`
 - `palette`
+
+Champ optionnel:
+
+- `client`: objet `{ label, value }` affiché dans les métadonnées de la fiche. Le label peut être adapté au contexte ou le champ peut être omis.
 
 Exemple:
 
@@ -28,7 +31,7 @@ Exemple:
   subtitle: "Documentaire, 2026",
   type: "Documentaire",
   role: "Montage et motion design",
-  client: "Nom du client",
+  client: { label: "Production", value: "Nom de la production" },
   text: [
     "Projet realise pour ...",
     "J'y ai assure ...",
@@ -74,7 +77,8 @@ Les noms et extensions reconnus sont documentés dans [`assets/README.md`](../as
 
 ## Etape 4: verifier
 
-- Si les medias sont absents, le placeholder reste visible.
+- Si le média principal ou l'image de carte est absent, le placeholder reste visible.
+- Les médias complémentaires absents ne créent aucun emplacement dans la galerie.
 - Si le `slug` du projet et le nom du dossier ne correspondent pas, rien ne se chargera.
 - Si tu veux changer l'ordre de la grille, deplace simplement l'objet dans le tableau `projects`.
 

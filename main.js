@@ -9,13 +9,33 @@ const projects = [
     subtitle: "Sélection de projets",
     type: "Demoreel",
     role: "Montage et motion design",
-    client: "Jérémie Carvalho",
+    client: {},
     vimeo: "https://player.vimeo.com/video/832654295?dnt=1",
     text: [
-      "Reel de présentation réunissant une sélection de projets en montage, motion design et postproduction.",
-      "Cette fiche sert de point d'entrée vers l'ensemble du travail présenté sur le site. Elle pourra être enrichie avec la vidéo finale, une sélection plus précise des extraits et des crédits détaillés si tu veux donner davantage de contexte à la pièce.",
+      "Devil’s Sweet Tooth | Live in concrete | Kee Avil — montage",
+      "Beyrouth plusieurs fois — réalisation, montage, colorisation",
+      "Zug Island — montage",
+      "Exobouchées 2 : Terre 2.0 — animation",
+      "Exobouchées 5 : Les téléscopes du futur — animation",
+      "Seuls | zouz — montage et colorisation",
+      "See, my shadow | Live in concrete | Kee Avil — montage",
+      "Évincés : Les aînés contre-attaquent — montage, motion design",
+      "Perspective contractée : Le Tombeau de Gilles Groulx — montage",
+      "Zéro Stress | Naomi — montage",
+      "Chroniques de la vie ordinaire : Canal St-Martin — montage",
+      "Chroniques de la vie ordinaire : Buttes-Chaumont — montage",
+      "Chroniques de la vie ordinaire : Strasbourg – St-Denis — montage",
+      "Division Couleur : DémoReel 2022 — motion design, vfx",
+      "Cité mémoire | MEH | L’église de la Malbaie — graphisme, motion design, montage",
+      "Come a Bit Closer (teaser) — montage",
+      "Prix du Gouverneur général pour les arts et spectacles 2018 (trailer) — montage",
+      "Come a Bit Closer : Tangente 2021 — réalisation, caméra, montage",
+      "Bienvenue au Biodôme de Montréal — montage et colorisation",
+      "HHHH | Live in concrete | Kee Avil — montage"
     ],
-    credits: [{ label: "Conception et montage", value: "Jérémie Carvalho" }],
+    credits: [
+      { label: "Montage et motion design", value: "Jérémie Carvalho" },
+    ],
     views: ["projects", "montage", "motion"],
     palette: {
       base: "#1d1e24",
@@ -30,11 +50,9 @@ const projects = [
     subtitle: "Vidéoclip, 2026",
     type: "Vidéoclip",
     role: "Colorisation et effets visuels",
-    client: "Philippe Léonard / Robert Langlois",
+    client: {},
     vimeo: "https://player.vimeo.com/video/1223384431",
-    text: [
-      "Projet réalisé pour Robert Langlois en collaboration avec Philippe Léonard."
-    ],
+    text: [],
     credits: [
       { label: "Réalisation", value: "Philippe Léonard" },
       { label: "Colorisation et effets visuels", value: "Jérémie Carvalho" },
@@ -53,10 +71,10 @@ const projects = [
     subtitle: "Bande-annonce, 2026",
     type: "Bande-annonce",
     role: "Montage",
-    client: "ONF",
+    client: { label: "Production", value: "ONF" },
     vimeo: "https://player.vimeo.com/video/1223445570",
     text: [
-      "La fiche reprend les informations actuellement disponibles sur le site existant et servira de base pour intégrer les médias définitifs.",
+      "« Une sœur dévouée prend la fuite avec son frère métamorphosé en étrange créature de pain. Une foule affamée les pourchasse. Les rues s’emmêlent, la raison s’émiette. L’amour peut-il l’emporter sur la faim ? » - site internet de l'ONF",
     ],
     credits: [
       { label: "Réalisation", value: "Alex Boya" },
@@ -77,14 +95,13 @@ const projects = [
     subtitle: "Bande-annonce, 2026",
     type: "Bande-annonce",
     role: "Montage",
-    client: "ONF",
+    client: { label: "Production", value: "ONF" },
     vimeo: "https://player.vimeo.com/video/1223444825",
     text: [
-      "La fiche reprend les informations actuellement disponibles sur le site existant et servira de base pour intégrer les médias définitifs.",
+      "« Bienvenue à Paradaïz : le lieu des limaces sans toit, des murs criblés de balles, des cigarettes qui s’enchaînent et des tomates explosives.» - site internet de l'ONF",
     ],
     credits: [
       { label: "Réalisation", value: "Matea Radic" },
-      { label: "Coordination bande-annonce", value: "Marion Duhaime-Morissette" },
       { label: "Montage bande-annonce", value: "Jérémie Carvalho" },
     ],
     views: ["projects", "montage"],
@@ -101,10 +118,10 @@ const projects = [
     subtitle: "Série documentaire, 2026",
     type: "Série documentaire",
     role: "Motion design et conception graphique",
-    client: "Casadel Films / Historia",
+    client: { label: "Production", value: "Casadel Films / Historia" },
     vimeo: "https://player.vimeo.com/video/1223399273",
     text: [
-      ""
+      "« Montréal est considérée comme une petite ville à l’échelle planétaire et, pourtant, elle jouit d’une grande réputation dans l’univers du crime organisé mondial. Comment son histoire criminelle reflète-t-elle son ADN? À la croisée des chemins entre l’Europe et l’Amérique, le crime montréalais a été façonné par de nombreuses vagues d’immigration, une situation géographique unique et des mouvements sociaux importants.» - site internet d'Historia"
     ],
     credits: [
       { label: "Réalisation", value: "Alexis Chartrand" },
@@ -126,14 +143,13 @@ const projects = [
     subtitle: "Bande-annonce, 2025",
     type: "Bande-annonce",
     role: "Montage",
-    client: "ONF",
+    client: { label: "Production", value: "ONF" },
     vimeo: "https://player.vimeo.com/video/1119834616",
     text: [
-      "La fiche reprend les informations actuellement disponibles sur le site existant et servira de base pour intégrer les médias définitifs.",
+      "« Épris d’une jeune fille dont les pleurs se transforment en perles, un garçon miséreux est confronté à un cruel dilemme entre l’amour et la fortune.» - site internet de l'ONF",
     ],
     credits: [
       { label: "Réalisation", value: "Chris Lavis, Maciek Szczerbowski" },
-      { label: "Coordination bande-annonce", value: "Judith Lessard-Bérubé" },
       { label: "Montage bande-annonce", value: "Jérémie Carvalho" },
     ],
     views: ["projects", "montage"],
@@ -150,10 +166,9 @@ const projects = [
     subtitle: "Vidéoclip, 2025",
     type: "Vidéoclip",
     role: "Montage",
-    client: "Stéphanie Boulay",
+    client: { label: "Label", value: "Simone records" },
     text: [
-      "Projet réalisé pour Stéphanie Boulay. J'y ai assuré le montage, avec une attention portée au rythme, à la respiration et à la progression du récit.",
-      "La fiche reprend les informations actuellement disponibles sur le site existant et servira de base pour intégrer les médias définitifs.",
+      "La chanson est parue sur l'album solo de Stéphanie Boulay, intitulé « Est-ce que quelqu’un me voit? ». Et oui, j'ai pleuré quelques fois moi aussi durant le montage de ce beau vidéoclip.",
     ],
     credits: [
       { label: "Réalisation", value: "Clara L'heureux-Garcia" },
@@ -173,7 +188,7 @@ const projects = [
     subtitle: "Série culinaire, 2025",
     type: "Série culinaire",
     role: "Motion design",
-    client: "Télé-Québec / Xavier Havitov",
+    client: { label: "Diffuseur", value: "Télé-Québec" },
     vimeo: "https://player.vimeo.com/video/1082653408?h=d5877f012e",
     text: [
       "Dans ce rafraîchissant magazine culturel de Télé-Québec, Hélène Bourgeois-Leclerc nous fait découvrir la diversité culturelle au Québec en visitant les cuisines de restaurants à travers la province.",
@@ -185,7 +200,6 @@ const projects = [
       { label: "Production", value: "Juliette Provost-Dubois, Hélène Villemure, Patrick Franke-Sirois" },
       { label: "Design graphique", value: "Maubau" },
       { label: "Motion design", value: "Jérémie Carvalho" },
-      { label: "Montage online", value: "Julien Noyon" },
     ],
     views: ["projects", "motion"],
     palette: {
@@ -201,14 +215,13 @@ const projects = [
     subtitle: "Bande-annonce, 2025",
     type: "Bande-annonce",
     role: "Montage",
-    client: "ONF",
+    client: { label: "Production", value: "ONF" },
     vimeo: "https://player.vimeo.com/video/1223395042?fl=tl&fe=ec&share=copy",
     text: [
-      "La fiche reprend les informations actuellement disponibles sur le site existant et servira de base pour intégrer les médias définitifs.",
+      "« Virginia Tangvald navigue sur les eaux troubles de son histoire familiale pour résoudre le mystère entourant la disparition de son frère et le naufrage de son père, le célèbre marin Peter Tangvald.» - site internet de l'ONF",
     ],
     credits: [
       { label: "Réalisation", value: "Virginia Tangvald" },
-      { label: "Coordination bande-annonce", value: "Judith Lessard-Bérubé" },
       { label: "Montage bande-annonce", value: "Jérémie Carvalho" },
     ],
     views: ["projects", "montage"],
@@ -225,7 +238,7 @@ const projects = [
     subtitle: "Vidéoclip, 2024",
     type: "Vidéoclip",
     role: "Montage, colorisation et effets visuels",
-    client: "Elisapie",
+    client: { label: "Label", value: "Bonsound" },
     vimeo: "https://player.vimeo.com/video/1053402314?h=ee18653680",
     text: [
       "Quviasukkuvit est une relecture en inuktitut de la chanson If It Makes You Happy, portée par une esthétique de « Hollywood hangover ».",
@@ -234,7 +247,6 @@ const projects = [
     ],
     credits: [
       { label: "Réalisation", value: "Philippe Léonard" },
-      { label: "Direction de la photographie", value: "Louis Turcotte" },
       { label: "Montage, colorisation et effets visuels", value: "Jérémie Carvalho" },
     ],
     views: ["projects", "montage"],
@@ -251,7 +263,7 @@ const projects = [
     subtitle: "Série documentaire, 2023",
     type: "Série documentaire",
     role: "Motion design et effets spéciaux",
-    client: "Crave / Casadel Films",
+    client: { label: "Diffuseur", value: "Crave" },
     vimeo: "https://player.vimeo.com/video/1082652788?h=223a1e7cb9",
     text: [
       "Frank Bourassa et ses faux millions raconte en trois épisodes l'histoire du faussaire de Trois-Rivières et de l'un des plus importants réseaux de faux billets au pays.",
@@ -280,7 +292,7 @@ const projects = [
     subtitle: "Série documentaire, 2024",
     type: "Série documentaire",
     role: "Conception graphique et motion design",
-    client: "TV5 / Casadel Films",
+    client: { label: "Diffuseur", value: "TV5" },
     vimeo: "https://player.vimeo.com/video/1082652587?h=4f1735eed5",
     text: [
       "Dans Beautés rebelles, Carla Beauvais parcourt le monde pour rencontrer des concours de beauté mettant de l'avant des personnes marginalisées et reconfigurant les normes qui définissent la beauté.",
@@ -308,7 +320,7 @@ const projects = [
     subtitle: "Série documentaire, 2024",
     type: "Série documentaire",
     role: "Conception graphique et motion design",
-    client: "Crave",
+    client: { label: "Diffuseur", value: "Crave" },
     vimeo: "https://player.vimeo.com/video/1082651792?h=ccc23b56c3",
     text: [
       "Cette série documentaire issue du journalisme d'enquête suit Marie-Christine Bergeron à la rencontre d'anciens membres de la Mission de l'Esprit-Saint.",
@@ -335,13 +347,16 @@ const projects = [
     subtitle: "Vidéoclip, 2024",
     type: "Vidéoclip",
     role: "Animation 2D",
-    client: "Steve Hill",
+    client: {},
     vimeo: "https://player.vimeo.com/video/1082654066?h=87d6c26f18",
     text: [
-      "Fiche préparée à partir des informations actuellement présentes dans le CV du site existant.",
-      "Le projet est référencé comme vidéoclip pour Steve Hill, avec un mandat en animation 2D. Les médias et le détail du processus pourront être ajoutés dans une deuxième passe.",
+      "Premier single de l'album du même nom, « Hanging on a String » est un vidéoclip réalisé par Annick Jean.",
     ],
-    credits: [{ label: "Animation 2D", value: "Jérémie Carvalho" }],
+    credits: [
+      { label: "Réalisation", value: "Annick Jean" },
+      { label: "Direction artistique", value: "Rodolphe St-Gelais" },
+      { label: "Animation", value: "Rodolphe St-Gelais, Jérémie Carvalho, Max Vannienschoot" },
+    ],
     views: ["projects", "motion"],
     palette: {
       base: "#251819",
@@ -356,16 +371,13 @@ const projects = [
     subtitle: "Court-métrage documentaire, 2022 · 22 min",
     type: "Court-métrage documentaire",
     role: "Montage",
-    client: "Les Films du 3 mars",
+    client: { label: "Distributeur", value: "Les Films du 3 mars" },
     vimeo: "https://player.vimeo.com/video/1082651964?h=49b988fb41",
     text: [
-      "Court-métrage documentaire réalisé par Nicolas Lachapelle et écrit avec Tiago Mc Nicoll Castro Lopes.",
-      "J'y ai assuré le montage, dans un travail centré sur la structure narrative, la circulation des séquences et l'équilibre entre observation et progression dramatique.",
+      "« En quête d’un son mystérieux, un preneur de son fait la rencontre des habitants d’un quartier à l’abandon. » - site internet des Films du 3 mars",
     ],
     credits: [
       { label: "Réalisation", value: "Nicolas Lachapelle" },
-      { label: "Scénario", value: "Nicolas Lachapelle, Tiago Mc Nicoll Castro Lopes" },
-      { label: "Direction de la photographie", value: "Nicolas Lachapelle" },
       { label: "Production", value: "Guillaume Collin, Nicolas Lachapelle" },
       { label: "Colorisation", value: "Laurence Messier-Moreau" },
       { label: "Montage", value: "Jérémie Carvalho" },
@@ -384,7 +396,7 @@ const projects = [
     subtitle: "Série documentaire, 2023",
     type: "Série documentaire",
     role: "Montage et motion design additionnel",
-    client: "Noovo / Casadel Films",
+    client: { label: "Diffuseur", value: "Crave/Noovo" },
     vimeo: "https://player.vimeo.com/video/1082653574?h=61a83c7eda",
     text: [
       "Évincés retrace la lutte des aînés de la résidence Mont-Carmel après la distribution d'avis d'éviction, dans une démarche à la fois politique, intime et profondément collective.",
@@ -413,15 +425,13 @@ const projects = [
     subtitle: "Campagne publicitaire, 2023",
     type: "Campagne publicitaire",
     role: "Motion design",
-    client: "Claude Bégin / Parade",
+    client: { label: "Production", value: "Parade" },
     vimeo: "https://player.vimeo.com/video/890120953?h=eab5981268",
     text: [
       "Projet publicitaire réalisé pour Claude Bégin avec Parade. J'y ai assuré le motion design en continuité avec le montage et la colorisation du projet.",
-      "La fiche reprend pour l'instant les crédits présents sur le site existant et pourra être enrichie avec des captures et détails de processus lors d'une prochaine passe.",
     ],
     credits: [
       { label: "Réalisation / montage", value: "Phil Chagnon" },
-      { label: "Production", value: "Parade" },
       { label: "Colorisation", value: "Olivier Séguin-Dang" },
       { label: "Motion design", value: "Jérémie Carvalho" },
     ],
@@ -439,12 +449,14 @@ const projects = [
     subtitle: "Motion design, 2023",
     type: "Motion design",
     role: "Habillage graphique",
-    client: "Projet culturel",
+    client: {},
     text: [
-      "Fiche préparée à partir des informations disponibles dans la sélection actuelle du site.",
-      "Le projet est conservé dans la structure pour préparer l'intégration des médias et des crédits détaillés lors d'une prochaine passe de contenu.",
+      "Illustrateur et ami, Philmath a concentré son univers créatif autour des choses qu’il aime, soit le café, le jazz et le vélo. Dans le soucis de développer cet art de vivre, l’été 2023 fût pour nous l’occasion de succéder les affogatos, les discussions et les parties d’échec, tout en élaborant de petits projets d’animations. Cette vidéo en fait parti.",
     ],
-    credits: [{ label: "Habillage graphique", value: "Jérémie Carvalho" }],
+    credits: [
+      { label: "Animation", value: "Jérémie Carvalho" },
+      { label: "Illustration et voix", value: "Philmath" },
+    ],
     views: ["projects", "motion"],
     palette: {
       base: "#261f1a",
@@ -459,10 +471,9 @@ const projects = [
     subtitle: "Vidéoclip, 2023",
     type: "Vidéoclip",
     role: "Montage",
-    client: "zouz",
+    client: { label: "Label", value: "Lazy At Work" },
     vimeo: "https://player.vimeo.com/video/890120953?h=eab5981268",
-    text: [
-    ],
+    text: [],
     credits: [
       { label: "Réalisation", value: "Philippe Léonard" },
       { label: "Montage et colorisation", value: "Jérémie Carvalho" },
@@ -481,7 +492,7 @@ const projects = [
     subtitle: "Série documentaire, 2022",
     type: "Série documentaire",
     role: "Montage",
-    client: "TV5 / Casadel Films",
+    client: { label: "Diffuseur", value: "TV5" },
     text: [
       "Après un premier cycle montréalais, Amélie Hardy poursuit Chroniques de la vie ordinaire à travers trois quartiers de Paris, dans une forme courte et intimiste.",
       "J'y ai assuré le montage, avec un travail orienté vers la lisibilité, la continuité entre les épisodes et la préservation de la sensibilité propre à chaque rencontre.",
@@ -506,11 +517,8 @@ const projects = [
     subtitle: "Vidéoclip, 2021",
     type: "Vidéoclip",
     role: "Montage",
-    client: "Naomi / Bravo Musique",
-    text: [
-      "Fiche préparée à partir des informations actuellement disponibles dans le CV du site existant.",
-      "Le projet est référencé comme vidéoclip produit avec Bravo Musique, avec un mandat de montage. Les médias et crédits détaillés seront intégrés dans une prochaine passe.",
-    ],
+    client: { label: "Label", value: "Bravo Musique" },
+    text: [],
     credits: [{ label: "Montage", value: "Jérémie Carvalho" }],
     views: ["projects", "montage"],
     palette: {
@@ -584,10 +592,7 @@ const overlayVideo = overlay?.querySelector(".project-panel__video");
 const overlayImage = overlay?.querySelector(".project-panel__image");
 const overlayTitle = overlay?.querySelector(".project-panel__title");
 const overlaySubtitle = overlay?.querySelector("[data-project-subtitle]");
-const overlayType = overlay?.querySelector("[data-project-type]");
-const overlayRole = overlay?.querySelector("[data-project-role]");
-const overlayClient = overlay?.querySelector("[data-project-client]");
-const overlayMetaLabels = [...document.querySelectorAll(".project-panel__meta dt")];
+const overlayMeta = overlay?.querySelector("[data-project-meta]");
 const overlayText = overlay?.querySelector("[data-project-text]");
 const overlayCredits = overlay?.querySelector("[data-project-credits]");
 const overlayCreditsHeading = overlay?.querySelector(".project-panel__credits h3");
@@ -598,6 +603,7 @@ const overlayMediaPlaceholderLabel = overlay?.querySelector(".project-panel__med
 const projectCardPlaceholderLabel = document.querySelector(".project-card__placeholder-label");
 
 let overlayTrigger = null;
+let galleryRenderId = 0;
 
 const projectMap = new Map(normalizedProjects.map((project) => [project.slug, project]));
 const imageExtensions = ["avif", "webp", "png", "jpg", "jpeg"];
@@ -651,7 +657,6 @@ const siteCopy = {
       meta: ["Type", "Rôle", "Client"],
       credits: "Crédits",
       galleryLabel: "Médias complémentaires",
-      galleryItem: "Média complémentaire",
       prev: "Précédent",
       next: "Suivant",
     },
@@ -692,7 +697,6 @@ const siteCopy = {
       meta: ["Type", "Role", "Client"],
       credits: "Credits",
       galleryLabel: "Supporting media",
-      galleryItem: "Supporting media",
       prev: "Previous",
       next: "Next",
     },
@@ -988,12 +992,6 @@ function applyLocale({ rerenderGrid = true, updateHistory = true } = {}) {
     overlayMediaPlaceholderLabel.textContent = copy.overlay.mediaPlaceholder;
   }
 
-  overlayMetaLabels.forEach((label, index) => {
-    if (copy.overlay.meta[index]) {
-      label.textContent = copy.overlay.meta[index];
-    }
-  });
-
   if (overlayCreditsHeading) {
     overlayCreditsHeading.textContent = copy.overlay.credits;
   }
@@ -1083,6 +1081,11 @@ function clearOverlayMedia() {
   resetVideoElement(overlayVideo);
   resetImageElement(overlayImage);
   setFilledState(overlayMedia, false);
+  galleryRenderId += 1;
+  if (overlayGallery) {
+    overlayGallery.innerHTML = "";
+    overlayGallery.hidden = true;
+  }
 }
 
 function setFilledState(container, isFilled) {
@@ -1205,18 +1208,16 @@ function loadMediaBox({
   loadImageFallback();
 }
 
-function createGalleryItem(label) {
+function createGalleryItem() {
   const item = document.createElement("div");
   const image = document.createElement("img");
-  const caption = document.createElement("span");
 
   item.className = "project-panel__gallery-item";
   image.className = "project-panel__gallery-image";
   image.alt = "";
   image.hidden = true;
-  caption.textContent = label;
 
-  item.append(image, caption);
+  item.append(image);
 
   return { item, image };
 }
@@ -1227,16 +1228,28 @@ function renderProjectGallery(project) {
   }
 
   const assetSet = getProjectAssetSet(project);
-  const copy = getSiteCopy();
+  const renderId = galleryRenderId + 1;
+
+  galleryRenderId = renderId;
   overlayGallery.innerHTML = "";
+  overlayGallery.hidden = true;
+  const loadedItems = [];
 
   assetSet.gallery.forEach((candidates, index) => {
-    const { item, image } = createGalleryItem(
-      `${copy.overlay.galleryItem} ${String(index + 1).padStart(2, "0")}`,
-    );
+    const { item, image } = createGalleryItem();
 
-    loadImageAsset(image, candidates, { container: item });
-    overlayGallery.appendChild(item);
+    loadImageAsset(image, candidates, {
+      container: item,
+      onSuccess: () => {
+        if (renderId !== galleryRenderId) {
+          return;
+        }
+
+        loadedItems[index] = item;
+        overlayGallery.replaceChildren(...loadedItems.filter(Boolean));
+        overlayGallery.hidden = false;
+      },
+    });
   });
 }
 
@@ -1369,15 +1382,45 @@ function setFilter(filter, { pushState = true, forceProjectsView = true } = {}) 
   closeMenu();
 }
 
+function renderProjectMeta(project) {
+  if (!overlayMeta) {
+    return;
+  }
+
+  const copy = getSiteCopy();
+  const entries = [
+    { label: copy.overlay.meta[0], value: project.type },
+    { label: copy.overlay.meta[1], value: project.role },
+    project.client,
+  ].filter(
+    (entry) =>
+      entry &&
+      typeof entry === "object" &&
+      String(entry.label ?? "").trim() &&
+      String(entry.value ?? "").trim(),
+  );
+
+  overlayMeta.innerHTML = "";
+  entries.forEach((entry) => {
+    const wrapper = document.createElement("div");
+    const label = document.createElement("dt");
+    const value = document.createElement("dd");
+
+    label.textContent = entry.label;
+    value.textContent = entry.value;
+    wrapper.append(label, value);
+    overlayMeta.appendChild(wrapper);
+  });
+}
+
 function fillOverlay(project) {
   const localizedProject = getLocalizedProject(project);
   const assetSet = getProjectAssetSet(project);
 
   overlayTitle.textContent = localizedProject.title;
   overlaySubtitle.textContent = localizedProject.subtitle ?? "";
-  overlayType.textContent = localizedProject.type;
-  overlayRole.textContent = localizedProject.role;
-  overlayClient.textContent = localizedProject.client;
+
+  renderProjectMeta(localizedProject);
 
   overlayText.innerHTML = "";
   localizedProject.text.forEach((paragraph) => {

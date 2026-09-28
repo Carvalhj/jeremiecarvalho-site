@@ -32,7 +32,7 @@ Après une mise à jour du contenu ou des médias:
 - [ ] Ouvrir un projet et vérifier son média principal, ses médias complémentaires, sa fermeture et sa navigation `Précédent`/`Suivant`.
 - [ ] Basculer la langue et confirmer que les libellés et le contenu visible changent.
 - [ ] Réduire la fenêtre à une largeur mobile et vérifier le menu, la grille, la vue Contact et le panneau projet.
-- [ ] Vérifier un projet auquel il manque un média optionnel: le placeholder doit rester visible.
+- [ ] Vérifier un projet auquel il manque un média complémentaire: aucun emplacement vide ne doit apparaitre.
 - [ ] Confirmer que les slugs des projets correspondent aux dossiers dans `assets/media/projects/`.
 - [ ] Confirmer que `ref/` est absent et qu'aucun fichier de production ne le référence.
 
@@ -57,7 +57,7 @@ assets/
         gallery-02.*
 ```
 
-Les extensions reconnues sont définies dans `main.js`: `avif`, `webp`, `png`, `jpg` et `jpeg` pour les images; `mp4` et `webm` pour les vidéos. Un média absent conserve le placeholder prévu par le site.
+Les extensions reconnues sont définies dans `main.js`: `avif`, `webp`, `png`, `jpg` et `jpeg` pour les images; `mp4` et `webm` pour les vidéos. Un média principal ou une image de carte absente conserve le placeholder prévu par le site. Les médias complémentaires absents sont retirés de la galerie.
 
 ## Ajouter un projet
 
