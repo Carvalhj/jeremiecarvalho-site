@@ -450,6 +450,7 @@ const projects = [
     type: "Motion design",
     role: "Habillage graphique",
     client: {},
+    vimeo: "https://player.vimeo.com/video/881523758",
     text: [
       "Illustrateur et ami, Philmath a concentré son univers créatif autour des choses qu’il aime, soit le café, le jazz et le vélo. Dans le soucis de développer cet art de vivre, l’été 2023 fût pour nous l’occasion de succéder les affogatos, les discussions et les parties d’échec, tout en élaborant de petits projets d’animations. Cette vidéo en fait parti.",
     ],
