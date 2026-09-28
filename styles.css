@@ -866,14 +866,17 @@ button {
 
 .project-panel__text {
   display: grid;
-  gap: 0.9rem;
-  max-width: 48rem;
-  margin: 1.4rem 0 0;
+  width: min(100%, 44rem);
+  max-width: 100%;
+  gap: 0;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+  margin: 1.4rem auto 0;
 }
 
 .project-panel__text p {
   margin: 0;
   color: var(--text-muted);
+  font-size: 0.92rem;
   line-height: 1.75;
 }
 
@@ -1099,6 +1102,11 @@ button {
 
   .project-panel__media {
     min-height: 34svh;
+  }
+
+  .project-panel__text {
+    width: 100%;
+    padding-inline: 0.25rem;
   }
 
   .hero__media::after {
