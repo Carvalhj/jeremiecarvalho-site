@@ -73,7 +73,7 @@ Les champs et l'ordre des projets sont détaillés dans [`docs/project-workflow.
 
 - [`assets/README.md`](assets/README.md): inventaire et organisation des assets;
 - [`docs/project-workflow.md`](docs/project-workflow.md): procédure d'ajout d'un projet;
-- [`.scratch/repo-cleanup/`](.scratch/repo-cleanup/): spécification et tickets de maintenance du dépôt. Ce tracker sert au travail de nettoyage; il ne fait pas partie du site déployé.
+- Les issues et spécifications de maintenance vivent dans GitHub Issues; elles ne font pas partie du site déployé.
 
 ## Contraintes du dépôt
 

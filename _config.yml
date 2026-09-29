@@ -1,0 +1,11 @@
+exclude:
+  - README.md
+  - AGENTS.md
+  - docs/
+  - assets/README.md
+  - assets/docs/README.md
+  - assets/icons/social/README.md
+  - assets/media/hero/README.md
+  - assets/media/portrait/README.md
+  - assets/media/projects/README.md
+  - .scratch/

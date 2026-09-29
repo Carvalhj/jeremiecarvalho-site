@@ -13,3 +13,7 @@ Desktop.ini
 *.tmp
 *.temp
 *.bak
+
+# Fichiers de travail et marqueurs de dossiers
+.scratch/
+*.gitkeep
