@@ -1032,6 +1032,11 @@ function loadVideoAsset(element, candidates, { container = null, onSuccess = nul
     return;
   }
 
+  element.autoplay = true;
+  element.defaultMuted = true;
+  element.muted = true;
+  element.playsInline = true;
+
   const tryCandidate = (index) => {
     if (index >= queue.length) {
       setFilledState(container, false);
@@ -1044,6 +1049,13 @@ function loadVideoAsset(element, candidates, { container = null, onSuccess = nul
       element.hidden = false;
       setFilledState(container, true);
       onSuccess?.(source);
+
+      try {
+        const playPromise = element.play();
+        playPromise?.catch(() => {});
+      } catch {
+        // The poster remains available if the browser requires a gesture.
+      }
     };
 
     element.onerror = () => {
