@@ -71,10 +71,10 @@ Le fichier `assets/docs/jeremie-carvalho-cv.pdf` est réservé à une intégrati
 
 Pour qu'un nouveau projet apparaisse dans le site, il faut faire 2 choses:
 
-1. Ajouter son contenu dans `main.js`.
+1. Ajouter son contenu dans `project-content.js`.
 2. Créer son dossier média dans `assets/media/projects/`.
 
-### 1. Ajouter l'objet projet dans `main.js`
+### 1. Ajouter l'objet projet dans `project-content.js`
 
 Chaque projet suit cette structure:
 
@@ -142,6 +142,6 @@ Puis y déposer les fichiers utiles:
 ### 5. Ou regarder
 
 - Structure et contrat des médias: `assets/README.md`
-- Contenu des projets: `main.js`
+- Contenu des projets: `project-content.js`
 - Comportement de la grille et du panneau: `main.js`
 - Aperçu et procédure générale: `../README.md`

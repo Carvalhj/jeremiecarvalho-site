@@ -4,7 +4,7 @@ Ce document resume la marche a suivre pour ajouter un nouveau projet au portfoli
 
 ## Etape 1: ajouter le contenu
 
-Ouvrir [`main.js`](../main.js) et ajouter un nouvel objet dans le tableau `projects`.
+Ouvrir [`project-content.js`](../project-content.js) et ajouter un nouvel objet dans `portfolioProjectCatalog`.
 
 Champs obligatoires:
 
@@ -13,7 +13,6 @@ Champs obligatoires:
 - `subtitle`
 - `type`
 - `role`
-- `text`
 - `credits`
 - `views`
 - `palette`
@@ -21,6 +20,7 @@ Champs obligatoires:
 Champ optionnel:
 
 - `client`: objet `{ label, value }` affiché dans les métadonnées de la fiche. Le label peut être adapté au contexte ou le champ peut être omis.
+- `text`: tableau de paragraphes descriptifs; il peut être omis ou rester vide jusqu'à ce que le contenu soit prêt.
 
 Exemple:
 
@@ -80,10 +80,11 @@ Les noms et extensions reconnus sont documentés dans [`assets/README.md`](../as
 - Si le média principal ou l'image de carte est absent, le placeholder reste visible.
 - Les médias complémentaires absents ne créent aucun emplacement dans la galerie.
 - Si le `slug` du projet et le nom du dossier ne correspondent pas, rien ne se chargera.
-- Si tu veux changer l'ordre de la grille, deplace simplement l'objet dans le tableau `projects`.
+- Si tu veux changer l'ordre de la grille et de la navigation, deplace simplement l'objet dans `portfolioProjectCatalog`.
 
 ## Notes utiles
 
-- Le panneau projet et la navigation precedent/suivant reutilisent l'ordre du tableau `projects`.
+- Le panneau projet et la navigation precedent/suivant reutilisent l'ordre de `portfolioProjectCatalog`.
 - Les filtres `Montage` et `Motion design` ne sont pas des pages differentes: ils reutilisent la meme grille avec une selection differente.
 - Le projet peut avoir seulement une image de couverture si tu n'as pas encore la video.
+- Après toute modification du catalogue, exécuter `node generate-site.js`, puis `node generate-site.js --check`.

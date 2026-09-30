@@ -1113,3 +1113,176 @@ button {
     height: 120px;
   }
 }
+
+.project-page {
+  width: min(calc(100% - var(--page-gutter)), var(--content-width));
+  margin: 0 auto;
+  padding: 2rem 0 5rem;
+}
+
+.project-page__nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.project-page__nav a {
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.project-page__nav a:hover,
+.project-page__nav a:focus-visible {
+  color: var(--text);
+}
+
+.project-page__header {
+  max-width: var(--copy-width);
+  padding: clamp(4rem, 11vw, 8rem) 0 clamp(2.5rem, 6vw, 5rem);
+}
+
+.project-page__eyebrow,
+.project-page__subtitle {
+  color: var(--text-soft);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.project-page__eyebrow {
+  margin: 0 0 1rem;
+}
+
+.project-page h1 {
+  max-width: 14ch;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(2.8rem, 8vw, 6.5rem);
+  font-weight: 600;
+  letter-spacing: -0.06em;
+  line-height: 0.98;
+}
+
+.project-page__subtitle {
+  margin: 1.5rem 0 0;
+}
+
+.project-page h2 {
+  margin: 0 0 1rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.project-page__media-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--bg-panel-edge);
+  border-radius: var(--radius-panel);
+  background: #050505;
+}
+
+.project-page__media-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.project-page__media-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  background: #050505;
+}
+
+.project-page__media-fallback img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0.15;
+}
+
+.project-page__media-fallback p {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  margin: 0;
+  padding: 0.5rem 0.7rem;
+  color: var(--text);
+  font-size: 0.78rem;
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.project-page__details,
+.project-page__credits {
+  width: min(100%, var(--copy-width));
+  margin-top: clamp(3rem, 8vw, 6rem);
+}
+
+.project-page__meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+}
+
+.project-page__meta div {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+}
+
+.project-page__meta dt {
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.project-page__meta dd {
+  margin: 0.35rem 0 0;
+  color: var(--text);
+}
+
+.project-page__text {
+  margin-top: 2rem;
+}
+
+.project-page__text p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+.project-page__text p + p {
+  margin-top: 1rem;
+}
+
+.project-page__meta--credits {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 620px) {
+  .project-page {
+    padding-top: 1.25rem;
+  }
+
+  .project-page__header {
+    padding-top: 3.5rem;
+  }
+
+  .project-page__meta {
+    grid-template-columns: 1fr;
+  }
+}

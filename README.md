@@ -8,8 +8,11 @@ Le dépôt n'utilise ni framework, ni dépendance, ni système de build.
 La page publiée est [`index.html`](index.html). Elle charge directement:
 
 - [`styles.css`](styles.css) pour la mise en page, les couleurs et la responsivité;
-- [`main.js`](main.js) pour les projets, les traductions, les filtres, le panneau projet et le menu mobile;
+- [`project-content.js`](project-content.js) pour le contenu partagé des pages projet et de l'overlay;
+- [`main.js`](main.js) pour les traductions, les filtres, le panneau projet et le menu mobile;
 - [`assets/`](assets/) pour les médias et les icônes locales.
+
+Les pages projet sont produites par [`generate-site.js`](generate-site.js), un outil d'auteur Node.js qui ne devient pas une dépendance du site publié.
 
 ## Aperçu local
 
@@ -28,6 +31,7 @@ Il est aussi possible d'ouvrir [`index.html`](index.html) directement, mais le s
 Après une mise à jour du contenu ou des médias:
 
 - [ ] Exécuter `node --check main.js`.
+- [ ] Exécuter `node generate-site.js --check` pour vérifier les pages statiques générées et leur fallback overlay.
 - [ ] Vérifier sur desktop la grille principale, les filtres `Montage` et `Motion design`, puis la vue `Contact`.
 - [ ] Ouvrir un projet et vérifier son média principal, ses médias complémentaires, sa fermeture et sa navigation `Précédent`/`Suivant`.
 - [ ] Basculer la langue et confirmer que les libellés et le contenu visible changent.
@@ -35,6 +39,8 @@ Après une mise à jour du contenu ou des médias:
 - [ ] Vérifier un projet auquel il manque un média complémentaire: aucun emplacement vide ne doit apparaitre.
 - [ ] Confirmer que les slugs des projets correspondent aux dossiers dans `assets/media/projects/`.
 - [ ] Confirmer que `ref/` est absent et qu'aucun fichier de production ne le référence.
+
+Après une modification de [`project-content.js`](project-content.js), régénérer les pages avec `node generate-site.js`, puis relancer `node generate-site.js --check`.
 
 ## Structure des médias
 
@@ -61,13 +67,13 @@ Les extensions reconnues sont définies dans `main.js`: `avif`, `webp`, `png`, `
 
 ## Ajouter un projet
 
-1. Ajouter un objet dans le tableau `projects` de [`main.js`](main.js), avec un `slug` unique et stable.
+1. Ajouter un objet dans le catalogue de [`project-content.js`](project-content.js), avec un `slug` unique et stable.
 2. Créer `assets/media/projects/<slug>/` avec exactement le même slug.
 3. Ajouter les médias nécessaires dans ce dossier. `card-main.*` alimente la carte; `cover-video.*` ou `cover-image.*` alimente le panneau projet; `gallery-01.*` et `gallery-02.*` sont optionnels.
 4. Ajouter le projet aux vues voulues avec `views`: `projects`, `montage` et/ou `motion`.
 5. Prévisualiser le site et vérifier la carte, le panneau projet et les médias manquants.
 
-Les champs et l'ordre des projets sont détaillés dans [`docs/project-workflow.md`](docs/project-workflow.md). La règle principale est de modifier ensemble le `slug` dans `main.js` et le dossier média correspondant.
+Les champs et l'ordre des projets sont détaillés dans [`docs/project-workflow.md`](docs/project-workflow.md). La règle principale est de modifier ensemble le `slug` dans `project-content.js` et le dossier média correspondant.
 
 ## Documentation connexe
 
@@ -77,4 +83,4 @@ Les champs et l'ordre des projets sont détaillés dans [`docs/project-workflow.
 
 ## Contraintes du dépôt
 
-Le site doit rester une page statique sans framework, gestionnaire de paquets, dépendance, CMS ou pipeline de build. Les médias de production sont conservés tels quels; leur optimisation est une tâche distincte.
+Le site doit rester une page statique sans framework, gestionnaire de paquets, dépendance runtime, CMS ou pipeline de build. Le générateur Node.js est limité à la publication des fichiers HTML. Les médias de production sont conservés tels quels; leur optimisation est une tâche distincte.

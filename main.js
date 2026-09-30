@@ -1,8 +1,7 @@
-// Nouveau projet:
-// 1. Ajouter ici un objet avec un slug unique.
-// 2. Créer le dossier `assets/media/projects/<slug>/`.
-// 3. Y déposer les médias selon `assets/README.md`.
-const projects = [
+// Le catalogue partagé se trouve dans `project-content.js`.
+const projects = Object.values(window.portfolioProjectCatalog);
+/*
+const legacyProjects = [
   {
     slug: "demoreel",
     title: "Demoreel",
@@ -182,33 +181,7 @@ const projects = [
       infoEnd: "#111111",
     },
   },
- {
-    slug: "donner-le-gout",
-    title: "Donner le goût",
-    subtitle: "Série culinaire, 2025",
-    type: "Série culinaire",
-    role: "Motion design",
-    client: { label: "Diffuseur", value: "Télé-Québec" },
-    vimeo: "https://player.vimeo.com/video/1082653408?h=d5877f012e",
-    text: [
-      "Dans ce rafraîchissant magazine culturel de Télé-Québec, Hélène Bourgeois-Leclerc nous fait découvrir la diversité culturelle au Québec en visitant les cuisines de restaurants à travers la province.",
-      "En partant de l'identité visuelle conçue par l'équipe de Maubau, j'ai développé le motion design pour répondre au rythme très catchy du montage, avec des mouvements brusques qui se terminent dans la douceur avec un petit oumf.",
-      "Le mandat visait quelque chose de simple, efficace et facilement déclinable par l'équipe du montage online. J'ai donc livré une poignée de templates faits maison, conçus dans After Effects avec des expressions pour que tout demeure éditable dans Adobe Premiere tout en conservant les mêmes mouvements d'un contexte à l'autre.",
-    ],
-    credits: [
-      { label: "Réalisation", value: "Xavier Havitov" },
-      { label: "Production", value: "Juliette Provost-Dubois, Hélène Villemure, Patrick Franke-Sirois" },
-      { label: "Design graphique", value: "Maubau" },
-      { label: "Motion design", value: "Jérémie Carvalho" },
-    ],
-    views: ["projects", "motion"],
-    palette: {
-      base: "#201d18",
-      accent: "#d6aa67",
-      infoStart: "#49311c",
-      infoEnd: "#100905",
-    },
-  },
+  window.portfolioProjectCatalog["donner-le-gout"],
   {
     slug: "onf-ledl",
     title: "Les enfants du large",
@@ -530,6 +503,7 @@ const projects = [
     },
   },
 ];
+*/
 
 function fixMojibake(value) {
   if (typeof value !== "string" || !/[ÃÂâ]/.test(value)) {
@@ -760,108 +734,10 @@ const creditLabelTranslations = {
   },
 };
 
-const projectLocaleOverrides = {
-  en: {
-    demoreel: {
-      title: "Demo Reel",
-      subtitle: "Selected work",
-      text: [
-        "A curated reel bringing together a selection of editing, motion design, and post-production work.",
-        "This project card acts as an entry point into the broader body of work featured on the site. It can later be expanded with the final reel, a more precise shot list, and fuller credits if needed.",
-      ],
-    },
-    "stephanie-boulay": {
-      text: [
-        "Music video created for Stéphanie Boulay. I handled the edit, with a strong focus on rhythm, breathing room, and the progression of the story.",
-        "This card currently reflects the information available on the existing site and can be expanded later with the final media assets.",
-      ],
-    },
-    elisapie: {
-      text: [
-        "Quviasukkuvit is an Inuktitut reinterpretation of If It Makes You Happy, built around a soft, slightly distorted Hollywood-hangover aesthetic.",
-        "For this project, I blurred the line between color work and visual effects to connect studio choreography with landscapes composited into the frame.",
-        "The edit was assembled in DaVinci Resolve, reworked in After Effects, and finalized through a dedicated color pass to shape the dreamy, intentionally imperfect finish.",
-      ],
-    },
-    "frank-bourassa": {
-      text: [
-        "Frank Bourassa et ses faux millions tells the story of a Trois-Rivières counterfeiter and one of the most significant fake-bill networks in the country.",
-        "To integrate evidence, stills, and digital materials, I built an After Effects pipeline that animated those elements in a 3D space aligned with the series’ dark visual language.",
-        "Part of the work also involved treating screen captures and surveillance footage as filmed objects, helping weaker source material feel cinematic and consistent with the opening sequence.",
-      ],
-    },
-    "beautes-rebelles": {
-      text: [
-        "In Beautés rebelles, Carla Beauvais travels the world to meet pageants that center marginalized people and challenge conventional ideas of beauty.",
-        "The design direction aimed to balance elegance and roughness through pastel tones, glints, grain, textures, and visual accidents that extended the spirit of the series.",
-        "It became a strong playground for building custom textures and luminosity treatments designed to energize transitions and shot flow.",
-      ],
-    },
-    "prison-esprit-saint": {
-      text: [
-        "This investigative documentary series follows Marie-Christine Bergeron as she meets former members of the Mission de l'Esprit-Saint.",
-        "The typographic approach was built around a tension between two systems of truth: an archaic, obscurantist visual language on one side and a more sober journalistic register on the other.",
-        "The design and motion work relies on layers, transparency, light, and depth, developed in After Effects and refined through a final color pass in DaVinci Resolve.",
-      ],
-    },
-    "hanging-on-a-string": {
-      text: [
-        "Project card prepared from the information currently available in the CV section of the original site.",
-        "The piece is listed as a music video for Steve Hill, with a 2D animation mandate. Media and process details can be added in a later pass.",
-      ],
-    },
-    "zug-island": {
-      text: [
-        "Documentary short directed by Nicolas Lachapelle and written with Tiago Mc Nicoll Castro Lopes.",
-        "I handled the edit, focusing on structure, sequence flow, and the balance between observation and dramatic progression.",
-      ],
-    },
-    evinces: {
-      text: [
-        "Évincés follows the fight led by the seniors of Résidence Mont-Carmel after receiving eviction notices, through a story that is political, intimate, and collective at once.",
-        "With more than twenty interviews and over eighty hours of material, the edit stretched over several months to build a clear investigative progression.",
-        "To support the investigation beyond simple screenshots, I integrated articles and documents in 3D inside After Effects, extending the documentary language through discreet but structuring graphic work.",
-      ],
-    },
-    "tout-doux": {
-      text: [
-        "Advertising project created for Claude Bégin with Parade. I handled the motion design in continuity with the editing and color treatment of the piece.",
-        "For now, the card reflects the credits available on the original site and can later be expanded with stills and process details.",
-      ],
-    },
-    "donner-le-gout": {
-      text: [
-        "In this vibrant Télé-Québec cultural food series, Hélène Bourgeois-Leclerc introduces the cultural diversity of Quebec through restaurant kitchens across the province.",
-        "Starting from the visual identity designed by Maubau, I developed the motion design to match the show’s catchy editorial rhythm, using sharp movements that resolve into something softer and warmer.",
-        "The mandate called for something simple, efficient, and easy for the online editing team to reuse. I therefore delivered a set of custom templates built in After Effects with expressions so that everything remained editable directly in Adobe Premiere while preserving the same motion logic in every context.",
-      ],
-    },
-    "ascension-pour-cafe-chaud": {
-      text: [
-        "Project card prepared from the information currently available in the site's live selection.",
-        "The piece remains in the structure to prepare the future integration of final media and detailed credits.",
-      ],
-    },
-    "chroniques-vie-ordinaire": {
-      text: [
-        "After a first cycle set in Montreal, Amélie Hardy continues Chroniques de la vie ordinaire across three Paris neighborhoods in a short and intimate format.",
-        "I handled the editing, with an emphasis on clarity, continuity across episodes, and the preservation of each encounter’s sensitivity.",
-      ],
-    },
-    "naomi-zero-stress": {
-      text: [
-        "Project card prepared from the information currently available in the CV section of the original site.",
-        "The piece is listed as a music video produced with Bravo Musique, with an editing mandate. Media and detailed credits can be added in a later pass.",
-      ],
-    },
-  },
-};
-
 const localizedSiteCopy = normalizeContent(siteCopy);
 const localizedTypeTranslations = normalizeContent(typeTranslations);
 const localizedRoleTranslations = normalizeContent(roleTranslations);
 const localizedCreditLabelTranslations = normalizeContent(creditLabelTranslations);
-const localizedProjectLocaleOverrides = normalizeContent(projectLocaleOverrides);
 
 function buildAssetCandidates(basePath, extensions) {
   return extensions.map((extension) => `${basePath}.${extension}`);
@@ -904,18 +780,18 @@ function localizeCredits(credits, locale = state.currentLocale) {
 }
 
 function getLocalizedProject(project, locale = state.currentLocale) {
-  const overrides = localizedProjectLocaleOverrides[locale]?.[project.slug] ?? {};
+  const localizedContent = project.locales?.[locale] ?? {};
 
   return {
     ...project,
-    ...overrides,
-    title: overrides.title ?? project.title,
-    subtitle: overrides.subtitle ?? localizeSubtitle(project.subtitle, locale),
-    type: overrides.type ?? translateMappedValue(project.type, localizedTypeTranslations, locale),
-    role: overrides.role ?? translateMappedValue(project.role, localizedRoleTranslations, locale),
-    client: overrides.client ?? project.client,
-    text: overrides.text ?? project.text,
-    credits: overrides.credits ?? localizeCredits(project.credits, locale),
+    ...localizedContent,
+    title: localizedContent.title ?? project.title,
+    subtitle: localizedContent.subtitle ?? localizeSubtitle(project.subtitle, locale),
+    type: localizedContent.type ?? translateMappedValue(project.type, localizedTypeTranslations, locale),
+    role: localizedContent.role ?? translateMappedValue(project.role, localizedRoleTranslations, locale),
+    client: localizedContent.client ?? project.client,
+    text: localizedContent.text ?? project.text,
+    credits: localizedContent.credits ?? localizeCredits(project.credits, locale),
   };
 }
 
@@ -1302,6 +1178,7 @@ function renderGrids() {
 
       card.dataset.project = project.slug;
       card.dataset.filter = filter;
+      card.href = getProjectPath(project);
       card.style.setProperty("--project-base", project.palette.base);
       card.style.setProperty("--project-accent", project.palette.accent);
 
@@ -1313,6 +1190,7 @@ function renderGrids() {
       loadImageAsset(image, assetSet.cardMain, { container: restSurface });
 
       card.addEventListener("click", (event) => {
+        event.preventDefault();
         const selectedProject = projectMap.get(event.currentTarget.dataset.project);
 
         if (!selectedProject) {
@@ -1576,7 +1454,21 @@ function hideOverlay({ updateHistory = true } = {}) {
   }
 }
 
+function closeProjectFromHistory() {
+  if (state.currentProject) {
+    window.history.back();
+    return;
+  }
+
+  hideOverlay({ updateHistory: false });
+}
+
 function syncUrl() {
+  if (state.currentProject) {
+    window.history.pushState({}, "", getProjectPath(state.currentProject));
+    return;
+  }
+
   const params = new URLSearchParams();
 
   if (state.currentLocale !== "fr") {
@@ -1591,17 +1483,24 @@ function syncUrl() {
     params.set("filter", state.currentFilter);
   }
 
-  if (state.currentProject) {
-    params.set("project", state.currentProject.slug);
-  }
-
   const query = params.toString();
-  const nextUrl = `${window.location.pathname}${query ? `?${query}` : ""}`;
+  const nextUrl = `/${query ? `?${query}` : ""}`;
   window.history.pushState({}, "", nextUrl);
+}
+
+function getProjectPath(project, locale = state.currentLocale) {
+  const section = locale === "fr" ? "projets" : "projects";
+  return `/${locale}/${section}/${project.slug}/`;
 }
 
 function parseUrlState() {
   const params = new URLSearchParams(window.location.search);
+  const pathSegments = window.location.pathname.split("/").filter(Boolean);
+  const pathLocale = ["fr", "en"].includes(pathSegments[0]) ? pathSegments[0] : null;
+  const pathSection = pathSegments[1];
+  const pathProject = pathLocale && ["projets", "projects"].includes(pathSection)
+    ? pathSegments[2]
+    : null;
   const requestedLocale = params.get("lang");
   const requestedView = params.get("view");
   const requestedFilter = params.get("filter");
@@ -1614,10 +1513,10 @@ function parseUrlState() {
     : "projects";
 
   return {
-    locale: validLocale,
+    locale: pathLocale ?? validLocale,
     view: validView,
     filter: validFilter,
-    project: requestedProject,
+    project: pathProject ?? requestedProject,
   };
 }
 
@@ -1688,7 +1587,7 @@ localeToggle?.addEventListener("click", () => {
 
 overlayCloseButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    hideOverlay();
+    closeProjectFromHistory();
   });
 });
 
@@ -1699,7 +1598,7 @@ overlayNavButtons.forEach((button) => {
 });
 
 overlayBackdrop?.addEventListener("click", () => {
-  hideOverlay();
+  closeProjectFromHistory();
 });
 
 document.addEventListener("keydown", (event) => {
@@ -1734,7 +1633,7 @@ document.addEventListener("keydown", (event) => {
   }
 
   if (event.key === "Escape") {
-    hideOverlay();
+    closeProjectFromHistory();
   }
 
   if (event.key === "ArrowLeft") {
