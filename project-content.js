@@ -239,8 +239,7 @@ const portfolioProjectCatalog = {
           { label: "Editing", value: "Jérémie Carvalho" },
         ],
         text: [
-          "Music video created for Stéphanie Boulay. I handled the edit, with a strong focus on rhythm, breathing room, and the progression of the story.",
-          "This card currently reflects the information available on the existing site and can be expanded later with the final media assets.",
+          "The song was released on Stéphanie Boulay's solo album, titled « Est-ce que quelqu’un me voit? ». And yes, I cried a few times myself while editing this beautiful music video.",
         ],
       },
     },
@@ -523,10 +522,7 @@ const portfolioProjectCatalog = {
           { label: "Art direction", value: "Rodolphe St-Gelais" },
           { label: "Animation", value: "Rodolphe St-Gelais, Jérémie Carvalho, Max Vannienschoot" },
         ],
-        text: [
-          "Project card prepared from the information currently available in the CV section of the original site.",
-          "The piece is listed as a music video for Steve Hill, with a 2D animation mandate. Media and process details can be added in a later pass.",
-        ],
+        text: ["First single from the album of the same name, « Hanging on a String » is a music video directed by Annick Jean."],
       },
     },
     views: ["projects", "motion"],

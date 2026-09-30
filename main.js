@@ -578,6 +578,7 @@ const overlayMediaPlaceholderLabel = overlay?.querySelector(".project-panel__med
 const projectCardPlaceholderLabel = document.querySelector(".project-card__placeholder-label");
 
 let overlayTrigger = null;
+let overlayReturnUrl = null;
 let galleryRenderId = 0;
 
 const projectMap = new Map(normalizedProjects.map((project) => [project.slug, project]));
@@ -1013,6 +1014,9 @@ function loadImageAsset(element, candidates, { container = null, onSuccess = nul
       tryCandidate(index + 1);
     };
 
+    if (element.loading === "lazy") {
+      element.hidden = false;
+    }
     element.src = source;
   };
 
@@ -1431,7 +1435,11 @@ function getFocusableElements(container) {
   );
 }
 
-function openProject(project, { trigger = null, pushState = true } = {}) {
+function openProject(project, { trigger = null, pushState = true, replaceState = false } = {}) {
+  if (!state.currentProject) {
+    overlayReturnUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  }
+
   state.currentProject = project;
   if (trigger) {
     overlayTrigger = trigger;
@@ -1455,7 +1463,7 @@ function openProject(project, { trigger = null, pushState = true } = {}) {
   });
 
   if (pushState) {
-    syncUrl();
+    syncUrl({ replace: replaceState });
   }
 }
 
@@ -1463,6 +1471,7 @@ function hideOverlay({ updateHistory = true } = {}) {
   const restoreTarget = overlayTrigger;
 
   overlayTrigger = null;
+  overlayReturnUrl = null;
   overlay.classList.remove("is-visible");
   document.body.classList.remove("is-overlay-open");
   clearOverlayMedia();
@@ -1486,6 +1495,14 @@ function hideOverlay({ updateHistory = true } = {}) {
 
 function closeProjectFromHistory() {
   if (state.currentProject) {
+    if (overlayReturnUrl) {
+      const returnUrl = overlayReturnUrl;
+      overlayReturnUrl = null;
+      window.history.replaceState({}, "", returnUrl);
+      hideOverlay({ updateHistory: false });
+      return;
+    }
+
     window.history.back();
     return;
   }
@@ -1493,9 +1510,11 @@ function closeProjectFromHistory() {
   hideOverlay({ updateHistory: false });
 }
 
-function syncUrl() {
+function syncUrl({ replace = false } = {}) {
+  const updateHistory = replace ? "replaceState" : "pushState";
+
   if (state.currentProject) {
-    window.history.pushState({}, "", getProjectPath(state.currentProject));
+    window.history[updateHistory]({}, "", getProjectPath(state.currentProject));
     return;
   }
 
@@ -1511,7 +1530,7 @@ function syncUrl() {
 
   const query = params.toString();
   const nextUrl = `${getHomePath()}${query ? `?${query}` : ""}`;
-  window.history.pushState({}, "", nextUrl);
+  window.history[updateHistory]({}, "", nextUrl);
 }
 
 function getHomePath(locale = state.currentLocale) {
@@ -1584,7 +1603,7 @@ function goToAdjacentProject(direction) {
     return;
   }
 
-  openProject(nextProject, { pushState: true });
+  openProject(nextProject, { pushState: true, replaceState: true });
 }
 
 if (menuToggle && primaryNav) {
