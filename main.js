@@ -1197,10 +1197,7 @@ function renderProjectGallery(project) {
 }
 
 function hydrateStaticAssets() {
-  const connection = navigator.connection;
-  const shouldLoadHeroVideo =
-    !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-    !connection?.saveData;
+  const shouldLoadHeroVideo = true;
 
   loadMediaBox({
     container: heroPlaceholder,
