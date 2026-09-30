@@ -243,6 +243,13 @@ function readImageDimensions(filePath) {
         height: 1 + data.readUIntLE(27, 3),
       };
     }
+
+    if (data.toString("ascii", 12, 16) === "VP8 " && data.subarray(23, 26).equals(Buffer.from([0x9d, 0x01, 0x2a]))) {
+      return {
+        width: data.readUInt16LE(26) & 0x3fff,
+        height: data.readUInt16LE(28) & 0x3fff,
+      };
+    }
   }
 
   if (data[0] === 0xff && data[1] === 0xd8) {
