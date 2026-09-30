@@ -326,7 +326,7 @@ const portfolioProjectCatalog = {
   elisapie: {
     slug: "elisapie",
     updated: "2026-09-30",
-    title: "Elisapie",
+    title: "Elisapie - Quviasukkuvit",
     subtitle: "Vidéoclip, 2024",
     type: "Vidéoclip",
     role: "Montage, colorisation et effets visuels",
@@ -343,7 +343,7 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
-        title: "Elisapie",
+        title: "Elisapie - Quviasukkuvit",
         subtitle: "Music video, 2024",
         type: "Music video",
         role: "Editing, color grading and visual effects",
@@ -365,7 +365,7 @@ const portfolioProjectCatalog = {
   "frank-bourassa": {
     slug: "frank-bourassa",
     updated: "2026-09-30",
-    title: "Frank Bourassa",
+    title: "Frank Bourassa et ses faux millions",
     subtitle: "Série documentaire, 2023",
     type: "Série documentaire",
     role: "Motion design et effets spéciaux",
@@ -386,7 +386,7 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
-        title: "Frank Bourassa",
+        title: "Frank Bourassa's Fake Millions",
         subtitle: "Documentary series, 2023",
         type: "Documentary series",
         role: "Motion design and visual effects",
@@ -500,7 +500,7 @@ const portfolioProjectCatalog = {
   "hanging-on-a-string": {
     slug: "hanging-on-a-string",
     updated: "2026-09-30",
-    title: "Hanging on a String",
+    title: "Steve Hill - Hanging on a String",
     subtitle: "Vidéoclip, 2024",
     type: "Vidéoclip",
     role: "Animation",
@@ -514,7 +514,7 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
-        title: "Hanging on a String",
+        title: "Steve Hill - Hanging on a String",
         subtitle: "Music video, 2024",
         type: "Music video",
         role: "Animation",
@@ -570,7 +570,7 @@ const portfolioProjectCatalog = {
   evinces: {
     slug: "evinces",
     updated: "2026-09-30",
-    title: "Évincés",
+    title: "Évincés : les aînés contre-attaquent",
     subtitle: "Série documentaire, 2023",
     type: "Série documentaire",
     role: "Montage et motion design additionnel",
