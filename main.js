@@ -1035,6 +1035,11 @@ function loadVideoAsset(element, candidates, { container = null, onSuccess = nul
     return;
   }
 
+  element.autoplay = true;
+  element.defaultMuted = true;
+  element.muted = true;
+  element.playsInline = true;
+
   const tryCandidate = (index) => {
     if (index >= queue.length) {
       setFilledState(container, false);
