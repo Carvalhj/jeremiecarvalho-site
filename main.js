@@ -949,19 +949,14 @@ function resetVideoElement(element) {
     return;
   }
 
-  videoLoadTokens.set(element, (videoLoadTokens.get(element) ?? 0) + 1);
   element.pause();
   element.hidden = true;
-  element.style.removeProperty("opacity");
   element.removeAttribute("src");
   element.removeAttribute("poster");
   element.onloadeddata = null;
-  element.onplaying = null;
   element.onerror = null;
   element.load();
 }
-
-const videoLoadTokens = new WeakMap();
 
 function resetIframeElement(element) {
   if (!element) {
@@ -1037,13 +1032,6 @@ function loadVideoAsset(element, candidates, { container = null, onSuccess = nul
     return;
   }
 
-  element.autoplay = true;
-  element.defaultMuted = true;
-  element.muted = true;
-  element.playsInline = true;
-  element.hidden = false;
-  element.style.opacity = "0";
-
   const tryCandidate = (index) => {
     if (index >= queue.length) {
       setFilledState(container, false);
@@ -1052,56 +1040,20 @@ function loadVideoAsset(element, candidates, { container = null, onSuccess = nul
     }
 
     const source = queue[index];
-    const loadToken = videoLoadTokens.get(element);
-    const isCurrentLoad = () => videoLoadTokens.get(element) === loadToken;
-    let hasShownVideo = false;
-
-    const showVideo = () => {
-      if (!isCurrentLoad() || hasShownVideo) {
-        return;
-      }
-
-      hasShownVideo = true;
-      element.style.removeProperty("opacity");
+    element.onloadeddata = () => {
+      element.hidden = false;
       setFilledState(container, true);
       onSuccess?.(source);
     };
 
-    const fallbackToNextCandidate = () => {
-      if (!isCurrentLoad()) {
-        return;
-      }
-
-      resetVideoElement(element);
-      tryCandidate(index + 1);
-    };
-
-    element.onplaying = showVideo;
-
     element.onerror = () => {
-      if (!isCurrentLoad()) {
-        return;
-      }
-
       resetVideoElement(element);
       tryCandidate(index + 1);
     };
 
-    element.preload = "auto";
+    element.preload = "metadata";
     element.src = source;
     element.load();
-
-    let playPromise;
-    try {
-      playPromise = element.play();
-    } catch {
-      fallbackToNextCandidate();
-      return;
-    }
-
-    if (playPromise && typeof playPromise.then === "function") {
-      playPromise.then(showVideo).catch(fallbackToNextCandidate);
-    }
   };
 
   tryCandidate(0);
