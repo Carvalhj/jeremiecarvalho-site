@@ -949,6 +949,7 @@ function resetVideoElement(element) {
     return;
   }
 
+  videoLoadTokens.set(element, (videoLoadTokens.get(element) ?? 0) + 1);
   element.pause();
   element.hidden = true;
   element.removeAttribute("src");
@@ -957,6 +958,8 @@ function resetVideoElement(element) {
   element.onerror = null;
   element.load();
 }
+
+const videoLoadTokens = new WeakMap();
 
 function resetIframeElement(element) {
   if (!element) {
@@ -1040,14 +1043,46 @@ function loadVideoAsset(element, candidates, { container = null, onSuccess = nul
     }
 
     const source = queue[index];
+    const loadToken = videoLoadTokens.get(element);
+    const isCurrentLoad = () => videoLoadTokens.get(element) === loadToken;
 
     element.onloadeddata = () => {
-      element.hidden = false;
-      setFilledState(container, true);
-      onSuccess?.(source);
+      if (!isCurrentLoad()) {
+        return;
+      }
+
+      const playPromise = element.play();
+      const showVideo = () => {
+        if (!isCurrentLoad()) {
+          return;
+        }
+
+        element.hidden = false;
+        setFilledState(container, true);
+        onSuccess?.(source);
+      };
+      const fallbackToNextCandidate = () => {
+        if (!isCurrentLoad()) {
+          return;
+        }
+
+        resetVideoElement(element);
+        tryCandidate(index + 1);
+      };
+
+      if (playPromise && typeof playPromise.then === "function") {
+        playPromise.then(showVideo).catch(fallbackToNextCandidate);
+        return;
+      }
+
+      showVideo();
     };
 
     element.onerror = () => {
+      if (!isCurrentLoad()) {
+        return;
+      }
+
       resetVideoElement(element);
       tryCandidate(index + 1);
     };
