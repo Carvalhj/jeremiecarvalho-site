@@ -581,10 +581,9 @@ let overlayTrigger = null;
 let galleryRenderId = 0;
 
 const projectMap = new Map(normalizedProjects.map((project) => [project.slug, project]));
-const imageExtensions = ["avif", "webp", "png", "jpg", "jpeg"];
-const videoExtensions = ["mp4", "webm"];
 const mainScript = document.querySelector('script[src$="main.js"]');
 const siteRootUrl = new URL("./", mainScript?.src ?? window.location.href);
+const mediaManifest = window.portfolioMedia ?? {};
 
 function getSiteAssetPath(relativePath) {
   return new URL(relativePath, siteRootUrl).pathname;
@@ -592,10 +591,10 @@ function getSiteAssetPath(relativePath) {
 
 const siteAssets = {
   hero: {
-    video: buildAssetCandidates(getSiteAssetPath("assets/media/hero/hero-video"), videoExtensions),
-    image: buildAssetCandidates(getSiteAssetPath("assets/media/hero/hero-poster"), imageExtensions),
+    video: mediaManifest.hero?.video,
+    image: mediaManifest.hero?.poster,
   },
-  portrait: buildAssetCandidates(getSiteAssetPath("assets/media/portrait/contact-portrait"), imageExtensions),
+  portrait: mediaManifest.portrait,
 };
 
 const state = {
@@ -745,8 +744,8 @@ const localizedTypeTranslations = normalizeContent(typeTranslations);
 const localizedRoleTranslations = normalizeContent(roleTranslations);
 const localizedCreditLabelTranslations = normalizeContent(creditLabelTranslations);
 
-function buildAssetCandidates(basePath, extensions) {
-  return extensions.map((extension) => `${basePath}.${extension}`);
+function getAssetCandidates(asset) {
+  return asset?.src ? [getSiteAssetPath(asset.src)] : [];
 }
 
 function getSiteCopy(locale = state.currentLocale) {
@@ -908,24 +907,29 @@ function applyLocale({ rerenderGrid = true, updateHistory = true } = {}) {
   }
 }
 
-function getProjectDirectory(project) {
-  return getSiteAssetPath(`assets/media/projects/${project.slug}`);
-}
-
 function getProjectAssetSet(project) {
-  const directory = getProjectDirectory(project);
+  const media = mediaManifest.projects?.[project.slug] ?? {};
 
   return {
-    cardMain: buildAssetCandidates(`${directory}/card-main`, imageExtensions),
-    coverVideo: buildAssetCandidates(`${directory}/cover-video`, videoExtensions),
-    coverImage: buildAssetCandidates(`${directory}/cover-image`, imageExtensions),
-    gallery: [1, 2].map((index) =>
-      buildAssetCandidates(
-        `${directory}/gallery-${String(index).padStart(2, "0")}`,
-        imageExtensions,
-      ),
-    ),
+    cardMain: media.cardMain,
+    coverVideo: media.coverVideo,
+    coverImage: media.coverImage,
+    gallery: media.gallery ?? [],
   };
+}
+
+function setImageMetadata(element, asset, { loading = "lazy" } = {}) {
+  if (!element || !asset) {
+    return;
+  }
+
+  if (asset.width && asset.height) {
+    element.width = asset.width;
+    element.height = asset.height;
+  }
+
+  element.decoding = "async";
+  element.loading = loading;
 }
 
 function resetImageElement(element) {
@@ -1046,6 +1050,7 @@ function loadVideoAsset(element, candidates, { container = null, onSuccess = nul
       tryCandidate(index + 1);
     };
 
+    element.preload = "metadata";
     element.src = source;
     element.load();
   };
@@ -1059,13 +1064,17 @@ function loadMediaBox({
   iframeSrc = "",
   videoElement = null,
   imageElement = null,
-  videoCandidates = [],
-  imageCandidates = [],
+  videoAsset = null,
+  imageAsset = null,
 } = {}) {
   setFilledState(container, false);
   resetIframeElement(iframeElement);
   resetVideoElement(videoElement);
   resetImageElement(imageElement);
+  setImageMetadata(imageElement, imageAsset, { loading: "eager" });
+
+  const videoCandidates = getAssetCandidates(videoAsset);
+  const imageCandidates = getAssetCandidates(imageAsset);
 
   if (iframeElement && iframeSrc) {
     iframeElement.src = iframeSrc;
@@ -1094,13 +1103,13 @@ function loadMediaBox({
   loadImageFallback();
 }
 
-function createGalleryItem() {
+function createGalleryItem(alt) {
   const item = document.createElement("div");
   const image = document.createElement("img");
 
   item.className = "project-panel__gallery-item";
   image.className = "project-panel__gallery-image";
-  image.alt = "";
+  image.alt = alt;
   image.hidden = true;
 
   item.append(image);
@@ -1113,18 +1122,20 @@ function renderProjectGallery(project) {
     return;
   }
 
-  const assetSet = getProjectAssetSet(project);
+       const assetSet = getProjectAssetSet(project);
   const renderId = galleryRenderId + 1;
+  const localizedProject = getLocalizedProject(project);
 
   galleryRenderId = renderId;
   overlayGallery.innerHTML = "";
   overlayGallery.hidden = true;
   const loadedItems = [];
 
-  assetSet.gallery.forEach((candidates, index) => {
-    const { item, image } = createGalleryItem();
+  assetSet.gallery.forEach((asset, index) => {
+    const { item, image } = createGalleryItem(`${localizedProject.title} ${index + 1}`);
+    setImageMetadata(image, asset);
 
-    loadImageAsset(image, candidates, {
+    loadImageAsset(image, getAssetCandidates(asset), {
       container: item,
       onSuccess: () => {
         if (renderId !== galleryRenderId) {
@@ -1140,15 +1151,22 @@ function renderProjectGallery(project) {
 }
 
 function hydrateStaticAssets() {
+  const connection = navigator.connection;
+  const shouldLoadHeroVideo =
+    !window.matchMedia("(max-width: 820px)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+    !connection?.saveData;
+
   loadMediaBox({
     container: heroPlaceholder,
-    videoElement: heroVideo,
+    videoElement: shouldLoadHeroVideo ? heroVideo : null,
     imageElement: heroPoster,
-    videoCandidates: siteAssets.hero.video,
-    imageCandidates: siteAssets.hero.image,
+    videoAsset: shouldLoadHeroVideo ? siteAssets.hero.video : null,
+    imageAsset: siteAssets.hero.image,
   });
 
-  loadImageAsset(portraitImage, siteAssets.portrait, { container: portraitPlaceholder });
+  setImageMetadata(portraitImage, siteAssets.portrait);
+  loadImageAsset(portraitImage, getAssetCandidates(siteAssets.portrait), { container: portraitPlaceholder });
 }
 
 function getProjectsForView(view) {
@@ -1184,7 +1202,7 @@ function renderGrids() {
       const title = fragment.querySelector(".project-card__title");
       const type = fragment.querySelector(".project-card__type");
       const role = fragment.querySelector(".project-card__role");
-      const assetSet = getProjectAssetSet(project);
+       const assetSet = getProjectAssetSet(project);
 
       card.dataset.project = project.slug;
       card.dataset.filter = filter;
@@ -1198,7 +1216,8 @@ function renderGrids() {
       srLabel.textContent = `${copy.card.openProject} ${localizedProject.title}`;
       placeholderLabel.textContent = copy.card.placeholder;
 
-      loadImageAsset(image, assetSet.cardMain, { container: restSurface });
+       setImageMetadata(image, assetSet.cardMain);
+       loadImageAsset(image, getAssetCandidates(assetSet.cardMain), { container: restSurface });
 
       card.addEventListener("click", (event) => {
         event.preventDefault();
@@ -1340,8 +1359,8 @@ function fillOverlay(project) {
     iframeSrc: project.vimeo ?? "",
     videoElement: overlayVideo,
     imageElement: overlayImage,
-    videoCandidates: assetSet.coverVideo,
-    imageCandidates: assetSet.coverImage,
+    videoAsset: assetSet.coverVideo,
+    imageAsset: assetSet.coverImage,
   });
 
   renderProjectGallery(project);

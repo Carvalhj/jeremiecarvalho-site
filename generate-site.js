@@ -8,6 +8,7 @@ const rootDirectory = __dirname;
 const siteOrigin = "https://jeremiecarvalho.com";
 const projects = Object.values(catalog);
 const imageExtensions = ["avif", "webp", "png", "jpg", "jpeg"];
+const videoExtensions = ["mp4", "webm"];
 const homepageImagePath = "assets/media/portrait/contact-portrait.png";
 const socialProfiles = [
   "https://www.instagram.com/carvalho.jeremie/",
@@ -220,11 +221,106 @@ function replaceLocalizedAttribute(html, attribute, marker, value) {
   return html.replace(pattern, (tag) => tag.replace(new RegExp(`${attribute}="[^"]*"`), `${attribute}="${escapeHtml(value)}"`));
 }
 
-function findMedia(slug, basename) {
-  const mediaDirectory = path.join(rootDirectory, "assets", "media", "projects", slug);
-  const extension = imageExtensions.find((candidate) => fs.existsSync(path.join(mediaDirectory, `${basename}.${candidate}`)));
+function toAssetPath(filePath) {
+  return path.relative(rootDirectory, filePath).split(path.sep).join("/");
+}
 
-  return extension ? `${basename}.${extension}` : null;
+function readImageDimensions(filePath) {
+  const data = fs.readFileSync(filePath);
+
+  if (data.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) {
+    return { width: data.readUInt32BE(16), height: data.readUInt32BE(20) };
+  }
+
+  if (data.toString("ascii", 0, 4) === "GIF8") {
+    return { width: data.readUInt16LE(6), height: data.readUInt16LE(8) };
+  }
+
+  if (data.toString("ascii", 0, 4) === "RIFF" && data.toString("ascii", 8, 12) === "WEBP") {
+    if (data.toString("ascii", 12, 16) === "VP8X") {
+      return {
+        width: 1 + data.readUIntLE(24, 3),
+        height: 1 + data.readUIntLE(27, 3),
+      };
+    }
+  }
+
+  if (data[0] === 0xff && data[1] === 0xd8) {
+    let offset = 2;
+    const startOfFrameMarkers = new Set([
+      0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7, 0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf,
+    ]);
+
+    while (offset + 9 < data.length) {
+      if (data[offset] !== 0xff) {
+        offset += 1;
+        continue;
+      }
+
+      const marker = data[offset + 1];
+      const length = data.readUInt16BE(offset + 2);
+
+      if (startOfFrameMarkers.has(marker)) {
+        return { width: data.readUInt16BE(offset + 7), height: data.readUInt16BE(offset + 5) };
+      }
+
+      offset += 2 + length;
+    }
+  }
+
+  return null;
+}
+
+function findMediaFile(directory, basename, extensions) {
+  const mediaDirectory = path.join(rootDirectory, directory);
+  const extension = extensions.find((candidate) => fs.existsSync(path.join(mediaDirectory, `${basename}.${candidate}`)));
+
+  return extension ? path.join(mediaDirectory, `${basename}.${extension}`) : null;
+}
+
+function mediaAsset(directory, basename, extensions, { dimensions = false } = {}) {
+  const filePath = findMediaFile(directory, basename, extensions);
+
+  if (!filePath) {
+    return null;
+  }
+
+  const asset = { src: toAssetPath(filePath) };
+  if (dimensions) {
+    Object.assign(asset, readImageDimensions(filePath) ?? {});
+  }
+
+  return asset;
+}
+
+function projectMediaAssets(project) {
+  const directory = `assets/media/projects/${project.slug}`;
+
+  return {
+    cardMain: mediaAsset(directory, "card-main", imageExtensions, { dimensions: true }),
+    coverVideo: mediaAsset(directory, "cover-video", videoExtensions),
+    coverImage: mediaAsset(directory, "cover-image", imageExtensions, { dimensions: true }),
+    gallery: [1, 2].map((index) =>
+      mediaAsset(directory, `gallery-${String(index).padStart(2, "0")}`, imageExtensions, { dimensions: true }),
+    ),
+  };
+}
+
+function buildMediaManifest() {
+  return {
+    hero: {
+      video: mediaAsset("assets/media/hero", "hero-video", videoExtensions),
+      poster: mediaAsset("assets/media/hero", "hero-poster", imageExtensions, { dimensions: true }),
+    },
+    portrait: mediaAsset("assets/media/portrait", "contact-portrait", imageExtensions, { dimensions: true }),
+    projects: Object.fromEntries(projects.map((project) => [project.slug, projectMediaAssets(project)])),
+  };
+}
+
+function findMedia(slug, basename) {
+  const filePath = findMediaFile(`assets/media/projects/${slug}`, basename, imageExtensions);
+
+  return filePath ? path.basename(filePath) : null;
 }
 
 function localizeSubtitle(subtitle, locale) {
@@ -334,13 +430,17 @@ function renderText(text) {
 
 function renderPrimaryMedia(project, content, copy) {
   const imagePath = projectImagePath(project, "../../../");
+  const imageAsset = projectMediaAssets(project).cardMain;
+  const imageDimensions = imageAsset?.width && imageAsset?.height
+    ? ` width="${imageAsset.width}" height="${imageAsset.height}"`
+    : "";
   const fallback = imagePath
     ? `
            <noscript>
              <div class="project-page__media-fallback">
-               <img src="${imagePath}" alt="${escapeHtml(content.title)}" />
-               <p>${copy.noScriptVideo}</p>
-             </div>
+                <img src="${imagePath}" alt="${escapeHtml(content.title)}"${imageDimensions} />
+                <p>${copy.noScriptVideo}</p>
+              </div>
            </noscript>`
     : "";
 
@@ -359,7 +459,7 @@ function renderPrimaryMedia(project, content, copy) {
   if (imagePath) {
     return `
          <div class="project-page__media-frame">
-           <img class="project-page__media-image" src="${imagePath}" alt="${escapeHtml(content.title)}" />
+           <img class="project-page__media-image" src="${imagePath}" alt="${escapeHtml(content.title)}"${imageDimensions} decoding="async" fetchpriority="high" />
          </div>`;
   }
 
@@ -457,11 +557,12 @@ ${renderCredits(content.credits)}
 function renderCard(project, locale, { root = false } = {}) {
   const content = localizeProject(project, locale);
   const assetPrefix = root ? "./" : "../";
-  const imagePath = projectImagePath(project, assetPrefix);
+  const imageAsset = projectMediaAssets(project).cardMain;
+  const imagePath = imageAsset ? `${assetPrefix}${imageAsset.src}` : null;
   const projectRoute = routes[locale](project).replace(`${locale}/`, "");
   const projectPath = root ? `./${routes[locale](project)}/` : `./${projectRoute}/`;
   const image = imagePath
-    ? `<img class="project-card__image" src="${imagePath}" alt="" />`
+    ? `<img class="project-card__image" src="${imagePath}" alt="" width="${imageAsset.width ?? 1}" height="${imageAsset.height ?? 1}" loading="lazy" decoding="async" sizes="(max-width: 620px) 100vw, (max-width: 900px) 50vw, 25vw" />`
     : `<img class="project-card__image" alt="" hidden />`;
 
   return `
@@ -567,11 +668,16 @@ function renderHomepage(homepage, locale, { root = false } = {}) {
   if (!root) {
     rendered = rendered
       .replaceAll('href="./styles.css"', 'href="../styles.css"')
+      .replaceAll('src="./media-manifest.js"', 'src="../media-manifest.js"')
       .replaceAll('src="./project-content.js"', 'src="../project-content.js"')
       .replaceAll('src="./main.js"', 'src="../main.js"');
   }
 
   return rendered;
+}
+
+function renderMediaManifest() {
+  return `window.portfolioMedia = ${serializeJsonLd(buildMediaManifest())};`;
 }
 
 function outputPath(project, locale) {
@@ -634,6 +740,7 @@ function generate() {
 
   fs.writeFileSync(path.join(rootDirectory, "sitemap.xml"), renderSitemap());
   fs.writeFileSync(path.join(rootDirectory, "robots.txt"), renderRobots());
+  fs.writeFileSync(path.join(rootDirectory, "media-manifest.js"), `${renderMediaManifest()}\n`);
 }
 
 function verify() {
@@ -644,6 +751,7 @@ function verify() {
   };
   const sitemap = fs.readFileSync(path.join(rootDirectory, "sitemap.xml"), "utf8");
   const robots = fs.readFileSync(path.join(rootDirectory, "robots.txt"), "utf8");
+  const mediaManifest = fs.readFileSync(path.join(rootDirectory, "media-manifest.js"), "utf8");
 
   assert.equal((homepage.match(/data-project=/g) ?? []).length, projects.length, "homepage catalog is incomplete");
   assert.equal((localizedHomepages.fr.match(/data-project=/g) ?? []).length, projects.length, "French homepage catalog is incomplete");
@@ -664,6 +772,7 @@ function verify() {
     assert.ok(generated.includes('type="application/ld+json"'));
     assert.ok(generated.includes('"@type":"Person"'));
     assert.ok(generated.includes('"@type":"ItemList"'));
+    assert.ok(generated.includes('<video class="hero__video" muted autoplay loop playsinline preload="none" hidden></video>'));
     assert.ok(!generated.includes("?lang="));
   });
 
@@ -719,6 +828,10 @@ function verify() {
   });
   assert.ok(robots.includes(`Sitemap: ${siteOrigin}/sitemap.xml`));
   assert.ok(robots.includes("Allow: /"));
+  const generatedMediaManifest = mediaManifest
+    .replace(/^window\.portfolioMedia = /, "")
+    .replace(/;\s*$/, "");
+  assert.deepEqual(JSON.parse(generatedMediaManifest), buildMediaManifest(), "media manifest is stale");
 }
 
 if (require.main === module) {

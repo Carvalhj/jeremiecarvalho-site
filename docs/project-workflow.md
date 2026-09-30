@@ -91,6 +91,6 @@ Les noms et extensions reconnus sont documentés dans [`assets/README.md`](../as
 - Le panneau projet et la navigation precedent/suivant reutilisent l'ordre de `portfolioProjectCatalog`.
 - Les filtres `Montage` et `Motion design` ne sont pas des pages differentes: ils reutilisent la meme grille avec une selection differente.
 - Le projet peut avoir seulement une image de couverture si tu n'as pas encore la video.
-- Après toute modification du catalogue, exécuter `node generate-site.js`, puis `node generate-site.js --check`.
+- Après toute modification du catalogue ou des médias, exécuter `node generate-site.js`, puis `node generate-site.js --check`. Cette génération met aussi à jour `media-manifest.js` avec les fichiers présents et leurs dimensions.
 - Le générateur crée les accueils `fr/` et `en/`; chaque projet du catalogue doit donc contenir le contenu explicite de `locales.en`.
 - Le générateur crée aussi `sitemap.xml` et `robots.txt`; la date `updated` doit correspondre à la dernière modification éditoriale du projet.

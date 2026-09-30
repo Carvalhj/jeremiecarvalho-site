@@ -1,6 +1,6 @@
 # Assets
 
-Cette arborescence contient les médias locaux du site. Les noms et formats des médias chargés automatiquement ci-dessous correspondent à la logique de [`main.js`](../main.js); le CV est décrit séparément comme une intégration future.
+Cette arborescence contient les médias locaux du site. Les noms et formats des médias chargés automatiquement ci-dessous correspondent à la logique de [`generate-site.js`](../generate-site.js) et au manifeste généré [`media-manifest.js`](../media-manifest.js); le CV est décrit séparément comme une intégration future.
 
 ## Arborescence
 
@@ -63,7 +63,7 @@ assets/
 - Images: `avif`, `webp`, `png`, `jpg`, `jpeg`
 - Vidéos: `mp4`, `webm`
 
-Le code essaie ces extensions pour chaque nom, puis garde le placeholder si aucun fichier n'est trouvé. Les icônes sociales visibles dans la page sont intégrées directement dans `index.html`; les fichiers SVG éventuels de `assets/icons/social/` ne sont pas chargés automatiquement.
+Le générateur choisit le premier fichier réellement présent selon cet ordre d'extensions et publie son chemin exact dans `media-manifest.js`. Le navigateur ne sonde donc pas les extensions absentes. Les icônes sociales visibles dans la page sont intégrées directement dans `index.html`; les fichiers SVG éventuels de `assets/icons/social/` ne sont pas chargés automatiquement.
 
 Le fichier `assets/docs/jeremie-carvalho-cv.pdf` est réservé à une intégration future. Le lien CV de la page est actuellement désactivé.
 

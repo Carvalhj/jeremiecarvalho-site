@@ -9,6 +9,7 @@ Les accueils canoniques sont [`fr/index.html`](fr/index.html) et [`en/index.html
 
 - [`styles.css`](styles.css) pour la mise en page, les couleurs et la responsivité;
 - [`project-content.js`](project-content.js) pour le contenu partagé des pages projet et de l'overlay;
+- [`media-manifest.js`](media-manifest.js) pour les fichiers médias réellement présents et leurs dimensions;
 - [`main.js`](main.js) pour les traductions, les filtres, le panneau projet et le menu mobile;
 - [`assets/`](assets/) pour les médias et les icônes locales.
 
@@ -39,10 +40,12 @@ Après une mise à jour du contenu ou des médias:
 - [ ] Vérifier un projet auquel il manque un média complémentaire: aucun emplacement vide ne doit apparaitre.
 - [ ] Confirmer que les slugs des projets correspondent aux dossiers dans `assets/media/projects/`.
 - [ ] Vérifier les accueils `/fr/` et `/en/`, puis le lien du sélecteur vers l'alternative linguistique.
+- [ ] Vérifier les images de cartes: `loading="lazy"`, dimensions intrinsèques, `sizes` et absence de sondage vers des extensions absentes.
+- [ ] Mesurer ou observer le LCP, le CLS et le coût de transfert initial sur desktop et mobile; la vidéo hero ne doit pas se charger sur mobile ou avec `Save-Data`.
 - [ ] Vérifier `sitemap.xml`, `robots.txt`, les aperçus Open Graph et les données structurées des pages représentatives.
 - [ ] Confirmer que `ref/` est absent et qu'aucun fichier de production ne le référence.
 
-Après une modification de [`project-content.js`](project-content.js), régénérer les pages avec `node generate-site.js`, puis relancer `node generate-site.js --check`.
+Après une modification de [`project-content.js`](project-content.js) ou des médias, régénérer les pages avec `node generate-site.js`, puis relancer `node generate-site.js --check`. Le manifeste généré évite les requêtes d'essai vers les extensions absentes.
 
 ## Structure des médias
 
