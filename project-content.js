@@ -79,7 +79,7 @@ const portfolioProjectCatalog = {
   "onf-bww": {
     slug: "onf-bww",
     updated: "2026-09-30",
-    title: "Bread Will Walk",
+    title: "Le pain se lève",
     subtitle: "Bande-annonce, 2026",
     type: "Bande-annonce",
     role: "Montage",
@@ -217,11 +217,12 @@ const portfolioProjectCatalog = {
   "stephanie-boulay": {
     slug: "stephanie-boulay",
     updated: "2026-09-30",
-    title: "Stéphanie Boulay",
+    title: "Stéphanie Boulay - Je veux pas t'attendre mais je t'attends",
     subtitle: "Vidéoclip, 2025",
     type: "Vidéoclip",
     role: "Montage",
     client: { label: "Label", value: "Simone records" },
+    vimeo: "https://player.vimeo.com/video/1231003987",
     text: ["La chanson est parue sur l'album solo de Stéphanie Boulay, intitulé « Est-ce que quelqu’un me voit? ». Et oui, j'ai pleuré quelques fois moi aussi durant le montage de ce beau vidéoclip."],
     credits: [
       { label: "Réalisation", value: "Clara L'heureux-Garcia" },
@@ -229,7 +230,7 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
-        title: "Stéphanie Boulay",
+        title: "Stéphanie Boulay - Je veux pas t'attendre mais je t'attends",
         subtitle: "Music video, 2025",
         type: "Music video",
         role: "Editing",
@@ -297,7 +298,7 @@ const portfolioProjectCatalog = {
     type: "Bande-annonce",
     role: "Montage",
     client: { label: "Production", value: "ONF" },
-    vimeo: "https://player.vimeo.com/video/1231003987",
+    vimeo: "https://player.vimeo.com/video/1223395042",
     text: ["« Virginia Tangvald navigue sur les eaux troubles de son histoire familiale pour résoudre le mystère entourant la disparition de son frère et le naufrage de son père, le célèbre marin Peter Tangvald.» - site internet de l'ONF"],
     credits: [
       { label: "Réalisation", value: "Virginia Tangvald" },
