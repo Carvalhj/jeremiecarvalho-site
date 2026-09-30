@@ -1,6 +1,7 @@
 const portfolioProjectCatalog = {
   demoreel: {
     slug: "demoreel",
+    updated: "2026-09-30",
     title: "Demoreel",
     subtitle: "Sélection de projets",
     type: "Demoreel",
@@ -48,6 +49,7 @@ const portfolioProjectCatalog = {
   },
   "langlois-dragonfly": {
     slug: "langlois-dragonfly",
+    updated: "2026-09-30",
     title: "Robert Langlois - Dragonfly",
     subtitle: "Vidéoclip, 2026",
     type: "Vidéoclip",
@@ -76,6 +78,7 @@ const portfolioProjectCatalog = {
   },
   "onf-bww": {
     slug: "onf-bww",
+    updated: "2026-09-30",
     title: "Bread Will Walk",
     subtitle: "Bande-annonce, 2026",
     type: "Bande-annonce",
@@ -110,6 +113,7 @@ const portfolioProjectCatalog = {
   },
   "onf-paradaiz": {
     slug: "onf-paradaiz",
+    updated: "2026-09-30",
     title: "Paradaïz",
     subtitle: "Bande-annonce, 2026",
     type: "Bande-annonce",
@@ -142,6 +146,7 @@ const portfolioProjectCatalog = {
   },
   "pc-cdn": {
     slug: "pc-cdn",
+    updated: "2026-09-30",
     title: "Crimes du nord",
     subtitle: "Série documentaire, 2026",
     type: "Série documentaire",
@@ -178,6 +183,7 @@ const portfolioProjectCatalog = {
   },
   "onf-tgwcp": {
     slug: "onf-tgwcp",
+    updated: "2026-09-30",
     title: "La jeune fille qui pleurait des perles",
     subtitle: "Bande-annonce, 2025",
     type: "Bande-annonce",
@@ -210,6 +216,7 @@ const portfolioProjectCatalog = {
   },
   "stephanie-boulay": {
     slug: "stephanie-boulay",
+    updated: "2026-09-30",
     title: "Stéphanie Boulay",
     subtitle: "Vidéoclip, 2025",
     type: "Vidéoclip",
@@ -242,6 +249,7 @@ const portfolioProjectCatalog = {
   },
   "donner-le-gout": {
     slug: "donner-le-gout",
+    updated: "2026-09-30",
     title: "Donner le goût",
     subtitle: "Série culinaire, 2025",
     type: "Série culinaire",
@@ -284,6 +292,7 @@ const portfolioProjectCatalog = {
   },
   "onf-ledl": {
     slug: "onf-ledl",
+    updated: "2026-09-30",
     title: "Les enfants du large",
     subtitle: "Bande-annonce, 2025",
     type: "Bande-annonce",
@@ -316,6 +325,7 @@ const portfolioProjectCatalog = {
   },
   elisapie: {
     slug: "elisapie",
+    updated: "2026-09-30",
     title: "Elisapie",
     subtitle: "Vidéoclip, 2024",
     type: "Vidéoclip",
@@ -354,6 +364,7 @@ const portfolioProjectCatalog = {
   },
   "frank-bourassa": {
     slug: "frank-bourassa",
+    updated: "2026-09-30",
     title: "Frank Bourassa",
     subtitle: "Série documentaire, 2023",
     type: "Série documentaire",
@@ -400,6 +411,7 @@ const portfolioProjectCatalog = {
   },
   "beautes-rebelles": {
     slug: "beautes-rebelles",
+    updated: "2026-09-30",
     title: "Beautés rebelles",
     subtitle: "Série documentaire, 2024",
     type: "Série documentaire",
@@ -444,6 +456,7 @@ const portfolioProjectCatalog = {
   },
   "prison-esprit-saint": {
     slug: "prison-esprit-saint",
+    updated: "2026-09-30",
     title: "La prison de l'Esprit-Saint",
     subtitle: "Série documentaire, 2024",
     type: "Série documentaire",
@@ -486,6 +499,7 @@ const portfolioProjectCatalog = {
   },
   "hanging-on-a-string": {
     slug: "hanging-on-a-string",
+    updated: "2026-09-30",
     title: "Hanging on a String",
     subtitle: "Vidéoclip, 2024",
     type: "Vidéoclip",
@@ -520,6 +534,7 @@ const portfolioProjectCatalog = {
   },
   "zug-island": {
     slug: "zug-island",
+    updated: "2026-09-30",
     title: "Zug Island",
     subtitle: "Court-métrage documentaire, 2022 · 22 min",
     type: "Court-métrage documentaire",
@@ -557,6 +572,7 @@ const portfolioProjectCatalog = {
   },
   evinces: {
     slug: "evinces",
+    updated: "2026-09-30",
     title: "Évincés",
     subtitle: "Série documentaire, 2023",
     type: "Série documentaire",
@@ -603,6 +619,7 @@ const portfolioProjectCatalog = {
   },
   "tout-doux": {
     slug: "tout-doux",
+    updated: "2026-09-30",
     title: "Tout doux",
     subtitle: "Campagne publicitaire, 2023",
     type: "Campagne publicitaire",
@@ -638,6 +655,7 @@ const portfolioProjectCatalog = {
   },
   "ascension-pour-cafe-chaud": {
     slug: "ascension-pour-cafe-chaud",
+    updated: "2026-09-30",
     title: "Ascension pour café chaud",
     subtitle: "Motion design, 2023",
     type: "Motion design",
@@ -670,6 +688,7 @@ const portfolioProjectCatalog = {
   },
   zouz: {
     slug: "zouz",
+    updated: "2026-09-30",
     title: "zouz - Seuls",
     subtitle: "Vidéoclip, 2023",
     type: "Vidéoclip",
@@ -699,6 +718,7 @@ const portfolioProjectCatalog = {
   },
   "chroniques-vie-ordinaire": {
     slug: "chroniques-vie-ordinaire",
+    updated: "2026-09-30",
     title: "Chroniques de la vie ordinaire",
     subtitle: "Série documentaire, 2022",
     type: "Série documentaire",
@@ -738,6 +758,7 @@ const portfolioProjectCatalog = {
   },
   "naomi-zero-stress": {
     slug: "naomi-zero-stress",
+    updated: "2026-09-30",
     title: "Naomi - Zéro stress",
     subtitle: "Vidéoclip, 2021",
     type: "Vidéoclip",

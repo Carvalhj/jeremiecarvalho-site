@@ -9,6 +9,7 @@ Ouvrir [`project-content.js`](../project-content.js) et ajouter un nouvel objet 
 Champs obligatoires:
 
 - `slug`
+- `updated` (date ISO `YYYY-MM-DD` utilisée par le sitemap)
 - `title`
 - `subtitle`
 - `type`
@@ -29,6 +30,7 @@ Exemple:
 ```js
 {
   slug: "mon-nouveau-projet",
+  updated: "2026-09-30",
   title: "Mon nouveau projet",
   subtitle: "Documentaire, 2026",
   type: "Documentaire",
@@ -91,3 +93,4 @@ Les noms et extensions reconnus sont documentés dans [`assets/README.md`](../as
 - Le projet peut avoir seulement une image de couverture si tu n'as pas encore la video.
 - Après toute modification du catalogue, exécuter `node generate-site.js`, puis `node generate-site.js --check`.
 - Le générateur crée les accueils `fr/` et `en/`; chaque projet du catalogue doit donc contenir le contenu explicite de `locales.en`.
+- Le générateur crée aussi `sitemap.xml` et `robots.txt`; la date `updated` doit correspondre à la dernière modification éditoriale du projet.

@@ -39,6 +39,7 @@ Après une mise à jour du contenu ou des médias:
 - [ ] Vérifier un projet auquel il manque un média complémentaire: aucun emplacement vide ne doit apparaitre.
 - [ ] Confirmer que les slugs des projets correspondent aux dossiers dans `assets/media/projects/`.
 - [ ] Vérifier les accueils `/fr/` et `/en/`, puis le lien du sélecteur vers l'alternative linguistique.
+- [ ] Vérifier `sitemap.xml`, `robots.txt`, les aperçus Open Graph et les données structurées des pages représentatives.
 - [ ] Confirmer que `ref/` est absent et qu'aucun fichier de production ne le référence.
 
 Après une modification de [`project-content.js`](project-content.js), régénérer les pages avec `node generate-site.js`, puis relancer `node generate-site.js --check`.

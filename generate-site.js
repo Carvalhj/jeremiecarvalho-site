@@ -8,6 +8,12 @@ const rootDirectory = __dirname;
 const siteOrigin = "https://jeremiecarvalho.com";
 const projects = Object.values(catalog);
 const imageExtensions = ["avif", "webp", "png", "jpg", "jpeg"];
+const homepageImagePath = "assets/media/portrait/contact-portrait.png";
+const socialProfiles = [
+  "https://www.instagram.com/carvalho.jeremie/",
+  "https://www.linkedin.com/in/j%C3%A9r%C3%A9mie-carvalho-469322177",
+  "https://www.facebook.com/carvalho.jeremie/",
+];
 
 const routes = {
   fr: (project) => `fr/projets/${project.slug}`,
@@ -89,6 +95,7 @@ const labels = {
 
 const homepageCopy = {
   fr: {
+    updated: "2026-09-30",
     title: "Jérémie Carvalho",
     description:
       "Portfolio de Jérémie Carvalho, monteur et motion designer à Montréal. Découvrez une sélection de projets en montage et en motion design.",
@@ -130,6 +137,7 @@ const homepageCopy = {
     },
   },
   en: {
+    updated: "2026-09-30",
     title: "Jeremie Carvalho",
     description:
       "Portfolio of Jeremie Carvalho, an editor and motion designer based in Montreal. Explore selected editing and motion design work.",
@@ -185,6 +193,19 @@ function escapeRegExp(value) {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+function escapeXml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
+}
+
+function serializeJsonLd(value) {
+  return JSON.stringify(value).replaceAll("<", "\\u003c");
+}
+
 function replaceElementContent(html, marker, value) {
   const pattern = new RegExp(
     `(<[^>]*data-i18n="${escapeRegExp(marker)}"[^>]*>)[\\s\\S]*?(</[^>]+>)`,
@@ -235,6 +256,64 @@ function localizeProject(project, locale) {
 function projectImagePath(project, prefix) {
   const filename = findMedia(project.slug, "card-main");
   return filename ? `${prefix}assets/media/projects/${project.slug}/${filename}` : null;
+}
+
+function personSchema(locale) {
+  const copy = homepageCopy[locale];
+
+  return {
+    "@type": "Person",
+    "@id": `${siteOrigin}/#person`,
+    name: copy.title,
+    url: `${siteOrigin}/${locale}/`,
+    jobTitle: copy.heroRole,
+    sameAs: socialProfiles,
+  };
+}
+
+function projectSchema(project, content, locale, canonicalUrl, imageUrl) {
+  const schema = {
+    "@type": "CreativeWork",
+    "@id": `${canonicalUrl}#project`,
+    name: content.title,
+    description: content.text[0] ?? content.title,
+    genre: content.type,
+    inLanguage: locale,
+    url: canonicalUrl,
+    contributor: {
+      "@type": "Role",
+      roleName: content.role,
+      contributor: { "@id": `${siteOrigin}/#person` },
+    },
+  };
+
+  if (imageUrl) {
+    schema.image = imageUrl;
+  }
+
+  return schema;
+}
+
+function homepageSchema(locale) {
+  const homepageUrl = `${siteOrigin}/${locale}/`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      personSchema(locale),
+      {
+        "@type": "ItemList",
+        "@id": `${homepageUrl}#projects`,
+        name: homepageCopy[locale].nav.projects,
+        itemListElement: projects.map((project, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: localizeProject(project, locale).title,
+          url: `${siteOrigin}/${routes[locale](project)}/`,
+        })),
+      },
+    ],
+  };
 }
 
 function renderCredits(credits) {
@@ -301,6 +380,11 @@ function renderPage(project, locale) {
   const imagePath = projectImagePath(project, "");
   const imageUrl = imagePath ? `${siteOrigin}/${imagePath}` : "";
   const documentTitle = `${content.title} | ${copy.home}`;
+  const description = content.text[0] ?? content.title;
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [personSchema(locale), projectSchema(project, content, locale, canonicalUrl, imageUrl)],
+  };
   const client = content.client?.value
     ? `
            <div>
@@ -315,15 +399,20 @@ function renderPage(project, locale) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${escapeHtml(documentTitle)}</title>
-    <meta name="description" content="${escapeHtml(content.text[0] ?? content.title)}" />
+    <meta name="description" content="${escapeHtml(description)}" />
     <link rel="canonical" href="${canonicalUrl}" />
     <link rel="alternate" hreflang="fr" href="${siteOrigin}/${routes.fr(project)}/" />
     <link rel="alternate" hreflang="en" href="${siteOrigin}/${routes.en(project)}/" />
     <meta property="og:title" content="${escapeHtml(documentTitle)}" />
-    <meta property="og:description" content="${escapeHtml(content.text[0] ?? content.title)}" />
+    <meta property="og:description" content="${escapeHtml(description)}" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="${canonicalUrl}" />
-${imageUrl ? `    <meta property="og:image" content="${imageUrl}" />\n` : ""}    <link rel="stylesheet" href="../../../styles.css" />
+    <meta property="og:locale" content="${locale === "fr" ? "fr_CA" : "en_CA"}" />
+    <meta property="og:locale:alternate" content="${locale === "fr" ? "en_CA" : "fr_CA"}" />
+${imageUrl ? `    <meta property="og:image" content="${imageUrl}" />
+    <meta property="og:image:alt" content="${escapeHtml(content.title)}" />
+` : ""}    <script type="application/ld+json">${serializeJsonLd(schema)}</script>
+    <link rel="stylesheet" href="../../../styles.css" />
   </head>
   <body>
     <main class="project-page">
@@ -453,7 +542,16 @@ function renderHomepage(homepage, locale, { root = false } = {}) {
   const languageLinks = `<!-- HOMEPAGE_LOCALE_LINKS -->
     <link rel="canonical" href="${homepageUrls[locale]}" />
     <link rel="alternate" hreflang="fr" href="${homepageUrls.fr}" />
-    <link rel="alternate" hreflang="en" href="${homepageUrls.en}" />`;
+    <link rel="alternate" hreflang="en" href="${homepageUrls.en}" />
+    <meta property="og:title" content="${escapeHtml(copy.title)}" />
+    <meta property="og:description" content="${escapeHtml(copy.description)}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="${homepageUrls[locale]}" />
+    <meta property="og:image" content="${siteOrigin}/${homepageImagePath}" />
+    <meta property="og:image:alt" content="${escapeHtml(copy.title)}" />
+    <meta property="og:locale" content="${locale === "fr" ? "fr_CA" : "en_CA"}" />
+    <meta property="og:locale:alternate" content="${locale === "fr" ? "en_CA" : "fr_CA"}" />
+    <script type="application/ld+json">${serializeJsonLd(homepageSchema(locale))}</script>`;
   rendered = rendered.replace(
     /<!-- HOMEPAGE_LOCALE_LINKS -->[\s\S]*?(?=\s*<link rel="stylesheet")/,
     languageLinks,
@@ -480,6 +578,42 @@ function outputPath(project, locale) {
   return path.join(rootDirectory, routes[locale](project), "index.html");
 }
 
+function sitemapEntries() {
+  return [
+    ...["fr", "en"].map((locale) => ({
+      url: `${siteOrigin}/${locale}/`,
+      lastmod: homepageCopy[locale].updated,
+    })),
+    ...projects.flatMap((project) =>
+      ["fr", "en"].map((locale) => ({
+        url: `${siteOrigin}/${routes[locale](project)}/`,
+        lastmod: project.updated,
+      })),
+    ),
+  ];
+}
+
+function renderSitemap() {
+  const urls = sitemapEntries()
+    .map(
+      ({ url, lastmod }) => `  <url>\n    <loc>${escapeXml(url)}</loc>\n    <lastmod>${escapeXml(lastmod)}</lastmod>\n  </url>`,
+    )
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls}
+</urlset>
+`;
+}
+
+function renderRobots() {
+  return `User-agent: *
+Allow: /
+Sitemap: ${siteOrigin}/sitemap.xml
+`;
+}
+
 function generate() {
   const homepage = fs.readFileSync(path.join(rootDirectory, "index.html"), "utf8");
   fs.writeFileSync(path.join(rootDirectory, "index.html"), renderHomepage(homepage, "fr", { root: true }));
@@ -497,6 +631,9 @@ function generate() {
       fs.writeFileSync(destination, renderPage(project, locale));
     });
   });
+
+  fs.writeFileSync(path.join(rootDirectory, "sitemap.xml"), renderSitemap());
+  fs.writeFileSync(path.join(rootDirectory, "robots.txt"), renderRobots());
 }
 
 function verify() {
@@ -505,6 +642,8 @@ function verify() {
     fr: fs.readFileSync(path.join(rootDirectory, "fr", "index.html"), "utf8"),
     en: fs.readFileSync(path.join(rootDirectory, "en", "index.html"), "utf8"),
   };
+  const sitemap = fs.readFileSync(path.join(rootDirectory, "sitemap.xml"), "utf8");
+  const robots = fs.readFileSync(path.join(rootDirectory, "robots.txt"), "utf8");
 
   assert.equal((homepage.match(/data-project=/g) ?? []).length, projects.length, "homepage catalog is incomplete");
   assert.equal((localizedHomepages.fr.match(/data-project=/g) ?? []).length, projects.length, "French homepage catalog is incomplete");
@@ -519,6 +658,12 @@ function verify() {
     assert.ok(generated.includes(`<link rel="canonical" href="${homepageUrl}" />`));
     assert.ok(generated.includes(`hreflang="${alternateLocale}"`));
     assert.ok(generated.includes(`href="../${alternateLocale}/"`));
+    assert.ok(generated.includes(`<meta property="og:url" content="${homepageUrl}" />`));
+    assert.ok(generated.includes(`<meta property="og:image" content="${siteOrigin}/${homepageImagePath}" />`));
+    assert.ok(generated.includes(`<meta property="og:locale" content="${locale === "fr" ? "fr_CA" : "en_CA"}" />`));
+    assert.ok(generated.includes('type="application/ld+json"'));
+    assert.ok(generated.includes('"@type":"Person"'));
+    assert.ok(generated.includes('"@type":"ItemList"'));
     assert.ok(!generated.includes("?lang="));
   });
 
@@ -547,21 +692,42 @@ function verify() {
       assert.ok(generated.includes(`href="${siteOrigin}/${route}/"`));
       assert.ok(generated.includes(`href="${siteOrigin}/${routes[locale === "fr" ? "en" : "fr"](project)}/"`));
       assert.ok(generated.includes(`href="../../../${locale}/"`));
+      assert.ok(generated.includes(`<meta property="og:url" content="${siteOrigin}/${route}/" />`));
+      assert.ok(generated.includes('type="application/ld+json"'));
+      assert.ok(generated.includes('"@type":"CreativeWork"'));
+      assert.ok(generated.includes(`"inLanguage":"${locale}"`));
+      const imagePath = projectImagePath(project, "");
+      if (imagePath) {
+        assert.ok(generated.includes(`<meta property="og:image" content="${siteOrigin}/${imagePath}" />`));
+      }
     });
 
     assert.ok(homepage.includes(`href="./fr/projets/${project.slug}/"`));
     assert.ok(localizedHomepages.fr.includes(`href="./projets/${project.slug}/"`));
     assert.ok(localizedHomepages.en.includes(`href="./projects/${project.slug}/"`));
   });
+
+  const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+  assert.deepEqual(
+    sitemapUrls,
+    sitemapEntries().map(({ url }) => url),
+    "sitemap must contain only canonical generated URLs",
+  );
+  sitemapEntries().forEach(({ lastmod }) => {
+    assert.match(lastmod, /^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(sitemap.includes(`<lastmod>${lastmod}</lastmod>`));
+  });
+  assert.ok(robots.includes(`Sitemap: ${siteOrigin}/sitemap.xml`));
+  assert.ok(robots.includes("Allow: /"));
 }
 
 if (require.main === module) {
   if (process.argv.includes("--check")) {
     verify();
-    console.log(`Ticket 4 localized pages are valid for ${projects.length} projects.`);
+    console.log(`Ticket 5 discovery metadata is valid for ${projects.length} projects.`);
   } else {
     generate();
-    console.log(`Generated French and English pages for ${projects.length} projects.`);
+    console.log(`Generated French and English pages, sitemap, and robots.txt for ${projects.length} projects.`);
   }
 }
 
