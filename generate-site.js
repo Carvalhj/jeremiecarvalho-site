@@ -73,9 +73,9 @@ const labels = {
     language: "English",
     media: "Média principal",
     summary: "Résumé",
+    type: "Type",
     role: "Rôle",
     client: "Client",
-    credits: "Crédits",
     back: "Retour au portfolio",
     videoTitle: (title) => `Vidéo du projet ${title}`,
     noScriptVideo: "La vidéo intégrée nécessite JavaScript.",
@@ -85,9 +85,9 @@ const labels = {
     language: "Français",
     media: "Primary media",
     summary: "Summary",
+    type: "Type",
     role: "Role",
     client: "Client",
-    credits: "Credits",
     back: "Back to portfolio",
     videoTitle: (title) => `${title} project video`,
     noScriptVideo: "Embedded video requires JavaScript.",
@@ -419,18 +419,6 @@ function homepageSchema(locale) {
   };
 }
 
-function renderCredits(credits) {
-  return credits
-    .map(
-      (credit) => `
-              <div>
-                <dt>${escapeHtml(credit.label)}</dt>
-                <dd>${escapeHtml(credit.value)}</dd>
-              </div>`,
-    )
-    .join("");
-}
-
 function renderText(text) {
   return text.map((paragraph) => `              <p>${escapeHtml(paragraph)}</p>`).join("\n");
 }
@@ -495,7 +483,7 @@ function renderPage(project, locale) {
   const client = content.client?.value
     ? `
            <div>
-             <dt>${copy.client}</dt>
+             <dt>${escapeHtml(content.client.label ?? copy.client)}</dt>
              <dd>${escapeHtml(content.client.value)}</dd>
            </div>`
     : "";
@@ -542,18 +530,15 @@ ${imageUrl ? `    <meta property="og:image" content="${imageUrl}" />
         <h2 id="project-summary-title">${copy.summary}</h2>
         <dl class="project-page__meta">
           <div>
+            <dt>${copy.type}</dt>
+            <dd>${escapeHtml(content.type)}</dd>
+          </div>
+          <div>
             <dt>${copy.role}</dt>
             <dd>${escapeHtml(content.role)}</dd>
           </div>${client}
         </dl>
-        ${content.text.length ? `<div class="project-page__text">\n${renderText(content.text)}\n         </div>` : ""}
-      </section>
-
-      <section class="project-page__credits" aria-labelledby="project-credits-title">
-        <h2 id="project-credits-title">${copy.credits}</h2>
-        <dl class="project-page__meta project-page__meta--credits">
-${renderCredits(content.credits)}
-        </dl>
+${content.text.length ? `         <div class="project-page__text">\n${renderText(content.text)}\n         </div>` : ""}
       </section>
     </main>
   </body>
@@ -802,9 +787,14 @@ function verify() {
 
       assert.equal(generated, renderPage(project, locale), `${locale}/${project.slug} page is stale`);
       assert.ok(generated.includes(`<h1>${escapeHtml(content.title)}</h1>`));
+      assert.ok(generated.includes(`<dt>${labels[locale].type}</dt>`));
       assert.ok(generated.includes(escapeHtml(content.role)));
       content.text.forEach((paragraph) => assert.ok(generated.includes(escapeHtml(paragraph))));
-      content.credits.forEach((credit) => assert.ok(generated.includes(escapeHtml(credit.value))));
+      assert.ok(!generated.includes('class="project-page__credits"'));
+      if (content.client?.value) {
+        assert.ok(generated.includes(`<dt>${escapeHtml(content.client.label ?? labels[locale].client)}</dt>`));
+        assert.ok(generated.includes(escapeHtml(content.client.value)));
+      }
       assert.ok(generated.includes(`href="${siteOrigin}/${route}/"`));
       assert.ok(generated.includes(`href="${siteOrigin}/${routes[locale === "fr" ? "en" : "fr"](project)}/"`));
       assert.ok(generated.includes(`href="../../../${locale}/"`));
