@@ -17,7 +17,9 @@ Champs obligatoires:
 - `views`
 - `palette`
 
-Champ optionnel:
+Pour publier le projet dans les deux langues, ajouter aussi `locales.en` avec le titre, le sous-titre, le type, le role, les metadonnees, les credits et le texte anglais.
+
+Champs optionnels:
 
 - `client`: objet `{ label, value }` affiché dans les métadonnées de la fiche. Le label peut être adapté au contexte ou le champ peut être omis.
 - `text`: tableau de paragraphes descriptifs; il peut être omis ou rester vide jusqu'à ce que le contenu soit prêt.
@@ -88,3 +90,4 @@ Les noms et extensions reconnus sont documentés dans [`assets/README.md`](../as
 - Les filtres `Montage` et `Motion design` ne sont pas des pages differentes: ils reutilisent la meme grille avec une selection differente.
 - Le projet peut avoir seulement une image de couverture si tu n'as pas encore la video.
 - Après toute modification du catalogue, exécuter `node generate-site.js`, puis `node generate-site.js --check`.
+- Le générateur crée les accueils `fr/` et `en/`; chaque projet du catalogue doit donc contenir le contenu explicite de `locales.en`.

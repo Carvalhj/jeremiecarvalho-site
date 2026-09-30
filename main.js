@@ -583,13 +583,19 @@ let galleryRenderId = 0;
 const projectMap = new Map(normalizedProjects.map((project) => [project.slug, project]));
 const imageExtensions = ["avif", "webp", "png", "jpg", "jpeg"];
 const videoExtensions = ["mp4", "webm"];
+const mainScript = document.querySelector('script[src$="main.js"]');
+const siteRootUrl = new URL("./", mainScript?.src ?? window.location.href);
+
+function getSiteAssetPath(relativePath) {
+  return new URL(relativePath, siteRootUrl).pathname;
+}
 
 const siteAssets = {
   hero: {
-    video: buildAssetCandidates("./assets/media/hero/hero-video", videoExtensions),
-    image: buildAssetCandidates("./assets/media/hero/hero-poster", imageExtensions),
+    video: buildAssetCandidates(getSiteAssetPath("assets/media/hero/hero-video"), videoExtensions),
+    image: buildAssetCandidates(getSiteAssetPath("assets/media/hero/hero-poster"), imageExtensions),
   },
-  portrait: buildAssetCandidates("./assets/media/portrait/contact-portrait", imageExtensions),
+  portrait: buildAssetCandidates(getSiteAssetPath("assets/media/portrait/contact-portrait"), imageExtensions),
 };
 
 const state = {
@@ -604,7 +610,7 @@ const siteCopy = {
     htmlLang: "fr",
     title: "Jérémie Carvalho",
     description:
-      "Prototype local du portfolio de Jérémie Carvalho avec navigation éditoriale, grilles de projets et panneau projet en surimpression.",
+      "Portfolio de Jérémie Carvalho, monteur et motion designer à Montréal. Découvrez une sélection de projets en montage et en motion design.",
     nav: {
       projects: "Jérémie Carvalho",
       montage: "Montage",
@@ -644,7 +650,7 @@ const siteCopy = {
     htmlLang: "en",
     title: "Jeremie Carvalho",
     description:
-      "Local portfolio prototype for Jeremie Carvalho with editorial navigation, project grids, and an overlay project panel.",
+      "Portfolio of Jeremie Carvalho, an editor and motion designer based in Montreal. Explore selected editing and motion design work.",
     nav: {
       projects: "Jeremie Carvalho",
       montage: "Editing",
@@ -824,7 +830,10 @@ function applyLocale({ rerenderGrid = true, updateHistory = true } = {}) {
   });
 
   if (localeToggle) {
-    localeToggle.textContent = state.currentLocale.toUpperCase();
+    const alternateLocale = state.currentLocale === "fr" ? "en" : "fr";
+
+    localeToggle.textContent = alternateLocale.toUpperCase();
+    localeToggle.href = getHomePath(alternateLocale);
     localeToggle.setAttribute("aria-label", copy.localeToggle);
     localeToggle.setAttribute("title", copy.localeToggle);
   }
@@ -900,7 +909,7 @@ function applyLocale({ rerenderGrid = true, updateHistory = true } = {}) {
 }
 
 function getProjectDirectory(project) {
-  return `./assets/media/projects/${project.slug}`;
+  return getSiteAssetPath(`assets/media/projects/${project.slug}`);
 }
 
 function getProjectAssetSet(project) {
@@ -1171,6 +1180,7 @@ function renderGrids() {
       const restSurface = fragment.querySelector(".project-card__surface--rest");
       const image = fragment.querySelector(".project-card__image");
       const srLabel = fragment.querySelector(".project-card__sr-label");
+      const placeholderLabel = fragment.querySelector(".project-card__placeholder-label");
       const title = fragment.querySelector(".project-card__title");
       const type = fragment.querySelector(".project-card__type");
       const role = fragment.querySelector(".project-card__role");
@@ -1186,6 +1196,7 @@ function renderGrids() {
       type.textContent = localizedProject.type;
       role.textContent = localizedProject.role;
       srLabel.textContent = `${copy.card.openProject} ${localizedProject.title}`;
+      placeholderLabel.textContent = copy.card.placeholder;
 
       loadImageAsset(image, assetSet.cardMain, { container: restSurface });
 
@@ -1471,10 +1482,6 @@ function syncUrl() {
 
   const params = new URLSearchParams();
 
-  if (state.currentLocale !== "fr") {
-    params.set("lang", state.currentLocale);
-  }
-
   if (state.currentView !== "projects") {
     params.set("view", state.currentView);
   }
@@ -1484,8 +1491,12 @@ function syncUrl() {
   }
 
   const query = params.toString();
-  const nextUrl = `/${query ? `?${query}` : ""}`;
+  const nextUrl = `${getHomePath()}${query ? `?${query}` : ""}`;
   window.history.pushState({}, "", nextUrl);
+}
+
+function getHomePath(locale = state.currentLocale) {
+  return `/${locale}/`;
 }
 
 function getProjectPath(project, locale = state.currentLocale) {
@@ -1578,11 +1589,6 @@ navButtons.forEach((button) => {
     setView(button.dataset.viewLink);
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
-});
-
-localeToggle?.addEventListener("click", () => {
-  state.currentLocale = state.currentLocale === "fr" ? "en" : "fr";
-  applyLocale();
 });
 
 overlayCloseButtons.forEach((button) => {

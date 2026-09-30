@@ -5,7 +5,7 @@ Le dépôt n'utilise ni framework, ni dépendance, ni système de build.
 
 ## Point d'entrée
 
-La page publiée est [`index.html`](index.html). Elle charge directement:
+Les accueils canoniques sont [`fr/index.html`](fr/index.html) et [`en/index.html`](en/index.html). [`index.html`](index.html) reste l'entrée historique française et pointe ses métadonnées vers `/fr/`. Les pages chargent directement:
 
 - [`styles.css`](styles.css) pour la mise en page, les couleurs et la responsivité;
 - [`project-content.js`](project-content.js) pour le contenu partagé des pages projet et de l'overlay;
@@ -38,6 +38,7 @@ Après une mise à jour du contenu ou des médias:
 - [ ] Réduire la fenêtre à une largeur mobile et vérifier le menu, la grille, la vue Contact et le panneau projet.
 - [ ] Vérifier un projet auquel il manque un média complémentaire: aucun emplacement vide ne doit apparaitre.
 - [ ] Confirmer que les slugs des projets correspondent aux dossiers dans `assets/media/projects/`.
+- [ ] Vérifier les accueils `/fr/` et `/en/`, puis le lien du sélecteur vers l'alternative linguistique.
 - [ ] Confirmer que `ref/` est absent et qu'aucun fichier de production ne le référence.
 
 Après une modification de [`project-content.js`](project-content.js), régénérer les pages avec `node generate-site.js`, puis relancer `node generate-site.js --check`.
@@ -67,11 +68,12 @@ Les extensions reconnues sont définies dans `main.js`: `avif`, `webp`, `png`, `
 
 ## Ajouter un projet
 
-1. Ajouter un objet dans le catalogue de [`project-content.js`](project-content.js), avec un `slug` unique et stable.
+1. Ajouter un objet dans le catalogue de [`project-content.js`](project-content.js), avec un `slug` unique et stable et une traduction complète dans `locales.en`.
 2. Créer `assets/media/projects/<slug>/` avec exactement le même slug.
 3. Ajouter les médias nécessaires dans ce dossier. `card-main.*` alimente la carte; `cover-video.*` ou `cover-image.*` alimente le panneau projet; `gallery-01.*` et `gallery-02.*` sont optionnels.
 4. Ajouter le projet aux vues voulues avec `views`: `projects`, `montage` et/ou `motion`.
-5. Prévisualiser le site et vérifier la carte, le panneau projet et les médias manquants.
+5. Régénérer les accueils et les pages avec `node generate-site.js`.
+6. Prévisualiser les deux langues et vérifier la carte, le panneau projet, le sélecteur de langue et les médias manquants.
 
 Les champs et l'ordre des projets sont détaillés dans [`docs/project-workflow.md`](docs/project-workflow.md). La règle principale est de modifier ensemble le `slug` dans `project-content.js` et le dossier média correspondant.
 

@@ -87,6 +87,91 @@ const labels = {
   },
 };
 
+const homepageCopy = {
+  fr: {
+    title: "Jérémie Carvalho",
+    description:
+      "Portfolio de Jérémie Carvalho, monteur et motion designer à Montréal. Découvrez une sélection de projets en montage et en motion design.",
+    nav: {
+      projects: "Jérémie Carvalho",
+      montage: "Montage",
+      motion: "Motion design",
+      contact: "Contact",
+    },
+    locale: { toggle: "EN" },
+    card: { placeholder: "Image principale" },
+    menuToggle: "Ouvrir la navigation",
+    primaryNav: "Navigation principale",
+    headerSocial: "Liens sociaux",
+    email: "Courriel",
+    footerSocial: "Liens de bas de page",
+    projectsView: "Projets",
+    contactView: "Page contact",
+    heroPlaceholder: "Vidéo hero à intégrer",
+    heroRole: "Monteur & motion designer — Montréal",
+    portraitPlaceholder: "Portrait à intégrer",
+    contactAbout: [
+      "Monteur et motion designer résidant à Montréal.",
+      "Je collabore avec des réalisateurs, artistes et équipes de production sur des projets documentaires, de fiction, des séries télé, des vidéoclips et autres.",
+      "Ouvert à des collaborations récurrentes ou contractuelles.",
+    ],
+    contactCopy: "Pour discuter d’un projet ou d’une collaboration, vous pouvez me joindre par courriel.",
+    copyright: "© 2026 Jérémie Carvalho. Tous droits réservés.",
+    overlay: {
+      panelLabel: "Aperçu du projet",
+      close: "Fermer le projet",
+      iframeTitle: "Vidéo du projet",
+      mediaPlaceholder: "Média principal à intégrer",
+      credits: "Crédits",
+      galleryLabel: "Médias complémentaires",
+      navigation: "Navigation entre les projets",
+      prev: "Précédent",
+      next: "Suivant",
+    },
+  },
+  en: {
+    title: "Jeremie Carvalho",
+    description:
+      "Portfolio of Jeremie Carvalho, an editor and motion designer based in Montreal. Explore selected editing and motion design work.",
+    nav: {
+      projects: "Jeremie Carvalho",
+      montage: "Editing",
+      motion: "Motion design",
+      contact: "Contact",
+    },
+    locale: { toggle: "FR" },
+    card: { placeholder: "Main image" },
+    menuToggle: "Open navigation",
+    primaryNav: "Main navigation",
+    headerSocial: "Social links",
+    email: "Email",
+    footerSocial: "Footer links",
+    projectsView: "Projects",
+    contactView: "Contact page",
+    heroPlaceholder: "Hero video placeholder",
+    heroRole: "Editor & motion designer — Montreal",
+    portraitPlaceholder: "Portrait placeholder",
+    contactAbout: [
+      "Editor and motion designer based in Montreal.",
+      "I collaborate with directors, artists, and production teams on documentaries, fiction, TV series, music videos, and other screen-based projects.",
+      "Available for recurring collaborations and contract-based work.",
+    ],
+    contactCopy: "To discuss a project or collaboration, feel free to reach out by email.",
+    copyright: "© 2026 Jeremie Carvalho. All rights reserved.",
+    overlay: {
+      panelLabel: "Project preview",
+      close: "Close project",
+      iframeTitle: "Project video",
+      mediaPlaceholder: "Main media placeholder",
+      credits: "Credits",
+      galleryLabel: "Supporting media",
+      navigation: "Project navigation",
+      prev: "Previous",
+      next: "Next",
+    },
+  },
+};
+
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -94,6 +179,24 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function replaceElementContent(html, marker, value) {
+  const pattern = new RegExp(
+    `(<[^>]*data-i18n="${escapeRegExp(marker)}"[^>]*>)[\\s\\S]*?(</[^>]+>)`,
+  );
+
+  return html.replace(pattern, `$1${escapeHtml(value)}$2`);
+}
+
+function replaceLocalizedAttribute(html, attribute, marker, value) {
+  const pattern = new RegExp(`<[^>]*data-i18n-${attribute}="${escapeRegExp(marker)}"[^>]*>`, "g");
+
+  return html.replace(pattern, (tag) => tag.replace(new RegExp(`${attribute}="[^"]*"`), `${attribute}="${escapeHtml(value)}"`));
 }
 
 function findMedia(slug, basename) {
@@ -194,7 +297,7 @@ function renderPage(project, locale) {
   const canonicalUrl = `${siteOrigin}/${route}/`;
   const alternateLocale = locale === "fr" ? "en" : "fr";
   const alternateUrl = `${siteOrigin}/${routes[alternateLocale](project)}/`;
-  const homeUrl = locale === "en" ? "../../../?lang=en" : "../../../";
+  const homeUrl = `../../../${locale}/`;
   const imagePath = projectImagePath(project, "");
   const imageUrl = imagePath ? `${siteOrigin}/${imagePath}` : "";
   const documentTitle = `${content.title} | ${copy.home}`;
@@ -262,9 +365,12 @@ ${renderCredits(content.credits)}
 `;
 }
 
-function renderCard(project) {
-  const content = localizeProject(project, "fr");
-  const imagePath = projectImagePath(project, "./");
+function renderCard(project, locale, { root = false } = {}) {
+  const content = localizeProject(project, locale);
+  const assetPrefix = root ? "./" : "../";
+  const imagePath = projectImagePath(project, assetPrefix);
+  const projectRoute = routes[locale](project).replace(`${locale}/`, "");
+  const projectPath = root ? `./${routes[locale](project)}/` : `./${projectRoute}/`;
   const image = imagePath
     ? `<img class="project-card__image" src="${imagePath}" alt="" />`
     : `<img class="project-card__image" alt="" hidden />`;
@@ -273,13 +379,13 @@ function renderCard(project) {
               <article class="project-card-shell">
                 <a
                   class="project-card"
-                  href="./fr/projets/${project.slug}/"
+                  href="${projectPath}"
                   data-project="${escapeHtml(project.slug)}"
                   aria-haspopup="dialog"
                 >
                   <span class="project-card__surface project-card__surface--rest" aria-hidden="true">
                     ${image}
-                    <span class="project-card__placeholder-label">Image principale</span>
+                  <span class="project-card__placeholder-label">${locale === "en" ? "Main image" : "Image principale"}</span>
                   </span>
                   <span class="project-card__info" aria-hidden="true">
                     <strong class="project-card__title">${escapeHtml(content.title)}</strong>
@@ -288,14 +394,12 @@ function renderCard(project) {
                       <span class="project-card__role">${escapeHtml(content.role)}</span>
                     </span>
                   </span>
-                  <span class="sr-only project-card__sr-label">Ouvrir le projet ${escapeHtml(content.title)}</span>
+                  <span class="sr-only project-card__sr-label">${locale === "en" ? "Open project" : "Ouvrir le projet"} ${escapeHtml(content.title)}</span>
                 </a>
               </article>`;
 }
 
-function renderHomepage() {
-  const homepagePath = path.join(rootDirectory, "index.html");
-  const homepage = fs.readFileSync(homepagePath, "utf8");
+function renderHomepage(homepage, locale, { root = false } = {}) {
   const startMarker = "<!-- PROJECT_CARDS_START -->";
   const endMarker = "<!-- PROJECT_CARDS_END -->";
   const start = homepage.indexOf(startMarker);
@@ -303,7 +407,73 @@ function renderHomepage() {
 
   assert.ok(start >= 0 && end > start, "homepage project card markers are missing");
 
-  return `${homepage.slice(0, start + startMarker.length)}${projects.map(renderCard).join("\n")}${homepage.slice(end)}`;
+  const copy = homepageCopy[locale];
+  let rendered = `${homepage.slice(0, start + startMarker.length)}${projects
+    .map((project) => renderCard(project, locale, { root }))
+    .join("\n")}${homepage.slice(end)}`;
+
+  rendered = rendered.replace(/<html lang="[^"]+">/, `<html lang="${locale}">`);
+  rendered = replaceElementContent(rendered, "title", copy.title);
+  rendered = replaceLocalizedAttribute(rendered, "content", "description", copy.description);
+  rendered = replaceElementContent(rendered, "nav.projects", copy.nav.projects);
+  rendered = replaceElementContent(rendered, "nav.montage", copy.nav.montage);
+  rendered = replaceElementContent(rendered, "nav.motion", copy.nav.motion);
+  rendered = replaceElementContent(rendered, "nav.contact", copy.nav.contact);
+  rendered = replaceElementContent(rendered, "locale.toggle", copy.locale.toggle);
+  rendered = replaceElementContent(rendered, "card.placeholder", copy.card.placeholder);
+  rendered = replaceLocalizedAttribute(rendered, "aria-label", "menuToggle", copy.menuToggle);
+  rendered = replaceLocalizedAttribute(rendered, "aria-label", "primaryNav", copy.primaryNav);
+  rendered = replaceLocalizedAttribute(rendered, "aria-label", "headerSocial", copy.headerSocial);
+  rendered = replaceLocalizedAttribute(rendered, "aria-label", "email", copy.email);
+  rendered = replaceLocalizedAttribute(rendered, "aria-label", "footerSocial", copy.footerSocial);
+  rendered = replaceLocalizedAttribute(rendered, "aria-label", "projectsView", copy.projectsView);
+  rendered = replaceLocalizedAttribute(rendered, "aria-label", "contactView", copy.contactView);
+  rendered = replaceElementContent(rendered, "heroPlaceholder", copy.heroPlaceholder);
+  rendered = replaceElementContent(rendered, "heroRole", copy.heroRole);
+  rendered = replaceElementContent(rendered, "portraitPlaceholder", copy.portraitPlaceholder);
+  copy.contactAbout.forEach((value, index) => {
+    rendered = replaceElementContent(rendered, `contactAbout.${index}`, value);
+  });
+  rendered = replaceElementContent(rendered, "contactCopy", copy.contactCopy);
+  rendered = replaceElementContent(rendered, "copyright", copy.copyright);
+  rendered = replaceLocalizedAttribute(rendered, "aria-label", "overlay.panelLabel", copy.overlay.panelLabel);
+  rendered = replaceLocalizedAttribute(rendered, "aria-label", "overlay.close", copy.overlay.close);
+  rendered = replaceLocalizedAttribute(rendered, "title", "overlay.iframeTitle", copy.overlay.iframeTitle);
+  rendered = replaceElementContent(rendered, "overlay.mediaPlaceholder", copy.overlay.mediaPlaceholder);
+  rendered = replaceElementContent(rendered, "overlay.credits", copy.overlay.credits);
+  rendered = replaceLocalizedAttribute(rendered, "aria-label", "overlay.galleryLabel", copy.overlay.galleryLabel);
+  rendered = replaceLocalizedAttribute(rendered, "aria-label", "overlay.navigation", copy.overlay.navigation);
+  rendered = replaceElementContent(rendered, "overlay.prev", copy.overlay.prev);
+  rendered = replaceElementContent(rendered, "overlay.next", copy.overlay.next);
+
+  const homepageUrls = {
+    fr: `${siteOrigin}/fr/`,
+    en: `${siteOrigin}/en/`,
+  };
+  const languageLinks = `<!-- HOMEPAGE_LOCALE_LINKS -->
+    <link rel="canonical" href="${homepageUrls[locale]}" />
+    <link rel="alternate" hreflang="fr" href="${homepageUrls.fr}" />
+    <link rel="alternate" hreflang="en" href="${homepageUrls.en}" />`;
+  rendered = rendered.replace(
+    /<!-- HOMEPAGE_LOCALE_LINKS -->[\s\S]*?(?=\s*<link rel="stylesheet")/,
+    languageLinks,
+  );
+
+  const alternateLocale = locale === "fr" ? "en" : "fr";
+  const localeLink = root ? `./${alternateLocale}/` : `../${alternateLocale}/`;
+  rendered = rendered.replace(
+    /(<a[^>]*data-locale-toggle[^>]*href=")[^"]*("[^>]*>)/,
+    `$1${localeLink}$2`,
+  );
+
+  if (!root) {
+    rendered = rendered
+      .replaceAll('href="./styles.css"', 'href="../styles.css"')
+      .replaceAll('src="./project-content.js"', 'src="../project-content.js"')
+      .replaceAll('src="./main.js"', 'src="../main.js"');
+  }
+
+  return rendered;
 }
 
 function outputPath(project, locale) {
@@ -311,7 +481,14 @@ function outputPath(project, locale) {
 }
 
 function generate() {
-  fs.writeFileSync(path.join(rootDirectory, "index.html"), renderHomepage());
+  const homepage = fs.readFileSync(path.join(rootDirectory, "index.html"), "utf8");
+  fs.writeFileSync(path.join(rootDirectory, "index.html"), renderHomepage(homepage, "fr", { root: true }));
+
+  ["fr", "en"].forEach((locale) => {
+    const destination = path.join(rootDirectory, locale, "index.html");
+    fs.mkdirSync(path.dirname(destination), { recursive: true });
+    fs.writeFileSync(destination, renderHomepage(homepage, locale));
+  });
 
   projects.forEach((project) => {
     ["fr", "en"].forEach((locale) => {
@@ -324,7 +501,30 @@ function generate() {
 
 function verify() {
   const homepage = fs.readFileSync(path.join(rootDirectory, "index.html"), "utf8");
+  const localizedHomepages = {
+    fr: fs.readFileSync(path.join(rootDirectory, "fr", "index.html"), "utf8"),
+    en: fs.readFileSync(path.join(rootDirectory, "en", "index.html"), "utf8"),
+  };
+
   assert.equal((homepage.match(/data-project=/g) ?? []).length, projects.length, "homepage catalog is incomplete");
+  assert.equal((localizedHomepages.fr.match(/data-project=/g) ?? []).length, projects.length, "French homepage catalog is incomplete");
+  assert.equal((localizedHomepages.en.match(/data-project=/g) ?? []).length, projects.length, "English homepage catalog is incomplete");
+
+  ["fr", "en"].forEach((locale) => {
+    const generated = localizedHomepages[locale];
+    const alternateLocale = locale === "fr" ? "en" : "fr";
+    const homepageUrl = `${siteOrigin}/${locale}/`;
+
+    assert.ok(generated.includes(`<html lang="${locale}">`));
+    assert.ok(generated.includes(`<link rel="canonical" href="${homepageUrl}" />`));
+    assert.ok(generated.includes(`hreflang="${alternateLocale}"`));
+    assert.ok(generated.includes(`href="../${alternateLocale}/"`));
+    assert.ok(!generated.includes("?lang="));
+  });
+
+  assert.ok(homepage.includes('href="./en/"'));
+  assert.ok(localizedHomepages.fr.includes('href="../en/"'));
+  assert.ok(localizedHomepages.en.includes('href="../fr/"'));
 
   projects.forEach((project) => {
     const mediaDirectory = path.join(rootDirectory, "assets", "media", "projects", project.slug);
@@ -335,6 +535,10 @@ function verify() {
       const content = localizeProject(project, locale);
       const route = routes[locale](project);
 
+      if (locale === "en") {
+        assert.ok(project.locales?.en, `${project.slug} is missing an explicit English translation`);
+      }
+
       assert.equal(generated, renderPage(project, locale), `${locale}/${project.slug} page is stale`);
       assert.ok(generated.includes(`<h1>${escapeHtml(content.title)}</h1>`));
       assert.ok(generated.includes(escapeHtml(content.role)));
@@ -342,17 +546,19 @@ function verify() {
       content.credits.forEach((credit) => assert.ok(generated.includes(escapeHtml(credit.value))));
       assert.ok(generated.includes(`href="${siteOrigin}/${route}/"`));
       assert.ok(generated.includes(`href="${siteOrigin}/${routes[locale === "fr" ? "en" : "fr"](project)}/"`));
-      assert.ok(generated.includes(`href="${locale === "en" ? "../../../?lang=en" : "../../../"}"`));
+      assert.ok(generated.includes(`href="../../../${locale}/"`));
     });
 
     assert.ok(homepage.includes(`href="./fr/projets/${project.slug}/"`));
+    assert.ok(localizedHomepages.fr.includes(`href="./projets/${project.slug}/"`));
+    assert.ok(localizedHomepages.en.includes(`href="./projects/${project.slug}/"`));
   });
 }
 
 if (require.main === module) {
   if (process.argv.includes("--check")) {
     verify();
-    console.log(`Ticket 3 static pages are valid for ${projects.length} projects.`);
+    console.log(`Ticket 4 localized pages are valid for ${projects.length} projects.`);
   } else {
     generate();
     console.log(`Generated French and English pages for ${projects.length} projects.`);

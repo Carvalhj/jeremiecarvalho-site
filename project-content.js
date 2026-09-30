@@ -36,6 +36,9 @@ const portfolioProjectCatalog = {
       en: {
         title: "Demo Reel",
         subtitle: "Selected work",
+        type: "Demo reel",
+        role: "Editing and motion design",
+        credits: [{ label: "Editing and motion design", value: "Jérémie Carvalho" }],
         text: [
           "A curated reel bringing together a selection of editing, motion design, and post-production work.",
           "This project card acts as an entry point into the broader body of work featured on the site. It can later be expanded with the final reel, a more precise shot list, and fuller credits if needed.",
@@ -58,6 +61,18 @@ const portfolioProjectCatalog = {
     ],
     views: ["projects", "motion"],
     palette: { base: "#2a2726", accent: "#7c7b7b", infoStart: "#1a1e57", infoEnd: "#111111" },
+    locales: {
+      en: {
+        title: "Robert Langlois - Dragonfly",
+        subtitle: "Music video, 2026",
+        type: "Music video",
+        role: "Color grading and visual effects",
+        credits: [
+          { label: "Direction", value: "Philippe Léonard" },
+          { label: "Color grading and visual effects", value: "Jérémie Carvalho" },
+        ],
+      },
+    },
   },
   "onf-bww": {
     slug: "onf-bww",
@@ -75,6 +90,23 @@ const portfolioProjectCatalog = {
     ],
     views: ["projects", "montage"],
     palette: { base: "#2a2726", accent: "#a78b75", infoStart: "#4d4036", infoEnd: "#111111" },
+    locales: {
+      en: {
+        title: "Bread Will Walk",
+        subtitle: "Trailer, 2026",
+        type: "Trailer",
+        role: "Editing",
+        client: { label: "Production", value: "ONF" },
+        text: [
+          "A devoted sister flees with her brother, transformed into a strange bread creature. A hungry crowd pursues them. The streets become tangled and reason crumbles. Can love overcome hunger? - NFB website",
+        ],
+        credits: [
+          { label: "Direction", value: "Alex Boya" },
+          { label: "Trailer coordination", value: "Marion Duhaime-Morissette" },
+          { label: "Trailer editing", value: "Jérémie Carvalho" },
+        ],
+      },
+    },
   },
   "onf-paradaiz": {
     slug: "onf-paradaiz",
@@ -91,6 +123,22 @@ const portfolioProjectCatalog = {
     ],
     views: ["projects", "montage"],
     palette: { base: "#2a2726", accent: "#a78b75", infoStart: "#4d4036", infoEnd: "#111111" },
+    locales: {
+      en: {
+        title: "Paradaïz",
+        subtitle: "Trailer, 2026",
+        type: "Trailer",
+        role: "Editing",
+        client: { label: "Production", value: "NFB" },
+        text: [
+          "Welcome to Paradaïz: a place for roofless slugs, bullet-riddled walls, chain-smoking, and explosive tomatoes. - NFB website",
+        ],
+        credits: [
+          { label: "Direction", value: "Matea Radic" },
+          { label: "Trailer editing", value: "Jérémie Carvalho" },
+        ],
+      },
+    },
   },
   "pc-cdn": {
     slug: "pc-cdn",
@@ -109,6 +157,24 @@ const portfolioProjectCatalog = {
     ],
     views: ["projects", "motion"],
     palette: { base: "#2a2726", accent: "#7c7b7b", infoStart: "#1a1e57", infoEnd: "#111111" },
+    locales: {
+      en: {
+        title: "Crimes du nord",
+        subtitle: "Documentary series, 2026",
+        type: "Documentary series",
+        role: "Motion design and graphic design",
+        client: { label: "Production", value: "Casadel Films / Historia" },
+        text: [
+          "Montreal is considered a small city on a global scale and yet enjoys a strong reputation in the world of organized crime. How does its criminal history reflect its DNA? At the crossroads of Europe and America, Montreal's crime scene was shaped by successive waves of immigration, a unique geography, and important social movements. - Historia website",
+        ],
+        credits: [
+          { label: "Direction", value: "Alexis Chartrand" },
+          { label: "Production", value: "Patrick Francke-Sirois" },
+          { label: "Editing", value: "Cédric Froment" },
+          { label: "Motion design and visual effects", value: "Jérémie Carvalho" },
+        ],
+      },
+    },
   },
   "onf-tgwcp": {
     slug: "onf-tgwcp",
@@ -125,6 +191,22 @@ const portfolioProjectCatalog = {
     ],
     views: ["projects", "montage"],
     palette: { base: "#2a2726", accent: "#a78b75", infoStart: "#4d4036", infoEnd: "#111111" },
+    locales: {
+      en: {
+        title: "The Girl Who Cried Pearls",
+        subtitle: "Trailer, 2025",
+        type: "Trailer",
+        role: "Editing",
+        client: { label: "Production", value: "NFB" },
+        text: [
+          "Enchanted by a young girl whose tears turn into pearls, an impoverished boy faces a cruel dilemma between love and fortune. - NFB website",
+        ],
+        credits: [
+          { label: "Direction", value: "Chris Lavis, Maciek Szczerbowski" },
+          { label: "Trailer editing", value: "Jérémie Carvalho" },
+        ],
+      },
+    },
   },
   "stephanie-boulay": {
     slug: "stephanie-boulay",
@@ -140,6 +222,15 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
+        title: "Stéphanie Boulay",
+        subtitle: "Music video, 2025",
+        type: "Music video",
+        role: "Editing",
+        client: { label: "Label", value: "Simone records" },
+        credits: [
+          { label: "Direction", value: "Clara L'heureux-Garcia" },
+          { label: "Editing", value: "Jérémie Carvalho" },
+        ],
         text: [
           "Music video created for Stéphanie Boulay. I handled the edit, with a strong focus on rhythm, breathing room, and the progression of the story.",
           "This card currently reflects the information available on the existing site and can be expanded later with the final media assets.",
@@ -206,6 +297,22 @@ const portfolioProjectCatalog = {
     ],
     views: ["projects", "montage"],
     palette: { base: "#2a2726", accent: "#a78b75", infoStart: "#4d4036", infoEnd: "#111111" },
+    locales: {
+      en: {
+        title: "The Children of the Open Sea",
+        subtitle: "Trailer, 2025",
+        type: "Trailer",
+        role: "Editing",
+        client: { label: "Production", value: "NFB" },
+        text: [
+          "Virginia Tangvald navigates the troubled waters of her family history to solve the mystery surrounding her brother's disappearance and her father Peter Tangvald's shipwreck. - NFB website",
+        ],
+        credits: [
+          { label: "Direction", value: "Virginia Tangvald" },
+          { label: "Trailer editing", value: "Jérémie Carvalho" },
+        ],
+      },
+    },
   },
   elisapie: {
     slug: "elisapie",
@@ -226,6 +333,15 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
+        title: "Elisapie",
+        subtitle: "Music video, 2024",
+        type: "Music video",
+        role: "Editing, color grading and visual effects",
+        client: { label: "Label", value: "Bonsound" },
+        credits: [
+          { label: "Direction", value: "Philippe Léonard" },
+          { label: "Editing, color grading and visual effects", value: "Jérémie Carvalho" },
+        ],
         text: [
           "Quviasukkuvit is an Inuktitut reinterpretation of If It Makes You Happy, built around a soft, slightly distorted Hollywood-hangover aesthetic.",
           "For this project, I blurred the line between color work and visual effects to connect studio choreography with landscapes composited into the frame.",
@@ -259,6 +375,19 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
+        title: "Frank Bourassa",
+        subtitle: "Documentary series, 2023",
+        type: "Documentary series",
+        role: "Motion design and visual effects",
+        client: { label: "Broadcaster", value: "Crave" },
+        credits: [
+          { label: "Direction", value: "Alexis Chartrand" },
+          { label: "Production", value: "Patrick Francke-Sirois, David Francke-Robitaille" },
+          { label: "Cinematography", value: "Thierry Sirois, Louis Turcotte" },
+          { label: "Editing", value: "Louis Chevalier" },
+          { label: "Motion design and visual effects", value: "Jérémie Carvalho" },
+          { label: "Additional motion design", value: "Simon Meloche (Muxmo)" },
+        ],
         text: [
           "Frank Bourassa et ses faux millions tells the story of a Trois-Rivières counterfeiter and one of the most significant fake-bill networks in the country.",
           "To integrate evidence, stills, and digital materials, I built an After Effects pipeline that animated those elements in a 3D space aligned with the series’ dark visual language.",
@@ -291,6 +420,18 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
+        title: "Beautés rebelles",
+        subtitle: "Documentary series, 2024",
+        type: "Documentary series",
+        role: "Design and motion design",
+        client: { label: "Broadcaster", value: "TV5" },
+        credits: [
+          { label: "Direction", value: "Alexis B. Martin" },
+          { label: "Original concept", value: "Alix Dufresne" },
+          { label: "Animation", value: "Carla Beauvais" },
+          { label: "Production", value: "Caroline Bergoin, Patrick Francke-Sirois" },
+          { label: "Design and motion design", value: "Jérémie Carvalho" },
+        ],
         text: [
           "In Beautés rebelles, Carla Beauvais travels the world to meet pageants that center marginalized people and challenge conventional ideas of beauty.",
           "The design direction aimed to balance elegance and roughness through pastel tones, glints, grain, textures, and visual accidents that extended the spirit of the series.",
@@ -322,6 +463,17 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
+        title: "The Prison of the Holy Spirit",
+        subtitle: "Documentary series, 2024",
+        type: "Documentary series",
+        role: "Design and motion design",
+        client: { label: "Broadcaster", value: "Crave" },
+        credits: [
+          { label: "Direction", value: "Isabelle Tincler" },
+          { label: "Animation", value: "Marie-Christine Bergeron" },
+          { label: "Production", value: "Maxime Landry" },
+          { label: "Design and motion design", value: "Jérémie Carvalho" },
+        ],
         text: [
           "This investigative documentary series follows Marie-Christine Bergeron as she meets former members of the Mission de l'Esprit-Saint.",
           "The typographic approach was built around a tension between two systems of truth: an archaic, obscurantist visual language on one side and a more sober journalistic register on the other.",
@@ -348,6 +500,15 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
+        title: "Hanging on a String",
+        subtitle: "Music video, 2024",
+        type: "Music video",
+        role: "Animation",
+        credits: [
+          { label: "Direction", value: "Annick Jean" },
+          { label: "Art direction", value: "Rodolphe St-Gelais" },
+          { label: "Animation", value: "Rodolphe St-Gelais, Jérémie Carvalho, Max Vannienschoot" },
+        ],
         text: [
           "Project card prepared from the information currently available in the CV section of the original site.",
           "The piece is listed as a music video for Steve Hill, with a 2D animation mandate. Media and process details can be added in a later pass.",
@@ -374,6 +535,17 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
+        title: "Zug Island",
+        subtitle: "Documentary short, 2022 · 22 min",
+        type: "Documentary short",
+        role: "Editing",
+        client: { label: "Distributor", value: "Les Films du 3 mars" },
+        credits: [
+          { label: "Direction", value: "Nicolas Lachapelle" },
+          { label: "Production", value: "Guillaume Collin, Nicolas Lachapelle" },
+          { label: "Color grading", value: "Laurence Messier-Moreau" },
+          { label: "Editing", value: "Jérémie Carvalho" },
+        ],
         text: [
           "Documentary short directed by Nicolas Lachapelle and written with Tiago Mc Nicoll Castro Lopes.",
           "I handled the edit, focusing on structure, sequence flow, and the balance between observation and dramatic progression.",
@@ -406,6 +578,19 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
+        title: "Évincés",
+        subtitle: "Documentary series, 2023",
+        type: "Documentary series",
+        role: "Editing and additional motion design",
+        client: { label: "Broadcaster", value: "Crave/Noovo" },
+        credits: [
+          { label: "Direction", value: "Alexis Chartrand" },
+          { label: "Animation", value: "Noémi Mercier" },
+          { label: "Production", value: "Patrick Francke-Sirois, Juliette Provost-Dubois, Noémi Mercier" },
+          { label: "Editing and additional motion design", value: "Jérémie Carvalho" },
+          { label: "Additional editing", value: "Louis Chevalier" },
+          { label: "Motion design", value: "Bechir Mogaadi" },
+        ],
         text: [
           "Évincés follows the fight led by the seniors of Résidence Mont-Carmel after receiving eviction notices, through a story that is political, intimate, and collective at once.",
           "With more than twenty interviews and over eighty hours of material, the edit stretched over several months to build a clear investigative progression.",
@@ -432,6 +617,16 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
+        title: "Tout doux",
+        subtitle: "Advertising campaign, 2023",
+        type: "Advertising campaign",
+        role: "Motion design",
+        client: { label: "Production", value: "Parade" },
+        credits: [
+          { label: "Direction / editing", value: "Phil Chagnon" },
+          { label: "Color grading", value: "Olivier Séguin-Dang" },
+          { label: "Motion design", value: "Jérémie Carvalho" },
+        ],
         text: [
           "Advertising project created for Claude Bégin with Parade. I handled the motion design in continuity with the editing and color treatment of the piece.",
           "For now, the card reflects the credits available on the original site and can later be expanded with stills and process details.",
@@ -456,6 +651,14 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
+        title: "Ascension for Hot Coffee",
+        subtitle: "Motion design, 2023",
+        type: "Motion design",
+        role: "Graphic package",
+        credits: [
+          { label: "Animation", value: "Jérémie Carvalho" },
+          { label: "Illustration and voice", value: "Philmath" },
+        ],
         text: [
           "Project card prepared from the information currently available in the site's live selection.",
           "The piece remains in the structure to prepare the future integration of final media and detailed credits.",
@@ -480,6 +683,19 @@ const portfolioProjectCatalog = {
     ],
     views: ["projects", "montage"],
     palette: { base: "#222127", accent: "#9d8ac0", infoStart: "#362f45", infoEnd: "#0f0c12" },
+    locales: {
+      en: {
+        title: "zouz - Seuls",
+        subtitle: "Music video, 2023",
+        type: "Music video",
+        role: "Editing",
+        client: { label: "Label", value: "Lazy At Work" },
+        credits: [
+          { label: "Direction", value: "Philippe Léonard" },
+          { label: "Editing and color grading", value: "Jérémie Carvalho" },
+        ],
+      },
+    },
   },
   "chroniques-vie-ordinaire": {
     slug: "chroniques-vie-ordinaire",
@@ -500,6 +716,17 @@ const portfolioProjectCatalog = {
     ],
     locales: {
       en: {
+        title: "Chroniques de la vie ordinaire",
+        subtitle: "Documentary series, 2022",
+        type: "Documentary series",
+        role: "Editing",
+        client: { label: "Broadcaster", value: "TV5" },
+        credits: [
+          { label: "Direction", value: "Amélie Hardy" },
+          { label: "Production", value: "Patrick Francke-Sirois" },
+          { label: "Cinematography", value: "Émile Desroches-Larouche" },
+          { label: "Editing", value: "Jérémie Carvalho" },
+        ],
         text: [
           "After a first cycle set in Montreal, Amélie Hardy continues Chroniques de la vie ordinaire across three Paris neighborhoods in a short and intimate format.",
           "I handled the editing, with an emphasis on clarity, continuity across episodes, and the preservation of each encounter’s sensitivity.",
@@ -520,6 +747,12 @@ const portfolioProjectCatalog = {
     credits: [{ label: "Montage", value: "Jérémie Carvalho" }],
     locales: {
       en: {
+        title: "Naomi - Zéro stress",
+        subtitle: "Music video, 2021",
+        type: "Music video",
+        role: "Editing",
+        client: { label: "Label", value: "Bravo Musique" },
+        credits: [{ label: "Editing", value: "Jérémie Carvalho" }],
         text: [
           "Project card prepared from the information currently available in the CV section of the original site.",
           "The piece is listed as a music video produced with Bravo Musique, with an editing mandate. Media and detailed credits can be added in a later pass.",
