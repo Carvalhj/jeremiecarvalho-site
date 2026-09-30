@@ -1014,9 +1014,7 @@ function loadImageAsset(element, candidates, { container = null, onSuccess = nul
       tryCandidate(index + 1);
     };
 
-    if (element.loading === "lazy") {
-      element.hidden = false;
-    }
+    element.hidden = false;
     element.src = source;
   };
 
@@ -1097,8 +1095,12 @@ function loadMediaBox({
   };
 
   if (videoElement && videoCandidates.length) {
+    loadImageAsset(imageElement, imageCandidates, { container });
     loadVideoAsset(videoElement, videoCandidates, {
       container,
+      onSuccess: () => {
+        resetImageElement(imageElement);
+      },
       onError: loadImageFallback,
     });
     return;
@@ -1157,7 +1159,6 @@ function renderProjectGallery(project) {
 function hydrateStaticAssets() {
   const connection = navigator.connection;
   const shouldLoadHeroVideo =
-    !window.matchMedia("(max-width: 820px)").matches &&
     !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
     !connection?.saveData;
 

@@ -26,7 +26,7 @@ assets/
 ## Raccourci
 
 - `hero-video.*` alimente la vidéo hero. Le code cherche les extensions vidéo reconnues.
-- `hero-poster.*` sert d'image de secours si la vidéo hero n'est pas présente.
+- `hero-poster.*` sert de poster pendant le chargement de la vidéo hero et d'image de secours si la vidéo n'est pas disponible.
 - `contact-portrait.*` remplace le placeholder de la page Contact.
 - `card-main.*` est l'image visible au repos dans la grille.
 - `cover-video.*` ou `cover-image.*` alimente le média principal du panneau projet.

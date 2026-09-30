@@ -41,7 +41,7 @@ Après une mise à jour du contenu ou des médias:
 - [ ] Confirmer que les slugs des projets correspondent aux dossiers dans `assets/media/projects/`.
 - [ ] Vérifier les accueils `/fr/` et `/en/`, puis le lien du sélecteur vers l'alternative linguistique.
 - [ ] Vérifier les images de cartes: `loading="lazy"`, dimensions intrinsèques, `sizes` et absence de sondage vers des extensions absentes.
-- [ ] Mesurer ou observer le LCP, le CLS et le coût de transfert initial sur desktop et mobile; la vidéo hero ne doit pas se charger sur mobile ou avec `Save-Data`.
+- [ ] Mesurer ou observer le LCP, le CLS et le coût de transfert initial sur desktop et mobile; la vidéo hero peut se charger sur desktop et mobile, mais reste désactivée avec `Save-Data` ou `prefers-reduced-motion`, avec le poster visible pendant le chargement.
 - [ ] Vérifier `sitemap.xml`, `robots.txt`, les aperçus Open Graph et les données structurées des pages représentatives.
 - [ ] Confirmer que `ref/` est absent et qu'aucun fichier de production ne le référence.
 
