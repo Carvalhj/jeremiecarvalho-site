@@ -546,6 +546,49 @@ const heroVideo = heroPlaceholder?.querySelector(".hero__video");
 const heroPoster = heroPlaceholder?.querySelector(".hero__poster");
 const heroPlaceholderLabel = heroPlaceholder?.querySelector("span");
 const heroRole = document.querySelector(".hero__role");
+const heroDebugMode = new URLSearchParams(window.location.search).get("debug-video") === "1";
+const heroDebugPanel = heroDebugMode ? document.createElement("pre") : null;
+const heroDebugEntries = [];
+
+if (heroDebugPanel) {
+  heroDebugPanel.style.cssText =
+    "position:fixed;z-index:9999;right:0;bottom:0;left:0;max-height:45vh;overflow:auto;margin:0;padding:0.75rem;color:#fff;background:rgba(0,0,0,0.9);font:11px/1.4 monospace;white-space:pre-wrap;";
+  heroDebugPanel.textContent = "Initialisation du diagnostic vidéo...";
+  document.body.append(heroDebugPanel);
+}
+
+function debugHeroVideo(label, details = {}) {
+  if (!heroDebugMode || !heroVideo || !heroDebugPanel) {
+    return;
+  }
+
+  const mediaError = heroVideo.error;
+  const state = {
+    src: heroVideo.currentSrc || heroVideo.src || "",
+    readyState: heroVideo.readyState,
+    networkState: heroVideo.networkState,
+    paused: heroVideo.paused,
+    currentTime: Number(heroVideo.currentTime.toFixed(3)),
+    duration: Number.isFinite(heroVideo.duration) ? Number(heroVideo.duration.toFixed(3)) : heroVideo.duration,
+    muted: heroVideo.muted,
+    defaultMuted: heroVideo.defaultMuted,
+    autoplay: heroVideo.autoplay,
+    playsInline: heroVideo.playsInline,
+    hidden: heroVideo.hidden,
+    rects: heroVideo.getClientRects().length,
+    width: heroVideo.getBoundingClientRect().width,
+    height: heroVideo.getBoundingClientRect().height,
+    visibility: document.visibilityState,
+    errorCode: mediaError?.code ?? null,
+    errorMessage: mediaError?.message ?? null,
+    ...details,
+  };
+
+  heroDebugEntries.push(`${new Date().toISOString()} ${label}\n${JSON.stringify(state, null, 2)}`);
+  heroDebugPanel.textContent = heroDebugEntries.join("\n\n");
+  heroDebugPanel.scrollTop = heroDebugPanel.scrollHeight;
+}
+
 const portraitPlaceholder = document.querySelector(".portrait-placeholder");
 const portraitImage = portraitPlaceholder?.querySelector(".portrait-placeholder__image");
 const portraitPlaceholderLabel = portraitPlaceholder?.querySelector("span");
@@ -1050,15 +1093,30 @@ function loadVideoAsset(element, candidates, { container = null, onSuccess = nul
       setFilledState(container, true);
       onSuccess?.(source);
 
+      if (element === heroVideo) {
+        debugHeroVideo("loadeddata");
+      }
+
       try {
+        if (element === heroVideo) {
+          debugHeroVideo("play-called");
+        }
         const playPromise = element.play();
-        playPromise?.catch(() => {});
+        playPromise?.catch((error) => {
+          debugHeroVideo("play-rejected", {
+            name: error?.name ?? "",
+            message: error?.message ?? "",
+          });
+        });
       } catch {
-        // The poster remains available if the browser requires a gesture.
+        debugHeroVideo("play-threw");
       }
     };
 
     element.onerror = () => {
+      if (element === heroVideo) {
+        debugHeroVideo("video-error");
+      }
       resetVideoElement(element);
       tryCandidate(index + 1);
     };
@@ -1066,6 +1124,10 @@ function loadVideoAsset(element, candidates, { container = null, onSuccess = nul
     element.preload = "metadata";
     element.src = source;
     element.load();
+
+    if (element === heroVideo) {
+      debugHeroVideo("source-assigned", { source });
+    }
   };
 
   tryCandidate(0);
@@ -1169,6 +1231,29 @@ function renderProjectGallery(project) {
 
 function hydrateStaticAssets() {
   const shouldLoadHeroVideo = true;
+
+  if (heroDebugMode && heroVideo && !heroVideo.dataset.heroDebugBound) {
+    [
+      "loadstart",
+      "loadedmetadata",
+      "loadeddata",
+      "canplay",
+      "play",
+      "playing",
+      "waiting",
+      "stalled",
+      "pause",
+      "suspend",
+      "abort",
+      "emptied",
+      "error",
+    ].forEach((eventName) => {
+      heroVideo.addEventListener(eventName, () => debugHeroVideo(`event:${eventName}`));
+    });
+    heroVideo.dataset.heroDebugBound = "true";
+  }
+
+  debugHeroVideo("hydrate");
 
   loadMediaBox({
     container: heroPlaceholder,
