@@ -4,6 +4,8 @@
 **Périmètre:** diagnostic documentaire et inspection locale seulement. Aucun fichier d’application n’a été modifié.  
 **Confiance globale:** élevée pour les faits locaux et les contrats d’API; moyenne pour la cause racine, qui reste non testée tant que le rejet de `play()` et la séquence des événements ne sont pas observés sur l’appareil.
 
+**Mise à jour:** le diagnostic iPhone fourni après cette recherche a confirmé `NotAllowedError` après `loadeddata`. Le code traite maintenant ce rejet en conservant le poster; les descriptions du chargeur qui avale le rejet ci-dessous documentent l’état observé avant cette correction.
+
 ## Conclusion courte
 
 Le dépôt ne donne pas à `<video>` un poster HTML. Il charge plutôt un `<img class="hero__poster">` séparé, puis garde le `<video>` caché jusqu’à `loadeddata`. Le poster peut donc apparaître même si la lecture vidéo n’a jamais commencé.
