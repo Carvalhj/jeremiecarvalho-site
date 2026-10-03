@@ -545,6 +545,7 @@ const heroPlaceholder = document.querySelector(".hero__video-placeholder");
 const heroVideo = heroPlaceholder?.querySelector(".hero__video");
 const heroPoster = heroPlaceholder?.querySelector(".hero__poster");
 const heroPlaceholderLabel = heroPlaceholder?.querySelector("span");
+const heroPlayButton = heroPlaceholder?.querySelector("[data-hero-play]");
 const heroRole = document.querySelector(".hero__role");
 const portraitPlaceholder = document.querySelector(".portrait-placeholder");
 const portraitImage = portraitPlaceholder?.querySelector(".portrait-placeholder__image");
@@ -618,6 +619,7 @@ const siteCopy = {
       contact: "Contact",
     },
     heroPlaceholder: "Vidéo hero à intégrer",
+    heroPlay: "Lire la vidéo",
     heroRole: "Monteur & motion designer — Montréal",
     portraitPlaceholder: "Portrait à intégrer",
     contactAbout: [
@@ -658,6 +660,7 @@ const siteCopy = {
       contact: "Contact",
     },
     heroPlaceholder: "Hero video placeholder",
+    heroPlay: "Play video",
     heroRole: "Editor & motion designer — Montreal",
     portraitPlaceholder: "Portrait placeholder",
     contactAbout: [
@@ -842,6 +845,10 @@ function applyLocale({ rerenderGrid = true, updateHistory = true } = {}) {
     heroPlaceholderLabel.textContent = copy.heroPlaceholder;
   }
 
+  if (heroPlayButton) {
+    heroPlayButton.textContent = copy.heroPlay;
+  }
+
   if (heroRole) {
     heroRole.textContent = copy.heroRole;
   }
@@ -1021,7 +1028,11 @@ function loadImageAsset(element, candidates, { container = null, onSuccess = nul
   tryCandidate(0);
 }
 
-function loadVideoAsset(element, candidates, { container = null, onSuccess = null, onError = null } = {}) {
+function loadVideoAsset(
+  element,
+  candidates,
+  { container = null, onSuccess = null, onError = null, manualStart = false, onReady = null } = {},
+) {
   resetVideoElement(element);
 
   const queue = candidates.filter(Boolean);
@@ -1032,10 +1043,13 @@ function loadVideoAsset(element, candidates, { container = null, onSuccess = nul
     return;
   }
 
-  element.autoplay = true;
+  element.autoplay = !manualStart;
   element.defaultMuted = true;
   element.muted = true;
   element.playsInline = true;
+  if (manualStart) {
+    element.removeAttribute("autoplay");
+  }
 
   const tryCandidate = (index) => {
     if (index >= queue.length) {
@@ -1046,6 +1060,11 @@ function loadVideoAsset(element, candidates, { container = null, onSuccess = nul
 
     const source = queue[index];
     element.onloadeddata = () => {
+      if (manualStart) {
+        onReady?.(source);
+        return;
+      }
+
       element.hidden = false;
       const showVideo = () => {
         setFilledState(container, true);
@@ -1089,6 +1108,8 @@ function loadMediaBox({
   imageElement = null,
   videoAsset = null,
   imageAsset = null,
+  manualStart = false,
+  onReady = null,
 } = {}) {
   setFilledState(container, false);
   resetIframeElement(iframeElement);
@@ -1123,6 +1144,8 @@ function loadMediaBox({
         resetImageElement(imageElement);
       },
       onError: loadImageFallback,
+      manualStart,
+      onReady,
     });
     return;
   }
@@ -1177,8 +1200,50 @@ function renderProjectGallery(project) {
   });
 }
 
+const heroManualStart = Boolean(
+  heroPlayButton &&
+    window.matchMedia("(pointer: coarse)").matches &&
+    navigator.maxTouchPoints > 0,
+);
+
+function startHeroVideo() {
+  if (!heroVideo || !heroPlayButton) {
+    return;
+  }
+
+  heroVideo.hidden = false;
+
+  const showVideo = () => {
+    heroPlayButton.hidden = true;
+    resetImageElement(heroPoster);
+    setFilledState(heroPlaceholder, true);
+  };
+
+  const keepPoster = () => {
+    heroVideo.hidden = true;
+    heroPlayButton.hidden = false;
+  };
+
+  try {
+    const playPromise = heroVideo.play();
+    if (playPromise && typeof playPromise.then === "function") {
+      playPromise.then(showVideo).catch(keepPoster);
+    } else {
+      showVideo();
+    }
+  } catch {
+    keepPoster();
+  }
+}
+
+heroPlayButton?.addEventListener("click", startHeroVideo);
+
 function hydrateStaticAssets() {
   const shouldLoadHeroVideo = true;
+
+  if (heroPlayButton) {
+    heroPlayButton.hidden = true;
+  }
 
   loadMediaBox({
     container: heroPlaceholder,
@@ -1186,6 +1251,12 @@ function hydrateStaticAssets() {
     imageElement: heroPoster,
     videoAsset: shouldLoadHeroVideo ? siteAssets.hero.video : null,
     imageAsset: siteAssets.hero.image,
+    manualStart: heroManualStart,
+    onReady: () => {
+      if (heroManualStart && heroPlayButton) {
+        heroPlayButton.hidden = false;
+      }
+    },
   });
 
   setImageMetadata(portraitImage, siteAssets.portrait);

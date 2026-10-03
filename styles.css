@@ -390,6 +390,29 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
+.hero__play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 4;
+  padding: 0.8rem 1rem;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: rgba(6, 6, 6, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+}
+
+.hero__play-button:hover,
+.hero__play-button:focus-visible {
+  background: rgba(255, 255, 255, 0.16);
+}
+
 .hero__video-placeholder.is-filled > span,
 .portrait-placeholder.is-filled > span,
 .project-panel__media-inner.is-filled > span,

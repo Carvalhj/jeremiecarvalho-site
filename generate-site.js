@@ -116,6 +116,7 @@ const homepageCopy = {
     projectsView: "Projets",
     contactView: "Page contact",
     heroPlaceholder: "Vidéo hero à intégrer",
+    heroPlay: "Lire la vidéo",
     heroRole: "Monteur & motion designer — Montréal",
     portraitPlaceholder: "Portrait à intégrer",
     contactAbout: [
@@ -158,6 +159,7 @@ const homepageCopy = {
     projectsView: "Projects",
     contactView: "Contact page",
     heroPlaceholder: "Hero video placeholder",
+    heroPlay: "Play video",
     heroRole: "Editor & motion designer — Montreal",
     portraitPlaceholder: "Portrait placeholder",
     contactAbout: [
@@ -611,6 +613,7 @@ function renderHomepage(homepage, locale, { root = false } = {}) {
   rendered = replaceLocalizedAttribute(rendered, "aria-label", "projectsView", copy.projectsView);
   rendered = replaceLocalizedAttribute(rendered, "aria-label", "contactView", copy.contactView);
   rendered = replaceElementContent(rendered, "heroPlaceholder", copy.heroPlaceholder);
+  rendered = replaceElementContent(rendered, "heroPlay", copy.heroPlay);
   rendered = replaceElementContent(rendered, "heroRole", copy.heroRole);
   rendered = replaceElementContent(rendered, "portraitPlaceholder", copy.portraitPlaceholder);
   copy.contactAbout.forEach((value, index) => {
